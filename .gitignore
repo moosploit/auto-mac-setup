@@ -1,7 +1,3 @@
-
-# Created by https://www.toptal.com/developers/gitignore/api/macos,zsh,linux,codekit,homebrew,visualstudiocode,python
-# Edit at https://www.toptal.com/developers/gitignore?templates=macos,zsh,linux,codekit,homebrew,visualstudiocode,python
-
 ### CodeKit ###
 # General CodeKit files to ignore
 config.codekit
@@ -195,7 +191,7 @@ dmypy.json
 .pytype/
 
 ### VisualStudioCode ###
-.vscode/*
+.vscode/
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
@@ -232,7 +228,5 @@ zsdoc/data
 # (for Zsh plugins using Python)
 
 # Zunit tests' output
-/tests/_output/*
+/tests/_output/
 !/tests/_output/.gitkeep
-
-# End of https://www.toptal.com/developers/gitignore/api/macos,zsh,linux,codekit,homebrew,visualstudiocode,python
