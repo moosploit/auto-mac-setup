@@ -24,6 +24,7 @@ function bkp_mas() {
     mkdir -p $mas_bkp_folder
 
     mas list > $mas_bkp_folder"/mas-list.txt"
+    mas list | cut -d " " -f 1 > $mas_bkp_folder"/mas-list-ids.txt"
 }
 
 # Backup current dotfiles
