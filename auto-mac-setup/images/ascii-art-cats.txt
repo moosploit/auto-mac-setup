@@ -1,21 +1,10 @@
-/*
- * ================================================================================
- * -- File:          images/ascii-art-cats.txt
- * -- Project:       auto-mac-setup
- * -- Project URL:   https://github.com/moosploit/auto-mac-setup
- * -- Create Date:   2020-04-20 13:35
- * -- Author:        Michael Linder
- * -- Company:       moosploit.com
- * -- License:       MIT License | http://www.opensource.org/licenses/MIT
- * ================================================================================
- */
-
 # Cat 1
 # ============================================================
          /\_/\
     ____/ o o \
   /~____  =ø= /
  (______)__m_m)
+
 
 # Cat 2
 # ============================================================

@@ -1,15 +1,3 @@
-/*
- * ================================================================================
- * -- File:          images/ascii-art-cow.txt
- * -- Project:       auto-mac-setup
- * -- Project URL:   https://github.com/moosploit/auto-mac-setup
- * -- Create Date:   2020-04-16 20:35
- * -- Author:        Michael Linder
- * -- Company:       moosploit.com
- * -- License:       MIT License | http://www.opensource.org/licenses/MIT
- * ================================================================================
- */
-
 # Cow 1
 # ============================================================
 
