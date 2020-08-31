@@ -20,12 +20,16 @@ col_blue=$esc_seq"1;34m"
 col_magenta=$esc_seq"1;35m"
 col_cyan=$esc_seq"1;36m"
 
+print_in_color() {
+    printf "%b" "$(tput setaf "$2" 2> /dev/null)" "$1" "$(tput sgr0 2> /dev/null)"
+}
+
 # Output functions
-function ok() {
+ok() {
 	printf $col_green"[OK]"$col_reset" %s \n" $1
 }
 
-function cow() {
+cow() {
 	printf "\n"
 	printf "              (      ) \n"
 	printf "              ~(^^^^)~ \n"
@@ -51,52 +55,41 @@ function cow() {
 	printf "\n"
 }
 
-function cat() {
-	# printf "\n"
-	# printf "        /\_/\\ \n"
-	# printf "   ____/ o o \\ \n"
-	# printf " /~____  =ø= /  - "$1"\n"
-	# printf "(______)__m_m)\n"
-	# printf "\n"
-
-	# printf "\n"
-	# printf $col_green"=^..^= "$col_reset" - "$1"\n"
-	# printf "\n"
-	
+cat() {
 	printf "\n"
-	printf $col_green"(,,,)=(^.^)=(,,,)"$col_reset" - "$1"\n"
+	printf $col_green"(,,,)=(^.^)=(,,,)"$col_reset" - %s \n" "$1"
 	printf "\n"
 }
 
-function action() {
-	printf $col_magenta"[action]"$col_reset" ❯ %s \n" $1
+action() {
+	printf $col_magenta"[action]"$col_reset" ❯ %s \n" "$1"
 }
 
-function run() {
-	printf $col_yellow"==❯"$col_reset" %s \n" $1
+run() {
+	printf $col_yellow"==❯"$col_reset" %s \n" "$1"
 }
 
-function warn() {
-	printf $col_yellow"[warning]"$col_reset" %s \n" $1
+warn() {
+	printf $col_yellow"[warning]"$col_reset" %s \n" "$1"
 }
 
-function error() {
-	printf $col_red"[error]"$col_reset" %s \n" $1
+error() {
+	printf $col_red"[error]"$col_reset" %s \n" "$1"
 }
 
-function fail() {
-	printf $col_red"[✖]"$col_reset" %s \n" $1
+success() {
+	printf $col_green" [✔]"$col_reset" %s \n" "$1"
 }
 
-function success() {
-	printf $col_green"[✔]"$col_reset" %s \n" $1
+fail() {
+	printf $col_red" [✖]"$col_reset" %s \n" "$1"
 }
 
-function result() {
+result() {
 	if [ "$1" -eq 0 ]; then
 		success "$2"
 	else
-		error "$2"
+		fail "$2"
 	fi
 	return "$1"
 }
