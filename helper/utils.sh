@@ -9,8 +9,6 @@
 # -- License:       MIT License | http://www.opensource.org/licenses/MIT
 # ================================================================================
 
-source ./helper/output.sh
-
 check_cmd_exists() {
     command -v "$1" &> /dev/null
 }
