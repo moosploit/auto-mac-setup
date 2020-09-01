@@ -9,27 +9,48 @@
 # -- License:       MIT License | http://www.opensource.org/licenses/MIT
 # ================================================================================
 
-# Define color variables
-esc_seq="\033["
-
-col_reset=$esc_seq"0;39;49m"
-col_red=$esc_seq"1;31m"
-col_green=$esc_seq"1;32m"
-col_yellow=$esc_seq"1;33m"
-col_blue=$esc_seq"1;34m"
-col_magenta=$esc_seq"1;35m"
-col_cyan=$esc_seq"1;36m"
-
+# Print color functions
 print_in_color() {
-    printf "%b" "$(tput setaf "$2" 2> /dev/null)" "$1" "$(tput sgr0 2> /dev/null)"
+    printf "%b" "$(tput setaf "$1" 2> /dev/null)" "$2" "$(tput sgr0 2> /dev/null)"
 }
 
-# Output functions
-ok() {
-	printf $col_green"[OK]"$col_reset" %s \n" $1
+print_in_black() {
+    print_in_color 0 "$1"
 }
 
-cow() {
+print_in_red() {
+    print_in_color 1 "$1"
+}
+
+print_in_green() {
+    print_in_color 2 "$1"
+}
+
+print_in_yellow() {
+    print_in_color 3 "$1"
+}
+
+print_in_blue() {
+    print_in_color 4 "$1"
+}
+
+print_in_magenta() {
+    print_in_color 5 "$1"
+}
+
+print_in_cyan() {
+    print_in_color 6 "$1"
+}
+print_in_white() {
+    print_in_color 7 "$1"
+}
+
+# Print specific output functions
+print_ok() {
+	printf "%s %s \n" "$( print_in_green '[OK]')" "$1"
+}
+
+print_cow() {
 	printf "\n"
 	printf "              (      ) \n"
 	printf "              ~(^^^^)~ \n"
@@ -55,41 +76,43 @@ cow() {
 	printf "\n"
 }
 
-cat() {
-	printf "\n"
-	printf $col_green"(,,,)=(^.^)=(,,,)"$col_reset" - %s \n" "$1"
-	printf "\n"
+print_cat() {
+	printf "%s %s \n" "$( print_in_green '(,,,)=(^.^)=(,,,)')" "$1"
 }
 
-action() {
-	printf $col_magenta"[action]"$col_reset" ❯ %s \n" "$1"
+print_action() {
+	printf "%s %s \n" "$( print_in_magenta '❯')" "$1"
 }
 
-run() {
-	printf $col_yellow"==❯"$col_reset" %s \n" "$1"
+print_run() {
+	printf "%s %s \n" "$( print_in_magenta '==❯')" "$1"
 }
 
-warn() {
-	printf $col_yellow"[warning]"$col_reset" %s \n" "$1"
+print_warn() {
+	printf "%s %s \n" "$( print_in_yellow '[warning]')" "$1"
 }
 
-error() {
-	printf $col_red"[error]"$col_reset" %s \n" "$1"
+print_error() {
+	printf "%s %s \n" "$( print_in_red '[error]')" "$1"
 }
 
-success() {
-	printf $col_green" [✔]"$col_reset" %s \n" "$1"
+print_success() {
+	printf "%s %s \n" "$( print_in_green '[✔]')" "$1"
 }
 
-fail() {
-	printf $col_red" [✖]"$col_reset" %s \n" "$1"
+print_warning() {
+	printf "%s %s \n" "$( print_in_yellow '[!]')" "$1"
 }
 
-result() {
+print_fail() {
+	printf "%s %s - %s\n" "$( print_in_red '[✖]')" "$1" "$2"
+}
+
+print_result() {
 	if [ "$1" -eq 0 ]; then
-		success "$2"
+		print_success "$2"
 	else
-		fail "$2"
+		print_fail "$2"
 	fi
 	return "$1"
 }
