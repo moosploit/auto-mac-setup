@@ -9,12 +9,30 @@
 # -- License:       MIT License | http://www.opensource.org/licenses/MIT
 # ================================================================================
 
+source ./helper/output.sh
+
 check_cmd_exists() {
     command -v "$1" &> /dev/null
 }
 
 ask_for_sudo() {
+    sudo -v
 
+    # https://gist.github.com/cowboy/3118588
+    while true; do
+        sudo -n true
+        sleep 60
+        kill -0 "$$" || exit
+    done &> /dev/null &
+}
+
+ask_for_confirmation() {
+    print_question "$1 (y|N) "
+    read -r -p "          "
+}
+
+answer_is_yes() {
+    [[ "$REPLY" =~(y|Y) ]] && return 0 || return 1
 }
 
 get_os() {
