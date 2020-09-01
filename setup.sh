@@ -9,6 +9,5 @@
 # -- License:       MIT License | http://www.opensource.org/licenses/MIT
 # ================================================================================
 
+source ./helper/utils.sh
 source ./helper/output.sh
-
-cat hello
