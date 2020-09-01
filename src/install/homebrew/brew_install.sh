@@ -8,3 +8,17 @@
 # -- Company:       moosploit.com
 # -- License:       MIT License | http://www.opensource.org/licenses/MIT
 # ================================================================================
+
+# Check whether the script is called directly or via source
+$(return &> /dev/null)
+
+if [ "$?" -ne "0" ]; then
+    source ../../../helper/output.sh
+    source ../../../helper/utils.sh
+fi
+
+main() {
+    print_success "yeah"
+}
+
+main
