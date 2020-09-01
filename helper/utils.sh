@@ -13,6 +13,10 @@ check_cmd_exists() {
     command -v "$1" &> /dev/null
 }
 
+ask_for_sudo() {
+
+}
+
 get_os() {
     local os=""
     local kernelName="$(uname -s)"
