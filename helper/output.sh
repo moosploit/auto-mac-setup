@@ -9,8 +9,6 @@
 # -- License:       MIT License | http://www.opensource.org/licenses/MIT
 # ================================================================================
 
-source ./helper/spinner.sh
-
 # Print color functions
 print_in_color() {
     printf "%b" "$(tput setaf "$1" 2> /dev/null)" "$2" "$(tput sgr0 2> /dev/null)"
@@ -49,7 +47,7 @@ print_in_white() {
 
 # Print specific output functions
 print_ok() {
-	printf "%s %s \n" "$( print_in_green '[OK]')" "$1"
+	printf "%s %s \n" "$( print_in_green '  [OK]  ')" "$1"
 }
 
 print_cow() {
