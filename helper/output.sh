@@ -79,7 +79,7 @@ print_cow() {
 }
 
 print_cat() {
-	printf "%s %s \n" "$( print_in_green '(,,,)=(^.^)=(,,,)')" "$1"
+	printf "\n %s %s \n" "$( print_in_green '=(^.^)=')" "$1"
 }
 
 print_action() {
