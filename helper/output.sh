@@ -97,7 +97,7 @@ print_warning() {
 }
 
 print_fail() {
-	printf "%s %s - %s\n" "$( print_in_red '   [✖]   ')" "$1" "$2"
+	printf "%s %s\n" "$( print_in_red '   [✖]   ')" "$1"
 }
 
 print_ok() {
