@@ -46,10 +46,6 @@ print_in_white() {
 }
 
 # Print specific output functions
-print_ok() {
-	printf "%s %s \n" "$( print_in_green '  [OK]  ')" "$1"
-}
-
 print_cow() {
 	printf "\n"
 	printf "              (      ) \n"
@@ -77,39 +73,43 @@ print_cow() {
 }
 
 print_cat() {
-	printf "\n %s  %s \n" "$( print_in_green '=(^.^)=')" "$1"
+	printf "\n%s %s\n" "$( print_in_green ' =(^.^)=') " "$1"
 }
 
 print_action() {
-	printf "%s  %s \n" "$( print_in_magenta '    ❯   ')" "$1"
+	printf "%s %s\n" "$( print_in_magenta '    ❯    ')" "$1"
 }
 
 print_run() {
-	printf "%s  %s \n" "$( print_in_magenta '==❯')" "$1"
-}
-
-print_warn() {
-	printf "%s  %s \n" "$( print_in_yellow '[warning]')" "$1"
-}
-
-print_error() {
-	printf "%s  %s \n" "$( print_in_red '[error]')" "$1"
+	printf "%s %s\n" "$( print_in_magenta '   ==❯   ')" "$1"
 }
 
 print_question() {
-	printf "%s  %s \n" "$( print_in_yellow '   [?]  ')" "$1"
+	printf "%s %s\n" "$( print_in_blue '   [?]   ')" "$1"
 }
 
 print_success() {
-	printf "%s  %s \n" "$( print_in_green '   [✔]  ')" "$1"
+	printf "%s %s\n" "$( print_in_green '   [✔]   ')" "$1"
 }
 
 print_warning() {
-	printf "%s  %s \n" "$( print_in_yellow '   [!]  ')" "$1"
+	printf "%s %s\n" "$( print_in_yellow '   [!]   ')" "$1"
 }
 
 print_fail() {
-	printf "%s  %s - %s\n" "$( print_in_red '   [✖]  ')" "$1" "$2"
+	printf "%s %s - %s\n" "$( print_in_red '   [✖]   ')" "$1" "$2"
+}
+
+print_ok() {
+	printf "%s %s\n" "$( print_in_green '[OK]     ')" "$1"
+}
+
+print_warn() {
+	printf "%s %s\n" "$( print_in_yellow '[warning]')" "$1"
+}
+
+print_error() {
+	printf "%s %s\n" "$( print_in_red '[error]  ')" "$1"
 }
 
 print_result() {
@@ -119,4 +119,19 @@ print_result() {
 		print_fail "$2"
 	fi
 	return "$1"
+}
+
+test_all () {
+	print_cat "This is a output test string" 
+	print_action "This is a output test string"
+	print_run "This is a output test string"
+	print_question "This is a output test string"
+	print_success "This is a output test string"
+	print_warning "This is a output test string"
+	print_fail "This is a output test string" "ErrorCode shows here"
+
+	print_ok "This is a output test string"
+	print_warn "This is a output test string"
+	print_error "This is a output test string"
+	print_result $? "This is a output test string"
 }
