@@ -21,6 +21,7 @@ if ! answer_is_yes; then
 fi
 
 print_cat "Purrrrrrfect! - Let us begin."
-ask_for_sudo
 
 source ./src/install/xcode/xcode_install.sh
+
+source ./src/install/homebrew/brew_install.sh
