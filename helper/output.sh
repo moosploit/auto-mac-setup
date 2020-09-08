@@ -11,38 +11,38 @@
 
 # Print color functions
 print_in_color() {
-    printf "%b" "$(tput setaf "$1" 2> /dev/null)" "$2" "$(tput sgr0 2> /dev/null)"
+	printf "%b" "$(tput setaf "$1" 2>/dev/null)" "$2" "$(tput sgr0 2>/dev/null)"
 }
 
 print_in_black() {
-    print_in_color 0 "$1"
+	print_in_color 0 "$1"
 }
 
 print_in_red() {
-    print_in_color 1 "$1"
+	print_in_color 1 "$1"
 }
 
 print_in_green() {
-    print_in_color 2 "$1"
+	print_in_color 2 "$1"
 }
 
 print_in_yellow() {
-    print_in_color 3 "$1"
+	print_in_color 3 "$1"
 }
 
 print_in_blue() {
-    print_in_color 4 "$1"
+	print_in_color 4 "$1"
 }
 
 print_in_magenta() {
-    print_in_color 5 "$1"
+	print_in_color 5 "$1"
 }
 
 print_in_cyan() {
-    print_in_color 6 "$1"
+	print_in_color 6 "$1"
 }
 print_in_white() {
-    print_in_color 7 "$1"
+	print_in_color 7 "$1"
 }
 
 # Print specific output functions
@@ -73,56 +73,56 @@ print_cow() {
 }
 
 print_cat() {
-	printf "\n%s %s\n" "$( print_in_green ' =(^.^)=') " "$1"
+	printf "\n%s %s\n" "$(print_in_green ' =(^.^)= ')" "$1"
 }
 
 print_action() {
-	printf "%s %s\n" "$( print_in_magenta '    ❯    ')" "$1"
+	printf "%s %s\n" "$(print_in_magenta '    ❯    ')" "$1"
 }
 
 print_run() {
-	printf "%s %s\n" "$( print_in_magenta '   ==❯   ')" "$1"
+	printf "%s %s\n" "$(print_in_magenta '   ==❯   ')" "$1"
 }
 
 print_question() {
-	printf "%s %s\n" "$( print_in_blue '   [?]   ')" "$1"
+	printf "%s %s\n" "$(print_in_blue '   [?]   ')" "$1"
 }
 
 print_success() {
-	printf "%s %s\n" "$( print_in_green '   [✔]   ')" "$1"
+	printf "%s %s\n" "$(print_in_green '   [✔]   ')" "$1"
 }
 
 print_warning() {
-	printf "%s %s\n" "$( print_in_yellow '   [!]   ')" "$1"
+	printf "%s %s\n" "$(print_in_yellow '   [!]   ')" "$1"
 }
 
 print_fail() {
-	printf "%s %s\n" "$( print_in_red '   [✖]   ')" "$1"
+	printf "%s %s\n" "$(print_in_red '   [✖]   ')" "$1"
 }
 
 print_ok() {
-	printf "%s %s\n" "$( print_in_green '[OK]     ')" "$1"
+	printf "%s %s\n" "$(print_in_green '[OK]     ')" "$1"
 }
 
 print_warn() {
-	printf "%s %s\n" "$( print_in_yellow '[warning]')" "$1"
+	printf "%s %s\n" "$(print_in_yellow '[warning]')" "$1"
 }
 
 print_error() {
-	printf "%s %s\n" "$( print_in_red '[error]  ')" "$1"
+	printf "%s %s %s\n" "$(print_in_red '[error]  ')" "$1" "$2"
 }
 
 print_result() {
 	if [ "$1" -eq 0 ]; then
 		print_success "$2"
 	else
-		print_fail "$2"
+		print_fail "$2" "$3"
 	fi
 	return "$1"
 }
 
-test_all () {
-	print_cat "This is a output test string" 
+test_all() {
+	print_cat "This is a output test string"
 	print_action "This is a output test string"
 	print_run "This is a output test string"
 	print_question "This is a output test string"
