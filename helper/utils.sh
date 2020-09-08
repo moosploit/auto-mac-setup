@@ -116,6 +116,7 @@ brew_install() {
 				print_success "'$FORMULA_NAME' is already installed!"
 				return 2
 			fi
+			print_run "Installing '$FORMULA_NAME'!"
 			brew cask install $FORMULA &>/dev/null
 			print_result "$?" "Installation of '$FORMULA_NAME'"
 			;;

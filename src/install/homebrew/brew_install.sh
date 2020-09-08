@@ -55,15 +55,15 @@ __init__() {
 	print_cat "Before we install a lot of cool stuff we have to update 'Homebrew'!"
 	brew_update
 
-	print_cat "Upgrade all installed and outdated 'Homebrew' formulas!"
+	print_cat "Homebrew | Upgrade all installed and outdated formulas!"
 	brew_upgrade
 
-	print_cat "Tap all necessary additional 'Homebrew' repositories!"
+	print_cat "Homebrew | Tap all necessary additional repositories!"
 	brew_tap "homebrew/cask"
 	brew_tap "homebrew/cask-drivers"
 	brew_tap "homebrew/cask-fonts"
 
-	print_cat "Now we are ready to install some cool CLI tools via 'Homebrew'!"
+	print_cat "Homebrew | Install some cool 'CLI Tools'!"
 	brew_install "mas | Mac App Store command-line interface" "mas"
 	brew_install "wget | Internet file retriever" "wget"
 	brew_install "tree | Display directories as trees" "tree"
@@ -72,7 +72,7 @@ __init__() {
 	brew_install "tldr | Simplified and community-driven man pages" "tldr"
 	# brew_install "ssllabs-scan | Command-line client for the SSL Labs APIs" "ssllabs-scan"
 
-	print_cat "Now we will install some cool fonts via 'Homebrew'!"
+	print_cat "Homebrew | Install some cool 'Fonts'!"
 	brew_install "Awesome Terminal Fonts" "font-awesome-terminal-fonts" "cask"
 	brew_install "Fira Code" "font-fira-code" "cask"
 	brew_install "Fira Code Nerd Font" "font-fira-code-nerd-font" "cask"
