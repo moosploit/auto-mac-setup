@@ -25,3 +25,5 @@ print_cat "Purrrrrrfect! - Let us begin."
 source ./src/install/xcode/xcode_install.sh
 
 source ./src/install/homebrew/brew_install.sh
+
+source ./src/install/homebrew/mas_install.sh
