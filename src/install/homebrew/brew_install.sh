@@ -65,6 +65,7 @@ __init__() {
 
 	print_cat "Homebrew | Install some cool 'CLI Tools'!"
 	brew_install "mas | Mac App Store command-line interface" "mas"
+	brew_install "glances | Alternative to top/htop" "glances"
 	brew_install "wget | Internet file retriever" "wget"
 	brew_install "tree | Displays directories as trees" "tree"
 	brew_install "python3 | Programming language" "python"
@@ -91,7 +92,63 @@ __init__() {
 	brew_install "Source Code Pro" "font-source-code-pro" "cask"
 	brew_install "Source Code Pro for Powerline" "font-source-code-pro-for-powerline" "cask"
 
-	# brew_install "Mozilla Firefox" "firefox" "cask"
+	print_cat "Homebrew | Install some usefull 'Tools'!"
+	brew_install "Keka" "keka" "cask"
+	brew_install "ForkLift" "forklift" "cask"
+	brew_install "Alfred" "alfred" "cask"
+	brew_install "AppCleaner" "appcleaner" "cask"
+	brew_install "CheatSheet" "cheatsheet" "cask"
+	brew_install "iStat Menus" "istat-menus" "cask"
+	brew_install "BetterTouchTool" "bettertouchtool" "cask"
+	brew_install "Logitech Options" "logitech-options" "cask"
+	brew_install "Monitor Control" "monitorcontrol" "cask"
+	brew_install "Steelseries Excatmouse Tool" "steelseries-exactmouse-tool" "cask"
+
+	print_cat "Homebrew | Install some cool 'Multimedia' applications!"
+	brew_install "VLC Media Player" "vlc" "cask"
+	brew_install "Plex Client" "plex" "cask"
+	brew_install "Spotify" "spotify" "cask"
+	brew_install "Handbrake" "handbrake" "cask"
+
+	print_cat "Homebrew | Install some nifty 'Media Editing' applications!"
+	brew_install "Adobe Creative Cloud" "adobe-creative-cloud" "cask"
+
+	print_cat "Homebrew | Install some dusty 'Office' applications!"
+	brew_install "1Password" "1password" "cask"
+	brew_install "TeamViewer" "teamviewer" "cask"
+	brew_install "jDownloader" "jdownloader" "cask"
+	brew_install "MacTeX No Gui" "mactex-no-gui" "cask"
+
+	print_cat "Homebrew | Install some cool 'Development' applications!"
+	brew_install "iTerm2 Terminal Emulator" "iterm2" "cask"
+	brew_install "Visual Studio Code" "visual-studio-code" "cask"
+	brew_install "GitHub Client" "github" "cask"
+	brew_install "CodeKit" "codekit" "cask"
+	brew_install "Insomnia" "insomnia" "cask"
+	brew_install "Sequel Pro" "sequel-pro" "cask"
+	# brew_install "CyberDuck FTP Client" "cyberduck" "cask"
+
+	print_cat "Homebrew | Install some 'Virtualization' applications!"
+	brew_install "VMware Fusion" "vmware-fusion" "cask"
+	brew_install "Oracle VirtualBox" "virtualbox" "cask"
+
+	print_cat "Homebrew | Install some cool 'SocialMedia - Messanger - Blogging' applications!"
+	brew_install "Flume" "flume" "cask"
+	brew_install "Signal" "signal" "cask"
+	brew_install "WhatsApp" "whatsapp" "cask"
+	brew_install "Telegram" "telegram" "cask"
+	brew_install "Discord" "discord" "cask"
+	brew_install "Wordpress Client" "wordpresscom" "cask"
+
+	print_cat "Homebrew | Install some necessary 'Browser' applications!"
+	brew_install "Firefox" "firefox" "cask"
+	brew_install "Google Chrome" "google-chrome" "cask"
+
+	print_cat "Homebrew | Install some 'Cloud Storage' applications!"
+	brew_install "NextCloud" "nextcloud" "cask"
+
+	print_cat "Homebrew | Install some 'Security' applications!"
+	brew_install "Little Snitch" "little-snitch" "cask"
 }
 
 __init__
