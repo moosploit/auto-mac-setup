@@ -101,7 +101,7 @@ brew_install() {
 
 	# == [[ $CMD not set ]] == /
 	if [[ -z "$CMD" ]]; then
-		# == Check is brew formula already installed == /
+		# == Check if brew formula already installed == /
 		brew list "$FORMULA" &>/dev/null
 		if [[ "$?" -eq 0 ]]; then
 			print_success "Homebrew | Formula $FORMULA_NAME is already installed!"
@@ -116,7 +116,7 @@ brew_install() {
 	else
 		case "$CMD" in
 		cask)
-			# == Check is brew cask formula already installed == /
+			# == Check if brew cask formula already installed == /
 			brew list --cask "$FORMULA" &>/dev/null
 			if [[ "$?" -eq 0 ]]; then
 				print_success "Homebrew | Cask Formula $FORMULA_NAME is already installed!"
@@ -164,8 +164,29 @@ brew_tap() {
 
 # === MacAppStore (MAS) Wrapper Functions === /
 mas_install() {
-	:
+	# mas_install "Numbers" "409203825"
+	declare -r APP_NAME=$(print_in_cyan "$1") # Numbers
+	declare -r APP_ID="$2"                    # 409203825
+
+	# == Check if enough arguments specifies == /
+	if [[ "$#" -lt 2 ]]; then
+		print_fail "There are not enough arguments specified for 'mas_install'! "
+		return 1
+	fi
+
+	# == Check if MAS App already installed == /
+	mas list | grep "$APP_ID" | head -n 1 &>/dev/null
+	if [[ "$?" -eq 0 ]]; then
+		print_success "MAS | Application $APP_NAME is already installed!"
+		return 2
+	fi
+
+	# == Install MAS App == /
+	print_run "MAS | Installing application $APP_NAME!"
+	mas install "$APP_ID" &>/dev/null
+	print_result "$?" "MAS | Installation of application $APP_NAME"
 }
+
 mas_update() {
 	:
 }
