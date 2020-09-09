@@ -52,7 +52,7 @@ __init__() {
 	print_cat "Beacuse we don't like analytics about our behaviours!"
 	opt_out_of_analaytics
 
-	print_cat "Before we install a lot of cool stuff we have to update 'Homebrew'!"
+	print_cat "Before we install a lot of cool stuff we have to update 'Homebrew' first!"
 	brew_update
 
 	print_cat "Homebrew | Upgrade all installed and outdated formulas!"
@@ -66,8 +66,8 @@ __init__() {
 	print_cat "Homebrew | Install some cool 'CLI Tools'!"
 	brew_install "mas | Mac App Store command-line interface" "mas"
 	brew_install "wget | Internet file retriever" "wget"
-	brew_install "tree | Display directories as trees" "tree"
-	brew_install "python3 | Interpreted, interactive, object-oriented programming language" "python"
+	brew_install "tree | Displays directories as trees" "tree"
+	brew_install "python3 | Programming language" "python"
 	brew_install "pipenv | Python dependency management tool" "pipenv"
 	brew_install "tldr | Simplified and community-driven man pages" "tldr"
 	# brew_install "ssllabs-scan | Command-line client for the SSL Labs APIs" "ssllabs-scan"

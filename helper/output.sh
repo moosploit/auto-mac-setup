@@ -73,7 +73,7 @@ print_cow() {
 }
 
 print_cat() {
-	printf "\n%s %s\n" "$(print_in_green ' =(^.^)= ')" "$1"
+	printf "$(print_in_cyan '\n%s %s\n')" " =(^.^)= " "$1"
 }
 
 print_action() {

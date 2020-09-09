@@ -90,64 +90,74 @@ get_os_version() {
 # === Homebrew Wrapper Functions === /
 brew_install() {
 	# brew_install "Google Chrome" "google-chrome" "cask"
-	declare -r FORMULA_NAME="$1" # Google Chrome
-	declare -r FORMULA="$2"      # google-chrome
-	declare -r CMD="$3"          # cask
+	declare -r FORMULA_NAME=$(print_in_cyan "$1") # Google Chrome
+	declare -r FORMULA="$2"                       # google-chrome
+	declare -r CMD="$3"                           # cask
 
 	if [[ "$#" -lt 2 ]]; then
 		print_fail "There are not enough arguments specified for 'brew_install'! "
 		return 1
 	fi
 
-	if [[ -z "$CMD" ]]; then # == [[ $CMD not set ]] == /
-		brew list $FORMULA &>/dev/null
+	# == [[ $CMD not set ]] == /
+	if [[ -z "$CMD" ]]; then
+		# == Check is brew formula already installed == /
+		brew list "$FORMULA" &>/dev/null
 		if [[ "$?" -eq 0 ]]; then
-			print_success "$FORMULA_NAME is already installed!"
+			print_success "Homebrew | Formula $FORMULA_NAME is already installed!"
 			return 2
 		fi
-		print_run "Installing '$FORMULA_NAME'!"
-		brew install $FORMULA &>/dev/null
-		print_result "$?" "Installation of '$FORMULA_NAME'"
-	else # == [[ $CMD is set ]] == /
+
+		# == Install brew formula == /
+		print_run "Homebrew | Installing formula $FORMULA_NAME!"
+		brew install "$FORMULA" &>/dev/null
+		print_result "$?" "Homebrew | Installation of formula $FORMULA_NAME"
+	# == [[ $CMD is set ]] == /
+	else
 		case "$CMD" in
 		cask)
+			# == Check is brew cask formula already installed == /
 			brew list --cask "$FORMULA" &>/dev/null
 			if [[ "$?" -eq 0 ]]; then
-				print_success "'$FORMULA_NAME' is already installed!"
+				print_success "Homebrew | Cask Formula $FORMULA_NAME is already installed!"
 				return 2
 			fi
-			print_run "Installing '$FORMULA_NAME'!"
-			brew cask install $FORMULA &>/dev/null
-			print_result "$?" "Installation of '$FORMULA_NAME'"
+			# == Install brew cask formula == /
+			print_run "Homebrew | Installing cask formula $FORMULA_NAME!"
+			brew cask install "$FORMULA" &>/dev/null
+			print_result "$?" "Homebrew | Installation of cask formula $FORMULA_NAME"
 			;;
 		*)
-			print_fail "Installation of '$FORMULA_NAME' failed, because command '$CMD' not defined!"
+			print_fail "Homebrew | Installation of formula $FORMULA_NAME failed, because command '$CMD' is not defined!"
+			return 99
 			;;
 		esac
 	fi
 }
 
 brew_update() {
-	print_run "Updating 'Homebrew'!"
+	print_run "Homebrew | Updating formulas!"
 
 	brew update &>/dev/null
-	print_result "$?" "'Homebrew' update."
+	print_result "$?" "Homebrew | Formulas update."
 }
 
 brew_upgrade() {
-	print_run "Upgrading all installed and outdated 'Homebrew' formulas!"
+	print_run "Homebrew | Upgrading all installed and outdated formulas!"
 
 	brew upgrade &>/dev/null
-	print_result "$?" "Upgrade of installed and outdated 'Homebrew' formulas!"
+	print_result "$?" "Homebrew | Upgrade of installed and outdated formulas!"
 }
 
 brew_tap() {
+	declare -r REPO=$(print_in_cyan "$1")
+
 	if ! brew tap | grep "$1" -i &>/dev/null; then
-		print_run "'Homebrew' is tapping '$1'!"
+		print_run "Homebrew | is tapping repository $REPO!"
 		brew tap "$1" &>/dev/null
-		print_result "$?" "Tapping of $1"
+		print_result "$?" "Homebrew | Tapping of repository $REPO"
 	else
-		print_success "'$1' is already tapped into 'Homebrew'"
+		print_success "Homebrew | the repository $REPO is already tapped."
 	fi
 
 }
