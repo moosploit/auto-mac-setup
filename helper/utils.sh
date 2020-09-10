@@ -16,7 +16,7 @@ if [ "$?" -ne "0" ]; then
 	source ./output.sh
 fi
 
-# === Handling Questions Functions === /
+# === Check Functions === /
 check_cmd_exists() {
 	command -v "$1" &>/dev/null
 }
@@ -25,7 +25,7 @@ check_already_sudo() {
 	sudo -n true 2>/dev/null
 }
 
-# === Handling Questions === /
+# === Question Handling Functions === /
 ask_for_sudo() {
 	if ! check_already_sudo; then
 		print_cat "May i have your password please?"
@@ -85,6 +85,11 @@ get_os_version() {
 	fi
 
 	printf "%s" "$version"
+}
+
+# === User Details Functions === /
+get_full_username() {
+	osascript -e "long user name of (system info)"
 }
 
 # === Homebrew Wrapper Functions === /
