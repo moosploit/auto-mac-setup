@@ -87,6 +87,18 @@ get_os_version() {
 	printf "%s" "$version"
 }
 
+kill_app() {
+	declare -r APPS="$@"
+
+	for app in $APPS; do
+		app_name=$(print_in_cyan $app)
+
+		print_run "Killing the application $app_name!"
+		killall "$app" &>/dev/null
+		print_result "$?" "Application $app_name killed!"
+	done
+}
+
 # === User Details Functions === /
 get_full_username() {
 	osascript -e "long user name of (system info)"
@@ -194,4 +206,23 @@ mas_install() {
 
 mas_update() {
 	:
+}
+
+# === macOS Defaults Wrapper Functions === /
+defaults_write() {
+	declare -r NAME=$(print_in_cyan "$1")
+	declare -r DOMAIN="$2"
+	declare -r KEY=$(print_in_cyan "$3")
+	declare -r TYPE="$4"
+	declare -r VALUE="$5"
+
+	# == Check if enough arguments specifies == /
+	if [[ "$#" -lt 5 ]]; then
+		print_fail "There are not enough arguments specified for 'defaults_write'! "
+		return 1
+	fi
+
+	print_run "Defaults | Setting up $KEY of $NAME!"
+	defaults write $DOMAIN $KEY $TYPE $VALUE
+	print_result "$?" "Defaults | Setup $KEY of $NAME"
 }
