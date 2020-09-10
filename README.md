@@ -1,8 +1,8 @@
 # Auto Mac Setup Script by moosploit
 
-![GitHub](https://img.shields.io/github/license/moosploit/auto-mac-setup?style=for-the-badge)
+<!-- ![GitHub](https://img.shields.io/github/license/moosploit/auto-mac-setup?style=for-the-badge) -->
 
-This script will setup automatic your fresh installed Apple Mac with ease.
+This script will automatically setup your clean installed or brand-new Apple Mac with ease.
 
 ## Installation
 
