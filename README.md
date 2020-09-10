@@ -1,4 +1,4 @@
-# Auto Mac Setup Script
+# Auto Mac Setup Script by moosploit
 
 This script will setup automatic your fresh installed Apple Mac with ease.
 
