@@ -8,13 +8,15 @@ This script will automatically setup your clean installed or brand-new Apple Mac
 
 ### Disclaimer
 
-Before you procceed keep in mind, that this script will override your current setup and you may loose some of your own configurations.
-Please do not use this script blindly unless you know what each functions entails. Best way would be to fork the repository and customize the script for your personal needs.
-Use it at your own risk!
+Before you procceed keep in mind, that this script will override your current setup and you may loose some of your own configurations. Please do not use this script blindly unless you know what each functions entails.
+
+Best way would be to fork the repository and customize the script for your personal needs.
+
+**Use this script at your own risk!**
 
 ### Dependecies
 
-This script do not need any kind of dependencies. It is designed for use on a brand-new machine or after a clean install of your Apple Mac.
+This script do not have any dependencies, because it is designed for use on a brand-new or clean installed Apple Mac.
 
 ### Setup
 
