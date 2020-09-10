@@ -17,7 +17,7 @@ Best way would be to fork the repository and customize the script for your perso
 
 ### Dependecies
 
-This script do not have any dependencies, because it is designed for use on a brand-new or clean installed Apple Mac.
+This script do not have any dependencies, because it is designed for use on a brand-new or clean-installed Apple Mac.
 
 ### Setup
 
