@@ -12,7 +12,7 @@
 source ./helper/utils.sh
 source ./helper/output.sh
 
-print_cat "Meow there! I will help you to auto configure your new Apple Mac."
+print_cat "Meow $(get_full_username)!" "I will help you to auto configure your new Apple Mac."
 ask_for_confirmation "Shall we procced?"
 
 if ! answer_is_yes; then
