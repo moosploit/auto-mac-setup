@@ -4,7 +4,7 @@
 
 ![ContainCats](<https://img.shields.io/badge/%3D(%5E.%5E)%3D%20-May%20contain%20traces%20of%20cats-e59400?style=flat-square>)
 
-This script will automatically setup your clean installed or brand-new Apple Mac with ease.
+This script will automatically setup your clean-installed or brand-new Apple Mac with ease.
 
 ## Installation
 
