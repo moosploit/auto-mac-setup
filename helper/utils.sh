@@ -43,13 +43,18 @@ ask_for_sudo() {
 	fi
 }
 
+ask_for_input() {
+	print_question "$1"
+	read -r -p "          "
+}
+
 ask_for_confirmation() {
 	print_question "$1 (y|N) "
 	read -r -p "          "
 }
 
 answer_is_yes() {
-	[[ "$REPLY" =~ (y|Y) ]] && return 0 || return 1
+	[[ "$REPLY" =~ ^([yY][eE][sS]|[yY])$ ]] && return 0 || return 1
 }
 
 # === Operating System Functions === /
@@ -225,4 +230,39 @@ defaults_write() {
 	print_run "Defaults | Setting up $KEY of $NAME!"
 	defaults write $DOMAIN $KEY $TYPE $VALUE
 	print_result "$?" "Defaults | Setup $KEY of $NAME"
+}
+
+# === macOS Scutil Wrapper Functions === /
+scutil_get() {
+	declare -r PREF=$1
+
+	# == Check if enough arguments specifies == /
+	if [[ "$#" -lt 1 ]]; then
+		print_fail "There are not enough arguments specified for 'scutil_get'! "
+		return 1
+	fi
+
+	sudo scutil --get $PREF 2>/dev/null
+}
+
+scutil_set() {
+	declare -r PREF=$1
+	declare -r PREF_NAME=$(print_in_cyan "$PREF")
+	declare -r VALUE=$2
+	declare -r VALUE_NAME=$(print_in_cyan "$VALUE")
+
+	# == Check if enough arguments specifies == /
+	if [[ "$#" -lt 2 ]]; then
+		print_fail "There are not enough arguments specified for 'scutil_set'! "
+		return 1
+	fi
+
+	if [[ $(scutil_get "$PREF") == "$VALUE" ]]; then
+		print_success "Scutil | Setting $PREF_NAME is already set to $VALUE_NAME!"
+		return 2
+	fi
+
+	print_run "Scutil | Setting $PREF_NAME to $VALUE_NAME!"
+	sudo scutil --set $PREF $VALUE &>/dev/null
+	print_result "$?" "Scutil | Set $PREF_NAME to $VALUE_NAME!"
 }
