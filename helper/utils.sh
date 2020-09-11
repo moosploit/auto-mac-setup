@@ -190,7 +190,7 @@ mas_install() {
 	declare -r APP_NAME=$(print_in_cyan "$1") # Numbers
 	declare -r APP_ID="$2"                    # 409203825
 
-	# == Check if enough arguments specifies == /
+	# == Check if enough arguments specified == /
 	if [[ "$#" -lt 2 ]]; then
 		print_fail "There are not enough arguments specified for 'mas_install'! "
 		return 1
@@ -215,28 +215,43 @@ mas_update() {
 
 # === macOS Defaults Wrapper Functions === /
 defaults_write() {
-	declare -r NAME=$(print_in_cyan "$1")
+	declare -r DOMAIN_NAME=$(print_in_cyan "$1")
 	declare -r DOMAIN="$2"
-	declare -r KEY=$(print_in_cyan "$3")
+	declare -r KEY="$3"
+	declare -r KEY_NAME=$(print_in_cyan "$KEY")
 	declare -r TYPE="$4"
 	declare -r VALUE="$5"
+	declare -r VALUE_NAME=$(print_in_cyan "$VALUE")
 
-	# == Check if enough arguments specifies == /
+	# == Check if enough arguments specified == /
 	if [[ "$#" -lt 5 ]]; then
 		print_fail "There are not enough arguments specified for 'defaults_write'! "
 		return 1
 	fi
 
-	print_run "Defaults | Setting up $KEY of $NAME!"
-	defaults write $DOMAIN $KEY $TYPE $VALUE
-	print_result "$?" "Defaults | Setup $KEY of $NAME"
+	# == If one of the allowed types was sent
+	if [[ "$TYPE" =~ ^(string|(bool|boolean)|(int|integer)|float)$ ]]; then
+
+		# == Checks whether the key exists or the sent value is already set
+		if [[ $(defaults read "$DOMAIN" "$KEY" 2>/dev/null) == "$VALUE" ]]; then
+			print_success "Defaults | Setting $KEY_NAME is already set to $VALUE_NAME for $DOMAIN_NAME!"
+		else # == If the Key does not exist or do have another value
+			print_run "Defaults | Will set $KEY_NAME to $VALUE_NAME for $DOMAIN_NAME!"
+			sudo defaults write "$DOMAIN" "$KEY" "-$TYPE" "$VALUE"
+			print_result "$?" "Defaults | Set up $KEY_NAME to $VALUE_NAME for $DOMAIN_NAME!"
+		fi
+
+	else # == If another type was sent
+		print_error "Defaults | Type '$TYPE' is in function 'defaults_write' not allowed!"
+		return 99
+	fi
 }
 
 # === macOS Scutil Wrapper Functions === /
 scutil_get() {
 	declare -r PREF=$1
 
-	# == Check if enough arguments specifies == /
+	# == Check if enough arguments specified == /
 	if [[ "$#" -lt 1 ]]; then
 		print_fail "There are not enough arguments specified for 'scutil_get'! "
 		return 1
@@ -251,7 +266,7 @@ scutil_set() {
 	declare -r VALUE=$2
 	declare -r VALUE_NAME=$(print_in_cyan "$VALUE")
 
-	# == Check if enough arguments specifies == /
+	# == Check if enough arguments specified == /
 	if [[ "$#" -lt 2 ]]; then
 		print_fail "There are not enough arguments specified for 'scutil_set'! "
 		return 1
