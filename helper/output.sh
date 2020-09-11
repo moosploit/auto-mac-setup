@@ -73,7 +73,11 @@ print_cow() {
 }
 
 print_cat() {
-	printf "$(print_in_cyan '\n%s %s %b\n')" " =(^.^)= " "$1" "\n          $2"
+	if [[ -n "$2" ]]; then
+		printf "$(print_in_cyan '\n%s %s %b\n')" " =(^.^)= " "$1" "\n          $2"
+	else
+		printf "$(print_in_cyan '\n%s %s\n')" " =(^.^)= " "$1"
+	fi
 }
 
 print_action() {
