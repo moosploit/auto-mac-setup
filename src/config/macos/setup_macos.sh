@@ -10,9 +10,7 @@
 # ================================================================================
 
 # Check whether the script is called directly or via source
-$(return &>/dev/null)
-
-if [ "$?" -ne "0" ]; then
+if [[ $(basename ${0}) == $(basename ${BASH_SOURCE}) ]]; then
 	source ../../../helper/output.sh
 	source ../../../helper/utils.sh
 fi
@@ -100,6 +98,8 @@ apps_in_dock_setup() {
 	wipe_apps_from_dock "left"
 	wipe_apps_from_dock "right"
 
+	kill_app Dock
+
 	add_app_to_dock "left" "ForkLift"
 	add_app_to_dock "left" "iTerm"
 	add_app_to_dock "left" "Spacer"
@@ -156,13 +156,13 @@ __init__() {
 	# == Close all System Preference panes to prevent them to overriding our settings
 	osascript -e 'tell application "System Preferences" to quit'
 
-	print_cat "First we will set up your computer name!"
+	print_cat "Setting up your computer name!"
 	computer_name_setup
 
-	print_cat "We are setting up your dock now!"
+	print_cat "Setting up your dock!"
 	dock_setup
 
-	print_cat "Setup applications inside your dock!"
+	print_cat "Setting up the applications inside your dock!"
 	apps_in_dock_setup
 
 }
