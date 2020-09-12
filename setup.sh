@@ -29,7 +29,7 @@ source ./src/install/xcode/xcode_install.sh
 source ./src/install/homebrew/brew_install.sh
 
 # === Install Applications via Mac App Store === /
-source ./src/install/homebrew/mas_install.sh
+source ./src/install/mas/mas_install.sh
 
 # === Configure macOS === /
 source ./src/config/macos/setup_macos.sh
