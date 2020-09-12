@@ -78,7 +78,7 @@ dock_setup() {
 	defaults_write "Apple Dock" "com.apple.dock" "show-process-indicators" "bool" "true"
 
 	# == System Preferences > Dock > Show recent applications in Dock [true|false] ==/
-	defaults_write "Apple Dock" "com.apple.dock" "show-recents" "bool" "true"
+	defaults_write "Apple Dock" "com.apple.dock" "show-recents" "bool" "false"
 
 	# == System Preferences > Mission Control > Group windows by application [true|false] ==/
 	defaults_write "Apple Dock" "com.apple.dock" "expose-group-apps" "bool" "true"
@@ -86,98 +86,67 @@ dock_setup() {
 	# == System Preferences > Mission Control > Automatically rearrange Spaces based on most recent use [true|false] ==/
 	defaults_write "Apple Dock" "com.apple.dock" "mru-spaces" "bool" "false"
 
+	kill_app Dock
+}
+
+apps_in_dock_setup() {
+
 	ask_for_confirmation "May I rearrange your apps inside your dock?"
-	if answer_is_yes; then
-		# == Wipe all application icons from the dock == /
-		defaults write com.apple.dock persistent-apps -array
-		defaults write com.apple.dock persistent-others -array
-
-		# == Add application Forklift to the dock == /
-		defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/ForkLift.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
-		# == Add application iTerm2 to the dock == /
-		defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/iTerm.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
-
-		# == Add a spacer to the left side of the Dock (where the applications are) == /
-		defaults write com.apple.dock persistent-apps -array-add '{tile-data={}; tile-type="spacer-tile";}'
-
-		# == Add application Firefox to the dock == /
-		defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/Firefox.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
-		# == Add application Google Chrome to the dock == /
-		defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/Google Chrome.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
-
-		# == Add a spacer to the left side of the Dock (where the applications are) == /
-		defaults write com.apple.dock persistent-apps -array-add '{tile-data={}; tile-type="spacer-tile";}'
-
-		# == Add application Visual Studio Code to the dock == /
-		defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/Visual Studio Code.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
-		# == Add application Sequel Pro to the dock == /
-		defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/Sequel Pro.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
-
-		# == Add a spacer to the left side of the Dock (where the applications are) == /
-		defaults write com.apple.dock persistent-apps -array-add '{tile-data={}; tile-type="spacer-tile";}'
-
-		# == Add application Adobe Lightroom Classic to the dock == /
-		defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/Adobe Lightroom Classic/Adobe Lightroom Classic.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
-		# == Add application Adobe Photoshop 2020 to the dock == /
-		defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/Adobe Photoshop 2020/Adobe Photoshop 2020.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
-		# == Add application Affinity Photo to the dock == /
-		defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/Affinity Photo.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
-		# == Add application Affinity Designer to the dock == /
-		defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/Affinity Designer.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
-
-		# == Add a spacer to the left side of the Dock (where the applications are) == /
-		defaults write com.apple.dock persistent-apps -array-add '{tile-data={}; tile-type="spacer-tile";}'
-
-		# == Add application Spotify to the dock == /
-		defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/Spotify.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
-		# == Add application Plex to the dock == /
-		defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/Plex.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
-
-		# == Add a spacer to the left side of the Dock (where the applications are) == /
-		defaults write com.apple.dock persistent-apps -array-add '{tile-data={}; tile-type="spacer-tile";}'
-
-		# == Add application Spark to the dock == /
-		defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/Spark.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
-		# == Add application Messages to the dock == /
-		defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>System/Applications/Messages.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
-		# == Add application WhatsApp to the dock == /
-		defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/WhatsApp.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
-		# == Add application Telegram to the dock == /
-		defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/Telegram.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
-		# == Add application Signal to the dock == /
-		defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/Signal.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
-		# == Add application Discord to the dock == /
-		defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/Discord.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
-
-		# == Add a spacer to the left side of the Dock (where the applications are) == /
-		defaults write com.apple.dock persistent-apps -array-add '{tile-data={}; tile-type="spacer-tile";}'
-
-		# == Add application Todoist to the dock == /
-		defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/Todoist.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
-		# == Add application Pages to the dock == /
-		defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/Pages.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
-		# == Add application Numbers to the dock == /
-		defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/Numbers.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
-		# == Add application PDFScanner to the dock == /
-		defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/PDFScanner.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
-		# == Add application News Explorer to the dock == /
-		defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/News Explorer.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
-
-		# == Add a spacer to the left side of the Dock (where the applications are) == /
-		defaults write com.apple.dock persistent-apps -array-add '{tile-data={}; tile-type="spacer-tile";}'
-
-		# == Add application VMware Fusion to the dock == /
-		defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/VMware Fusion.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
-		# == Add application VirtualBox to the dock == /
-		defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/VirtualBox.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
-
-		# ====================================================================== /
-		# == Add application System Preferences to the dock on the right side == /
-		defaults write com.apple.dock persistent-others -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/System/Applications/System Preferences.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
-
-		# == Add a spacer to the right side of the Dock (where the Trash is) == /
-		# defaults write com.apple.dock persistent-others -array-add '{tile-data={}; tile-type="spacer-tile";}'
+	if ! answer_is_yes; then
+		return 1
 	fi
+
+	# == Wipe all application icons from the dock == /
+	wipe_apps_from_dock "left"
+	wipe_apps_from_dock "right"
+
+	add_app_to_dock "left" "ForkLift"
+	add_app_to_dock "left" "iTerm"
+	add_app_to_dock "left" "Spacer"
+
+	add_app_to_dock "left" "Visual Studio Code"
+	add_app_to_dock "left" "SnippetsLab"
+	add_app_to_dock "left" "Sequel Pro"
+	add_app_to_dock "left" "Insomnia"
+	add_app_to_dock "left" "Spacer"
+
+	add_app_to_dock "left" "Firefox"
+	add_app_to_dock "left" "Google Chrome"
+	add_app_to_dock "left" "Safari"
+	add_app_to_dock "left" "Spacer"
+
+	add_app_to_dock "left" "Adobe Lightroom Classic/Adobe Lightroom Classic"
+	add_app_to_dock "left" "Adobe Photoshop 2020/Adobe Photoshop 2020"
+	add_app_to_dock "left" "Adobe XD/Adobe XD"
+	add_app_to_dock "left" "Affinity Photo"
+	add_app_to_dock "left" "Affinity Designer"
+	add_app_to_dock "left" "Spacer"
+
+	add_app_to_dock "left" "Spotify"
+	add_app_to_dock "left" "Plex"
+	add_app_to_dock "left" "Spacer"
+
+	add_app_to_dock "left" "Spark"
+	add_app_to_dock "left" "Messages" "System"
+	add_app_to_dock "left" "WhatsApp"
+	add_app_to_dock "left" "Telegram"
+	add_app_to_dock "left" "Signal"
+	add_app_to_dock "left" "Discord"
+	add_app_to_dock "left" "Spacer"
+
+	add_app_to_dock "left" "Todoist"
+	# add_app_to_dock "left" "Pages"
+	# add_app_to_dock "left" "Numbers"
+	add_app_to_dock "left" "PDFScanner"
+	add_app_to_dock "left" "News Explorer"
+	add_app_to_dock "left" "Spacer"
+
+	add_app_to_dock "left" "VMware Fusion"
+	add_app_to_dock "left" "VirtualBox"
+
+	add_app_to_dock "right" "System Preferences" "System"
+	add_app_to_dock "right" "AppCleaner"
+
 	kill_app Dock
 }
 
@@ -192,6 +161,9 @@ __init__() {
 
 	print_cat "We are setting up your dock now!"
 	dock_setup
+
+	print_cat "Setup applications inside your dock!"
+	apps_in_dock_setup
 
 }
 
