@@ -96,7 +96,7 @@ kill_app() {
 	declare -r APPS="$@"
 
 	for app in $APPS; do
-		app_name=$(print_in_cyan $app)
+		app_name=$(print_highlight $app)
 
 		print_run "Killing the application $app_name!"
 		killall "$app" &>/dev/null
@@ -112,9 +112,10 @@ get_full_username() {
 # === Homebrew Wrapper Functions === /
 brew_install() {
 	# brew_install "Google Chrome" "google-chrome" "cask"
-	declare -r FORMULA_NAME=$(print_in_cyan "$1") # Google Chrome
-	declare -r FORMULA="$2"                       # google-chrome
-	declare -r CMD="$3"                           # cask
+	declare -r FORMULA_NAME=$(print_highlight "$1") # Google Chrome
+	declare -r FORMULA="$2"                         # google-chrome
+	declare -r CMD="$3"                             # cask
+	declare -r MODULE=$(print_highlight "Brew-Install")
 
 	if [[ "$#" -lt 2 ]]; then
 		print_fail "There are not enough arguments specified for 'brew_install'! "
@@ -126,14 +127,14 @@ brew_install() {
 		# == Check if brew formula already installed == /
 		brew list "$FORMULA" &>/dev/null
 		if [[ "$?" -eq 0 ]]; then
-			print_success "Homebrew | Formula $FORMULA_NAME is already installed!"
+			print_success "$MODULE | Formula $FORMULA_NAME is already installed!"
 			return 2
 		fi
 
 		# == Install brew formula == /
-		print_run "Homebrew | Installing formula $FORMULA_NAME!"
+		print_run "$MODULE | Installing formula $FORMULA_NAME!"
 		brew install "$FORMULA" &>/dev/null
-		print_result "$?" "Homebrew | Installation of formula $FORMULA_NAME"
+		print_result "$?" "$MODULE | Installation of formula $FORMULA_NAME"
 	# == [[ $CMD is set ]] == /
 	else
 		case "$CMD" in
@@ -141,16 +142,16 @@ brew_install() {
 			# == Check if brew cask formula already installed == /
 			brew list --cask "$FORMULA" &>/dev/null
 			if [[ "$?" -eq 0 ]]; then
-				print_success "Homebrew | Cask Formula $FORMULA_NAME is already installed!"
+				print_success "$MODULE | Cask Formula $FORMULA_NAME is already installed!"
 				return 2
 			fi
 			# == Install brew cask formula == /
-			print_run "Homebrew | Installing cask formula $FORMULA_NAME!"
+			print_run "$MODULE | Installing cask formula $FORMULA_NAME!"
 			brew cask install "$FORMULA" &>/dev/null
-			print_result "$?" "Homebrew | Installation of cask formula $FORMULA_NAME"
+			print_result "$?" "$MODULE | Installation of cask formula $FORMULA_NAME"
 			;;
 		*)
-			print_fail "Homebrew | Installation of formula $FORMULA_NAME failed, because command '$CMD' is not defined!"
+			print_fail "$MODULE | Installation of formula $FORMULA_NAME failed, because command '$CMD' is not defined!"
 			return 99
 			;;
 		esac
@@ -158,28 +159,31 @@ brew_install() {
 }
 
 brew_update() {
-	print_run "Homebrew | Updating formulas!"
+	declare -r MODULE=$(print_highlight "Brew-Update")
+	print_run "$MODULE | Updating formulas!"
 
 	brew update &>/dev/null
-	print_result "$?" "Homebrew | Formulas update."
+	print_result "$?" "$MODULE | Formulas update."
 }
 
 brew_upgrade() {
-	print_run "Homebrew | Upgrading all installed and outdated formulas!"
+	declare -r MODULE=$(print_highlight "Brew-Upgrade")
+	print_run "$MODULE | Upgrading all installed and outdated formulas!"
 
 	brew upgrade &>/dev/null
-	print_result "$?" "Homebrew | Upgrade of installed and outdated formulas!"
+	print_result "$?" "$MODULE | Upgrade of installed and outdated formulas!"
 }
 
 brew_tap() {
-	declare -r REPO=$(print_in_cyan "$1")
+	declare -r REPO=$(print_highlight "$1")
+	declare -r MODULE=$(print_highlight "Brew-Tap")
 
 	if ! brew tap | grep "$1" -i &>/dev/null; then
-		print_run "Homebrew | is tapping repository $REPO!"
+		print_run "$MODULE | is tapping repository $REPO!"
 		brew tap "$1" &>/dev/null
-		print_result "$?" "Homebrew | Tapping of repository $REPO"
+		print_result "$?" "$MODULE | Tapping of repository $REPO"
 	else
-		print_success "Homebrew | the repository $REPO is already tapped."
+		print_success "$MODULE | the repository $REPO is already tapped."
 	fi
 
 }
@@ -187,8 +191,9 @@ brew_tap() {
 # === MacAppStore (MAS) Wrapper Functions === /
 mas_install() {
 	# mas_install "Numbers" "409203825"
-	declare -r APP_NAME=$(print_in_cyan "$1") # Numbers
-	declare -r APP_ID="$2"                    # 409203825
+	declare -r APP_NAME=$(print_highlight "$1") # Numbers
+	declare -r APP_ID="$2"                      # 409203825
+	declare -r MODULE=$(print_highlight "MAS-Install")
 
 	# == Check if enough arguments specified == /
 	if [[ "$#" -lt 2 ]]; then
@@ -199,30 +204,30 @@ mas_install() {
 	# == Check if MAS App already installed == /
 	mas list | grep "$APP_ID" | head -n 1 &>/dev/null
 	if [[ "$?" -eq 0 ]]; then
-		print_success "MAS | Application $APP_NAME is already installed!"
+		print_success "$MODULE | Application $APP_NAME is already installed!"
 		return 2
 	fi
 
 	# == Install MAS App == /
-	print_run "MAS | Installing application $APP_NAME!"
+	print_run "$MODULE | Installing application $APP_NAME!"
 	mas install "$APP_ID" &>/dev/null
-	print_result "$?" "MAS | Installation of application $APP_NAME"
+	print_result "$?" "$MODULE | Installation of application $APP_NAME"
 }
 
 mas_update() {
-	:
+	declare -r MODULE=$(print_highlight "MAS-Update")
 }
 
 # === macOS Defaults Wrapper Functions === /
 defaults_write() {
-	declare -r DOMAIN_NAME=$(print_in_cyan "$1")
+	declare -r DOMAIN_NAME=$(print_highlight "$1")
 	declare -r DOMAIN="$2"
 	declare -r KEY="$3"
-	declare -r KEY_NAME=$(print_in_cyan "$KEY")
+	declare -r KEY_NAME=$(print_highlight "$KEY")
 	declare -r TYPE="$4"
 
 	local VALUE="$5"
-	local VALUE_NAME=$(print_in_cyan "$VALUE")
+	local VALUE_NAME=$(print_highlight "$VALUE")
 
 	# == Check if enough arguments specified == /
 	if [[ "$#" -lt 5 ]]; then
@@ -245,7 +250,7 @@ defaults_write() {
 		# == If value is true or 1 == /
 		true | 1)
 			VALUE="true"
-			VALUE_NAME=$(print_in_cyan "$VALUE")
+			VALUE_NAME=$(print_highlight "$VALUE")
 			# == Checks whether the key exists or the sent value is already set
 			if [[ $(defaults read "$DOMAIN" "$KEY" 2>/dev/null) == "1" ]]; then
 				print_success "$DOMAIN_NAME | The setting $KEY_NAME is already set to $VALUE_NAME!"
@@ -255,7 +260,7 @@ defaults_write() {
 		# == If value is false or 0 == /
 		false | 0)
 			VALUE="false"
-			VALUE_NAME=$(print_in_cyan "$VALUE")
+			VALUE_NAME=$(print_highlight "$VALUE")
 			# == Checks whether the key exists or the sent value is already set
 			if [[ $(defaults read "$DOMAIN" "$KEY" 2>/dev/null) == "0" ]]; then
 				print_success "$DOMAIN_NAME | The setting $KEY_NAME is already set to $VALUE_NAME!"
@@ -278,11 +283,11 @@ defaults_write() {
 
 add_app_to_dock() {
 	declare -r DOCK_SIDE="$1"
-	declare -r DOCK_SIDE_NAME=$(print_in_cyan "$DOCK_SIDE")
+	declare -r DOCK_SIDE_NAME=$(print_highlight "$DOCK_SIDE")
 	declare -r APP="$2"
-	declare -r APP_NAME=$(print_in_cyan "$APP")
+	declare -r APP_NAME=$(print_highlight "$APP")
 	declare -r SYSTEM="$3"
-	declare -r MODULE=$(print_in_cyan "Apple Dock")
+	declare -r MODULE=$(print_highlight "Apple Dock")
 
 	local KEY=""
 	local APP_ARRAY=""
@@ -320,12 +325,13 @@ add_app_to_dock() {
 	print_run "$MODULE | Adding application $APP_NAME to the $DOCK_SIDE_NAME!"
 	defaults write com.apple.dock "$KEY" -array-add "$APP_ARRAY"
 	print_result "$?" "$MODULE | Added application $APP_NAME to the $DOCK_SIDE_NAME!"
+	sleep 1
 }
 
 wipe_apps_from_dock() {
 	declare -r DOCK_SIDE="$1"
-	declare -r DOCK_SIDE_NAME=$(print_in_cyan "$DOCK_SIDE")
-	declare -r MODULE=$(print_in_cyan "Apple Dock")
+	declare -r DOCK_SIDE_NAME=$(print_highlight "$DOCK_SIDE")
+	declare -r MODULE=$(print_highlight "Apple Dock")
 
 	local KEY=""
 
@@ -342,6 +348,7 @@ wipe_apps_from_dock() {
 	print_run "$MODULE | Wiping all applications from the $DOCK_SIDE_NAME!"
 	defaults write com.apple.dock "$KEY" -array
 	print_result "$?" "$MODULE | Wiped all applications from the $DOCK_SIDE_NAME!"
+	sleep 1
 }
 
 # === macOS Scutil Wrapper Functions === /
@@ -359,9 +366,10 @@ scutil_get() {
 
 scutil_set() {
 	declare -r PREF=$1
-	declare -r PREF_NAME=$(print_in_cyan "$PREF")
+	declare -r PREF_NAME=$(print_highlight "$PREF")
 	declare -r VALUE=$2
-	declare -r VALUE_NAME=$(print_in_cyan "$VALUE")
+	declare -r VALUE_NAME=$(print_highlight "$VALUE")
+	declare -r MODULE=$(print_highlight "Scutil-Set")
 
 	# == Check if enough arguments specified == /
 	if [[ "$#" -lt 2 ]]; then
@@ -370,11 +378,11 @@ scutil_set() {
 	fi
 
 	if [[ $(scutil_get "$PREF") == "$VALUE" ]]; then
-		print_success "Scutil | Setting $PREF_NAME is already set to $VALUE_NAME!"
+		print_success "$MODULE | Setting $PREF_NAME is already set to $VALUE_NAME!"
 		return 2
 	fi
 
-	print_run "Scutil | Setting $PREF_NAME to $VALUE_NAME!"
+	print_run "$MODULE | Setting $PREF_NAME to $VALUE_NAME!"
 	sudo scutil --set $PREF $VALUE &>/dev/null
-	print_result "$?" "Scutil | Set $PREF_NAME to $VALUE_NAME!"
+	print_result "$?" "$MODULE | Set $PREF_NAME to $VALUE_NAME!"
 }
