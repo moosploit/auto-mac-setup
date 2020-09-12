@@ -220,8 +220,8 @@ defaults_write() {
 	declare -r KEY="$3"
 	declare -r KEY_NAME=$(print_in_cyan "$KEY")
 	declare -r TYPE="$4"
-	declare -r VALUE="$5"
-	declare -r VALUE_NAME=$(print_in_cyan "$VALUE")
+	local VALUE="$5"
+	local VALUE_NAME=$(print_in_cyan "$VALUE")
 
 	# == Check if enough arguments specified == /
 	if [[ "$#" -lt 5 ]]; then
@@ -229,22 +229,50 @@ defaults_write() {
 		return 1
 	fi
 
-	# == If one of the allowed types was sent
-	if [[ "$TYPE" =~ ^(string|(bool|boolean)|(int|integer)|float)$ ]]; then
-
+	case "$TYPE" in
+	# == If type is string, int, integer or float == /
+	string | int | integer | float)
 		# == Checks whether the key exists or the sent value is already set
 		if [[ $(defaults read "$DOMAIN" "$KEY" 2>/dev/null) == "$VALUE" ]]; then
-			print_success "Defaults | Setting $KEY_NAME is already set to $VALUE_NAME for $DOMAIN_NAME!"
-		else # == If the Key does not exist or do have another value
-			print_run "Defaults | Will set $KEY_NAME to $VALUE_NAME for $DOMAIN_NAME!"
-			sudo defaults write "$DOMAIN" "$KEY" "-$TYPE" "$VALUE"
-			print_result "$?" "Defaults | Set up $KEY_NAME to $VALUE_NAME for $DOMAIN_NAME!"
+			print_success "$DOMAIN_NAME | The setting $KEY_NAME is already set to $VALUE_NAME!"
+			return 2
 		fi
-
-	else # == If another type was sent
+		;;
+	# == If type is bool or boolean == /
+	bool | boolean)
+		case "$VALUE" in
+		# == If value is true or 1 == /
+		true | 1)
+			VALUE="true"
+			VALUE_NAME=$(print_in_cyan "$VALUE")
+			# == Checks whether the key exists or the sent value is already set
+			if [[ $(defaults read "$DOMAIN" "$KEY" 2>/dev/null) == "1" ]]; then
+				print_success "$DOMAIN_NAME | The setting $KEY_NAME is already set to $VALUE_NAME!"
+				return 2
+			fi
+			;;
+		# == If value is false or 0 == /
+		false | 0)
+			VALUE="false"
+			VALUE_NAME=$(print_in_cyan "$VALUE")
+			# == Checks whether the key exists or the sent value is already set
+			if [[ $(defaults read "$DOMAIN" "$KEY" 2>/dev/null) == "0" ]]; then
+				print_success "$DOMAIN_NAME | The setting $KEY_NAME is already set to $VALUE_NAME!"
+				return 2
+			fi
+			;;
+		esac
+		;;
+	# == If another type was sent
+	*)
 		print_error "Defaults | Type '$TYPE' is in function 'defaults_write' not allowed!"
 		return 99
-	fi
+		;;
+	esac
+
+	print_run "$DOMAIN_NAME | Will set $KEY_NAME to $VALUE_NAME!"
+	defaults write "$DOMAIN" "$KEY" "-$TYPE" "$VALUE"
+	print_result "$?" "$DOMAIN_NAME | Set up $KEY_NAME to $VALUE_NAME!"
 }
 
 # === macOS Scutil Wrapper Functions === /
