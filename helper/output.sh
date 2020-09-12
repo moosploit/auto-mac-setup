@@ -80,6 +80,10 @@ print_cat() {
 	fi
 }
 
+print_highlight() {
+	print_in_cyan "$1"
+}
+
 print_action() {
 	printf "%s %s\n" "$(print_in_magenta '    ❯    ')" "$1"
 }
@@ -126,16 +130,18 @@ print_result() {
 }
 
 test_all() {
-	print_cat "This is a output test string"
-	print_action "This is a output test string"
-	print_run "This is a output test string"
-	print_question "This is a output test string"
-	print_success "This is a output test string"
-	print_warning "This is a output test string"
-	print_fail "This is a output test string" "ErrorCode shows here"
+	print_cat "This is a output test string - One Line"
+	print_cat "This is a output test string" "Two lines"
+	print_highlight "This is a out test string - highlight"
+	print_action "This is a output test string - action"
+	print_run "This is a output test string - run"
+	print_question "This is a output test string - question"
+	print_success "This is a output test string - success"
+	print_warning "This is a output test string - warning"
+	print_fail "This is a output test string - fail" "ErrorCode shows here"
 
-	print_ok "This is a output test string"
-	print_warn "This is a output test string"
-	print_error "This is a output test string"
-	print_result $? "This is a output test string"
+	print_ok "This is a output test string - ok"
+	print_warn "This is a output test string - warn"
+	print_error "This is a output test string - error"
+	print_result $? "This is a output test string - result"
 }
