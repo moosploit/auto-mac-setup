@@ -102,6 +102,7 @@ kill_app() {
 		killall "$app" &>/dev/null
 		print_result "$?" "Application $app_name killed!"
 	done
+	sleep 2
 }
 
 # === User Details Functions === /
