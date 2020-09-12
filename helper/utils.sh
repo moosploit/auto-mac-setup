@@ -220,6 +220,7 @@ defaults_write() {
 	declare -r KEY="$3"
 	declare -r KEY_NAME=$(print_in_cyan "$KEY")
 	declare -r TYPE="$4"
+
 	local VALUE="$5"
 	local VALUE_NAME=$(print_in_cyan "$VALUE")
 
@@ -273,6 +274,74 @@ defaults_write() {
 	print_run "$DOMAIN_NAME | Will set $KEY_NAME to $VALUE_NAME!"
 	defaults write "$DOMAIN" "$KEY" "-$TYPE" "$VALUE"
 	print_result "$?" "$DOMAIN_NAME | Set up $KEY_NAME to $VALUE_NAME!"
+}
+
+add_app_to_dock() {
+	declare -r DOCK_SIDE="$1"
+	declare -r DOCK_SIDE_NAME=$(print_in_cyan "$DOCK_SIDE")
+	declare -r APP="$2"
+	declare -r APP_NAME=$(print_in_cyan "$APP")
+	declare -r SYSTEM="$3"
+	declare -r MODULE=$(print_in_cyan "Apple Dock")
+
+	local KEY=""
+	local APP_ARRAY=""
+
+	# == Check if enough arguments specified == /
+	if [[ "$#" -lt 2 ]]; then
+		print_fail "There are not enough arguments specified for 'add_app_to_dock'! "
+		return 1
+	fi
+
+	# == On which side of the Dock should the application be placed
+	case $DOCK_SIDE in
+	left)
+		KEY="persistent-apps"
+		;;
+	right)
+		KEY="persistent-others"
+		;;
+	esac
+
+	# == If the application is a spacer
+	if [[ "$APP" =~ ^[sS](pacer|eperator) ]]; then
+		APP_ARRAY="<dict><key>tile-data</key><dict></dict><key>tile-type</key><string>spacer-tile</string></dict>"
+	# == If the application is not a spacer
+	else
+		# == If the application is a apple default application
+		if [[ -n "$SYSTEM" ]]; then
+			APP_ARRAY="<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>System/Applications/$APP.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>"
+		# == If the application is a normal application
+		else
+			APP_ARRAY="<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/$APP.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>"
+		fi
+	fi
+
+	print_run "$MODULE | Adding application $APP_NAME to the $DOCK_SIDE_NAME!"
+	defaults write com.apple.dock "$KEY" -array-add "$APP_ARRAY"
+	print_result "$?" "$MODULE | Added application $APP_NAME to the $DOCK_SIDE_NAME!"
+}
+
+wipe_apps_from_dock() {
+	declare -r DOCK_SIDE="$1"
+	declare -r DOCK_SIDE_NAME=$(print_in_cyan "$DOCK_SIDE")
+	declare -r MODULE=$(print_in_cyan "Apple Dock")
+
+	local KEY=""
+
+	# == On which side of the Dock should the application be wiped
+	case $DOCK_SIDE in
+	left)
+		KEY="persistent-apps"
+		;;
+	right)
+		KEY="persistent-others"
+		;;
+	esac
+
+	print_run "$MODULE | Wiping all applications from the $DOCK_SIDE_NAME!"
+	defaults write com.apple.dock "$KEY" -array
+	print_result "$?" "$MODULE | Wiped all applications from the $DOCK_SIDE_NAME!"
 }
 
 # === macOS Scutil Wrapper Functions === /
