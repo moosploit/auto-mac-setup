@@ -150,6 +150,55 @@ apps_in_dock_setup() {
 	kill_app Dock
 }
 
+general_setup() {
+	ask_for_confirmation "Should I setup the general settings now?"
+	if ! answer_is_yes; then
+		return 1
+	fi
+
+	# == System Preferences > General > Interface Style [Light|Dark] ==/
+	defaults_write "General" "NSGlobalDomain" "AppleInterfaceStyle" "string" "Dark"
+
+	# == System Preferences > General > Accent Color ==/
+	# == [-1=Graphite|0=Red|1=Orange|2=Yellow|3=Green|4=Blue]5=Purple|6=Pink|7=]
+	defaults_write "General" "NSGlobalDomain" "AppleAccentColor" "int" "1"
+
+	# == System Preferences > General > Highlight Color ==/
+	# == "0.968627 0.831373 1.000000 Purple"
+	# == "1.000000 0.874510 0.701961 Orange"
+	# == "1.000000 0.749020 0.823529 Pink"
+	# == "1.000000 0.733333 0.721569 Red"
+	# == "1.000000 0.937255 0.690196 Yellow"
+	# == "0.752941 0.964706 0.678431 Green"
+	# == "0.847059 0.847059 0.862745 Graphite"
+	defaults_write "General" "NSGlobalDomain" "AppleInterfaceStyle" "string" "1.000000 0.874510 0.701961 Orange"
+
+	# == System Preferences > General > Sidebar icon size [1=small|2=middle|3=great] ==/
+	defaults_write "General" "NSGlobalDomain" "NSTableViewDefaultSizeMode" "int" "1"
+
+	# == System Preferences > General > Show scrollbars [Automatic|WhenScrolling|Always] ==/
+	defaults_write "General" "NSGlobalDomain" "AppleShowScrollBars" "string" "Always"
+
+	# == System Preferences > Disable auto-correct [true|false] ==/
+	defaults_write "General" "NSGlobalDomain" "NSAutomaticSpellingCorrectionEnabled" "bool" "false"
+
+	# == System Preferences > Expand save panel by default [true|false] ==/
+	defaults_write "General" "NSGlobalDomain" "NSNavPanelExpandedStateForSaveMode" "bool" "true"
+
+	# == System Preferences > Expand print panel by default [true|false] ==/
+	defaults_write "General" "NSGlobalDomain" "PMPrintingExpandedStateForPrint" "bool" "true"
+
+	# == System Preferences > Save to disk by default, instead of iCloud [true|false] ==/
+	defaults_write "General" "NSGlobalDomain" "NSDocumentSaveNewDocumentsToCloud" "bool" "false"
+
+	# == System Preferences > Disable smart quotes when typing [true|false] ==/
+	defaults_write "General" "NSGlobalDomain" "NSAutomaticQuoteSubstitutionEnabled" "bool" "false"
+
+	# == System Preferences > Disable smart dashes when typing [true|false] ==/
+	defaults_write "General" "NSGlobalDomain" "NSAutomaticDashSubstitutionEnabled" "bool" "false"
+
+}
+
 __init__() {
 	ask_for_sudo
 
@@ -164,6 +213,9 @@ __init__() {
 
 	print_cat "Setting up the applications inside your dock!"
 	apps_in_dock_setup
+
+	print_cat "Setting up some general settings!"
+	general_setup
 
 }
 
