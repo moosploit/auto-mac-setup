@@ -35,6 +35,58 @@ computer_name_setup() {
 	defaults_write "Apple SMB Server" "/Library/Preferences/SystemConfiguration/com.apple.smb.server" "NetBIOSName" "string" "$MAC_NAME"
 }
 
+general_setup() {
+	ask_for_confirmation "Should I setup the general settings now?"
+	if ! answer_is_yes; then
+		return 1
+	fi
+
+	# == System Preferences > General > Interface Style [Light|Dark] ==/
+	defaults_write "General" "NSGlobalDomain" "AppleInterfaceStyle" "string" "Dark"
+
+	# == System Preferences > General > Accent Color ==/
+	# == [-1=Graphite|0=Red|1=Orange|2=Yellow|3=Green|4=Blue]5=Purple|6=Pink|7=]
+	defaults_write "General" "NSGlobalDomain" "AppleAccentColor" "int" "1"
+
+	# == System Preferences > General > Highlight Color ==/
+	# == "0.968627 0.831373 1.000000 Purple"
+	# == "1.000000 0.874510 0.701961 Orange"
+	# == "1.000000 0.749020 0.823529 Pink"
+	# == "1.000000 0.733333 0.721569 Red"
+	# == "1.000000 0.937255 0.690196 Yellow"
+	# == "0.752941 0.964706 0.678431 Green"
+	# == "0.847059 0.847059 0.862745 Graphite"
+	defaults_write "General" "NSGlobalDomain" "AppleInterfaceStyle" "string" "1.000000 0.874510 0.701961 Orange"
+
+	# == System Preferences > General > Sidebar icon size [1=small|2=middle|3=great] ==/
+	defaults_write "General" "NSGlobalDomain" "NSTableViewDefaultSizeMode" "int" "1"
+
+	# == System Preferences > General > Show scrollbars [Automatic|WhenScrolling|Always] ==/
+	defaults_write "General" "NSGlobalDomain" "AppleShowScrollBars" "string" "Always"
+
+	# == System Preferences > Disable automatic capitalization [true|false] ==/
+	defaults_write "General" "NSGlobalDomain" "NSAutomaticCapitalizationEnabled" "bool" "false"
+
+	# == System Preferences > Disable auto-correct [true|false] ==/
+	defaults_write "General" "NSGlobalDomain" "NSAutomaticSpellingCorrectionEnabled" "bool" "false"
+
+	# == System Preferences > Expand save panel by default [true|false] ==/
+	defaults_write "General" "NSGlobalDomain" "NSNavPanelExpandedStateForSaveMode" "bool" "true"
+
+	# == System Preferences > Expand print panel by default [true|false] ==/
+	defaults_write "General" "NSGlobalDomain" "PMPrintingExpandedStateForPrint" "bool" "true"
+
+	# == System Preferences > Save to disk by default, instead of iCloud [true|false] ==/
+	defaults_write "General" "NSGlobalDomain" "NSDocumentSaveNewDocumentsToCloud" "bool" "false"
+
+	# == System Preferences > Disable smart quotes when typing [true|false] ==/
+	defaults_write "General" "NSGlobalDomain" "NSAutomaticQuoteSubstitutionEnabled" "bool" "false"
+
+	# == System Preferences > Disable smart dashes when typing [true|false] ==/
+	defaults_write "General" "NSGlobalDomain" "NSAutomaticDashSubstitutionEnabled" "bool" "false"
+
+}
+
 dock_setup() {
 
 	ask_for_confirmation "Should I setup your dock?"
@@ -77,12 +129,6 @@ dock_setup() {
 
 	# == System Preferences > Dock > Show recent applications in Dock [true|false] ==/
 	defaults_write "Apple Dock" "com.apple.dock" "show-recents" "bool" "false"
-
-	# == System Preferences > Mission Control > Group windows by application [true|false] ==/
-	defaults_write "Apple Dock" "com.apple.dock" "expose-group-apps" "bool" "true"
-
-	# == System Preferences > Mission Control > Automatically rearrange Spaces based on most recent use [true|false] ==/
-	defaults_write "Apple Dock" "com.apple.dock" "mru-spaces" "bool" "false"
 
 	kill_app Dock
 }
@@ -136,6 +182,7 @@ apps_in_dock_setup() {
 
 	add_app_to_dock "left" "Todoist"
 	# add_app_to_dock "left" "Pages"
+
 	# add_app_to_dock "left" "Numbers"
 	add_app_to_dock "left" "PDFScanner"
 	add_app_to_dock "left" "News Explorer"
@@ -150,53 +197,102 @@ apps_in_dock_setup() {
 	kill_app Dock
 }
 
-general_setup() {
-	ask_for_confirmation "Should I setup the general settings now?"
+mission_control_setup() {
+	ask_for_confirmation "Should I setup the mission control settings now?"
 	if ! answer_is_yes; then
 		return 1
 	fi
 
-	# == System Preferences > General > Interface Style [Light|Dark] ==/
-	defaults_write "General" "NSGlobalDomain" "AppleInterfaceStyle" "string" "Dark"
+	# == System Preferences > Mission Control > Group windows by application [true|false] ==/
+	defaults_write "Mission Control" "com.apple.dock" "expose-group-apps" "bool" "true"
 
-	# == System Preferences > General > Accent Color ==/
-	# == [-1=Graphite|0=Red|1=Orange|2=Yellow|3=Green|4=Blue]5=Purple|6=Pink|7=]
-	defaults_write "General" "NSGlobalDomain" "AppleAccentColor" "int" "1"
+	# == System Preferences > Mission Control > Automatically rearrange Spaces based on most recent use [true|false] ==/
+	defaults_write "Mission Control" "com.apple.dock" "mru-spaces" "bool" "false"
 
-	# == System Preferences > General > Highlight Color ==/
-	# == "0.968627 0.831373 1.000000 Purple"
-	# == "1.000000 0.874510 0.701961 Orange"
-	# == "1.000000 0.749020 0.823529 Pink"
-	# == "1.000000 0.733333 0.721569 Red"
-	# == "1.000000 0.937255 0.690196 Yellow"
-	# == "0.752941 0.964706 0.678431 Green"
-	# == "0.847059 0.847059 0.862745 Graphite"
-	defaults_write "General" "NSGlobalDomain" "AppleInterfaceStyle" "string" "1.000000 0.874510 0.701961 Orange"
+	# == System Preferences > Mission Control > Speed up mission control animations ==/
+	defaults_write "Mission Control" "com.apple.dock" "expose-animation-duration" "float" "0.1"
 
-	# == System Preferences > General > Sidebar icon size [1=small|2=middle|3=great] ==/
-	defaults_write "General" "NSGlobalDomain" "NSTableViewDefaultSizeMode" "int" "1"
+	kill_app Dock
+}
 
-	# == System Preferences > General > Show scrollbars [Automatic|WhenScrolling|Always] ==/
-	defaults_write "General" "NSGlobalDomain" "AppleShowScrollBars" "string" "Always"
+keyboard_setup() {
+	ask_for_confirmation "Should I setup the keyboard settings now?"
+	if ! answer_is_yes; then
+		return 1
+	fi
 
-	# == System Preferences > Disable auto-correct [true|false] ==/
-	defaults_write "General" "NSGlobalDomain" "NSAutomaticSpellingCorrectionEnabled" "bool" "false"
+	# == System Preferences > Keyboard > KeyRepeat ==/
+	defaults_write "Keyboard" "NSGlobalDomain" "KeyRepeat" "int" "2"
 
-	# == System Preferences > Expand save panel by default [true|false] ==/
-	defaults_write "General" "NSGlobalDomain" "NSNavPanelExpandedStateForSaveMode" "bool" "true"
+	# == System Preferences > Keyboard > InitialKeyRepeat ==/
+	defaults_write "Keyboard" "NSGlobalDomain" "InitialKeyRepeat" "int" "15"
+}
 
-	# == System Preferences > Expand print panel by default [true|false] ==/
-	defaults_write "General" "NSGlobalDomain" "PMPrintingExpandedStateForPrint" "bool" "true"
+trackpad_setup() {
+	ask_for_confirmation "Should I setup the trackpad settings now?"
+	if ! answer_is_yes; then
+		return 1
+	fi
 
-	# == System Preferences > Save to disk by default, instead of iCloud [true|false] ==/
-	defaults_write "General" "NSGlobalDomain" "NSDocumentSaveNewDocumentsToCloud" "bool" "false"
+	# == System Preferences > Trackpad > Tap to click ==/
+	defaults_write "Trackpad" "com.apple.driver.AppleBluetoothMultitouch.trackpad" "Clicking" "bool" "true"
 
-	# == System Preferences > Disable smart quotes when typing [true|false] ==/
-	defaults_write "General" "NSGlobalDomain" "NSAutomaticQuoteSubstitutionEnabled" "bool" "false"
+	# == System Preferences > Trackpad > Tap to click ==/
+	defaults_write "Trackpad" "com.apple.AppleMultitouchTrackpad" "Clicking" "bool" "true"
+}
 
-	# == System Preferences > Disable smart dashes when typing [true|false] ==/
-	defaults_write "General" "NSGlobalDomain" "NSAutomaticDashSubstitutionEnabled" "bool" "false"
+finder_setup() {
+	ask_for_confirmation "Should I setup the Finder settings now?"
+	if ! answer_is_yes; then
+		return 1
+	fi
 
+	# == Finder > Preferences > General > New Finder-Window target ==/
+	# == PfHm=Home Folder | file:///Users/$(get_username)/ ==/
+	# == PfDe=Desktop | file:///Users/$(get_username)/Desktop ==/
+	# == PfDo=Documents | file:///Users/$(get_username)/Documents/ ==/
+	defaults_write "Finder" "com.apple.finder" "NewWindowTarget" "string" "PfHm"
+	defaults_write "Finder" "com.apple.finder" "NewWindowTargetPath" "string" "file:///Users/$(get_username)/"
+
+	# == Finder > Preferences > General > Show objects on desktop [true|false] ==/
+	defaults_write "Finder" "com.apple.finder" "ShowHardDrivesOnDesktop" "bool" "false"
+	defaults_write "Finder" "com.apple.finder" "ShowExternalHardDrivesOnDesktop" "bool" "false"
+	defaults_write "Finder" "com.apple.finder" "ShowRemovableMediaOnDesktop" "bool" "false"
+	defaults_write "Finder" "com.apple.finder" "ShowMountedServersOnDesktop" "bool" "false"
+
+	# == Finder > Preferences > General > Open folders in new tabs [true|false] ==/
+	defaults_write "Finder" "com.apple.finder" "FinderSpawnTab" "bool" "true"
+
+	# == Finder > Preferences > Extended > Show all filename extensions [true|false] ==/
+	defaults_write "Finder" "NSGlobalDomain" "AppleShowAllExtensions" "bool" "true"
+
+	# == Finder > Preferences > Extended > Show warning before changing an extension [true|false] ==/
+	defaults_write "Finder" "com.apple.finder" "FXEnableExtensionChangeWarning" "bool" "false"
+
+	# == Finder > Preferences > Extended > Show warning before removing from iCloud drive [true|false] ==/
+	defaults_write "Finder" "com.apple.finder" "FXEnableRemoveFromICloudDriveWarning" "bool" "false"
+
+	# == Finder > Preferences > Extended > Search scope [SCcf=current folder|SCev=This Mac|SCsp=last search] ==/
+	defaults_write "Finder" "com.apple.finder" "FXDefaultSearchScope" "string" "SCcf"
+
+	# == Finder > Preferences > Extended > Folder sort order [true|false] ==/
+	defaults_write "Finder" "com.apple.finder" "_FXSortFoldersFirst" "bool" "true"
+	defaults_write "Finder" "com.apple.finder" "_FXSortFoldersFirstOnDesktop" "bool" "true"
+
+	# == Finder > View > As columns [icnv=As Symbols|Nlsv=As List|clmv=As Column|glyv=As Galery] ==/
+	defaults_write "Finder" "com.apple.finder" "FXPreferredViewStyle" "string" "clmv"
+	defaults_write "Finder" "com.apple.finder" "FXPreferredSearchViewStyle" "string" "clmv"
+
+	# == Finder > View > Show sidebar [true|false] ==/
+	defaults_write "Finder" "com.apple.finder" "ShowSidebar" "bool" "true"
+
+	# == Finder > View > Show pathbar [true|false] ==/
+	defaults_write "Finder" "com.apple.finder" "ShowPathbar" "bool" "true"
+
+	# == Finder > View > Show status bar [true|false] ==/
+	defaults_write "Finder" "com.apple.finder" "ShowStatusBar" "bool" "true"
+
+	kill_app Finder
 }
 
 __init__() {
@@ -208,15 +304,26 @@ __init__() {
 	print_cat "Setting up your computer name!"
 	computer_name_setup
 
+	print_cat "Setting up general settings!"
+	general_setup
+
 	print_cat "Setting up your dock!"
 	dock_setup
 
 	print_cat "Setting up the applications inside your dock!"
 	apps_in_dock_setup
 
-	print_cat "Setting up some general settings!"
-	general_setup
+	print_cat "Setting up mission control!"
+	mission_control_setup
 
+	print_cat "Setting up the keyboard!"
+	keyboard_setup
+
+	print_cat "Setting up the trackpad!"
+	trackpad_setup
+
+	print_cat "Setting up the Finder for you!"
+	finder_setup
 }
 
 __init__
