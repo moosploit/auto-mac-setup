@@ -106,6 +106,10 @@ kill_app() {
 }
 
 # === User Details Functions === /
+get_username() {
+	echo $(id -un) # whomai
+}
+
 get_full_username() {
 	osascript -e "long user name of (system info)"
 }
