@@ -10,9 +10,7 @@
 # ================================================================================
 
 # Check whether the script is called directly or via source
-$(return &>/dev/null)
-
-if [ "$?" -ne "0" ]; then
+if [[ $(basename ${0}) == $(basename ${BASH_SOURCE}) ]]; then
 	source ./output.sh
 fi
 
@@ -390,4 +388,43 @@ scutil_set() {
 	print_run "$MODULE | Setting $PREF_NAME to $VALUE_NAME!"
 	sudo scutil --set $PREF $VALUE &>/dev/null
 	print_result "$?" "$MODULE | Set $PREF_NAME to $VALUE_NAME!"
+}
+
+# === macOS PlistBuddy Wrapper Functions === /
+plist_get() {
+	declare -r PROPERTY="$1" # == : seperated path to property
+	declare -r PLIST="$2"    # == Absolut path to PLIST file
+
+	# == Check if enough arguments specified == /
+	if [[ "$#" -lt 2 ]]; then
+		print_fail "There are not enough arguments specified for 'plist_get'! "
+		return 1
+	fi
+
+	/usr/libexec/PlistBuddy -c "Print :$PROPERTY" "$PLIST" #2>/dev/null
+}
+
+plist_set() {
+	declare -r MODULE=$(print_highlight "$1")               # == Module name which the plist file belongs to
+	declare -r PROPERTY=$2                                  # == Path to property seperated by :
+	declare -r PROPERTY_NAME=$(print_highlight "$PROPERTY") # == Color formated property
+	declare -r VALUE=$3                                     # == New value for the property
+	declare -r VALUE_NAME=$(print_highlight "$VALUE")       # == Color formated value
+	declare -r PLIST=$4                                     # == Absolut path to PLIST file
+
+	# == Check if enough arguments specified == /
+	if [[ "$#" -lt 4 ]]; then
+		print_fail "There are not enough arguments specified for 'plist_set'! "
+		return 1
+	fi
+
+	if [[ $(plist_get "$PROPERTY" "$PLIST") == "$VALUE" ]]; then
+		print_success "$MODULE | Setting $PROPERTY_NAME is already set to $VALUE_NAME!"
+		return 2
+	fi
+
+	print_run "$MODULE | Setting $PROPERTY_NAME to $VALUE_NAME!"
+	/usr/libexec/PlistBuddy -c "Set :$PROPERTY $VALUE" "$PLIST"
+	print_result "$?" "$MODULE | Set $PROPERTY_NAME to $VALUE_NAME!"
+
 }
