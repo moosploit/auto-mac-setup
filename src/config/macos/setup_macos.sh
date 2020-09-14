@@ -242,6 +242,21 @@ keyboard_setup() {
 
 	# == System Preferences > Keyboard > Enable full keyboard access for all controls ==/
 	defaults_write "Keyboard" "NSGlobalDomain" "AppleKeyboardUIMode" "int" "3"
+
+	# == System Preferences > Language & Region > Languages == /
+	# defaults_write "Keyboard" "NSGlobalDomain" "AppleLanguages" "array" "{}"
+
+	# == System Preferences > Language & Region > Language == /
+	defaults_write "Keyboard" "NSGlobalDomain" "AppleLocale" "string" "de_DE"
+
+	# == System Preferences > Language & Region > Metric Units == /
+	defaults_write "Keyboard" "NSGlobalDomain" "AppleMetricUnits" "bool" "true;"
+
+	# == System Preferences > Language & Region > MeasurementUnits [Centimeters|Inches] == /
+	defaults_write "Keyboard" "NSGlobalDomain" "AppleMeasurementUnits" "string" "Centimeters"
+
+	# == System Preferences > Language & Region > Temperatur [Celsius|Fahrenheit] == /
+	defaults_write "Keyboard" "NSGlobalDomain" "AppleTemperatureUnit" "string" "Celsius;"
 }
 
 trackpad_setup() {
