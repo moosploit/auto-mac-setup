@@ -59,7 +59,7 @@ general_setup() {
 	defaults_write "General" "NSGlobalDomain" "AppleInterfaceStyle" "string" "1.000000 0.874510 0.701961 Orange"
 
 	# == System Preferences > General > Sidebar icon size [1=small|2=middle|3=great] ==/
-	defaults_write "General" "NSGlobalDomain" "NSTableViewDefaultSizeMode" "int" "1"
+	defaults_write "General" "NSGlobalDomain" "NSTableViewDefaultSizeMode" "int" "2"
 
 	# == System Preferences > General > Show scrollbars [Automatic|WhenScrolling|Always] ==/
 	defaults_write "General" "NSGlobalDomain" "AppleShowScrollBars" "string" "Always"
@@ -85,6 +85,8 @@ general_setup() {
 	# == System Preferences > Disable smart dashes when typing [true|false] ==/
 	defaults_write "General" "NSGlobalDomain" "NSAutomaticDashSubstitutionEnabled" "bool" "false"
 
+	# == System Preferences > Disable Photos.app from starting everytime a device is plugged in [true|false] ==/
+	defaults_write "General-Photos" "com.apple.ImageCapture" "disableHotPlug" "bool" "true"
 }
 
 dock_setup() {
@@ -215,6 +217,17 @@ mission_control_setup() {
 	kill_app Dock
 }
 
+siri_setup() {
+
+	ask_for_confirmation "Should I setup the Siri settings now?"
+	if ! answer_is_yes; then
+		return 1
+	fi
+
+	# == System Preferences > Siri > Show Siri in Menu [true|false] ==/
+	defaults_write "General" "com.apple.Siri" "StatusMenuVisible" "bool" "false"
+}
+
 keyboard_setup() {
 	ask_for_confirmation "Should I setup the keyboard settings now?"
 	if ! answer_is_yes; then
@@ -226,6 +239,9 @@ keyboard_setup() {
 
 	# == System Preferences > Keyboard > InitialKeyRepeat ==/
 	defaults_write "Keyboard" "NSGlobalDomain" "InitialKeyRepeat" "int" "15"
+
+	# == System Preferences > Keyboard > Enable full keyboard access for all controls ==/
+	defaults_write "Keyboard" "NSGlobalDomain" "AppleKeyboardUIMode" "int" "3"
 }
 
 trackpad_setup() {
@@ -236,8 +252,6 @@ trackpad_setup() {
 
 	# == System Preferences > Trackpad > Tap to click ==/
 	defaults_write "Trackpad" "com.apple.driver.AppleBluetoothMultitouch.trackpad" "Clicking" "bool" "true"
-
-	# == System Preferences > Trackpad > Tap to click ==/
 	defaults_write "Trackpad" "com.apple.AppleMultitouchTrackpad" "Clicking" "bool" "true"
 }
 
@@ -247,12 +261,13 @@ finder_setup() {
 		return 1
 	fi
 
-	# == Finder > Preferences > General > New Finder-Window target ==/
-	# == PfHm=Home Folder | file:///Users/$(get_username)/ ==/
-	# == PfDe=Desktop | file:///Users/$(get_username)/Desktop ==/
-	# == PfDo=Documents | file:///Users/$(get_username)/Documents/ ==/
+	# == Finder > Preferences > General > New Finder-Window target
+	# == PfHm=Home Folder | file:///$HOME/
+	# == PfDe=Desktop | file:///Users/$HOME/Desktop/
+	# == PfDo=Documents | file:///Users/$HOME/Documents/
+	# == PfLo=Own Path | file:///full/path/here/ ==/
 	defaults_write "Finder" "com.apple.finder" "NewWindowTarget" "string" "PfHm"
-	defaults_write "Finder" "com.apple.finder" "NewWindowTargetPath" "string" "file:///Users/$(get_username)/"
+	defaults_write "Finder" "com.apple.finder" "NewWindowTargetPath" "string" "file:///$HOME/"
 
 	# == Finder > Preferences > General > Show objects on desktop [true|false] ==/
 	defaults_write "Finder" "com.apple.finder" "ShowHardDrivesOnDesktop" "bool" "false"
@@ -263,25 +278,29 @@ finder_setup() {
 	# == Finder > Preferences > General > Open folders in new tabs [true|false] ==/
 	defaults_write "Finder" "com.apple.finder" "FinderSpawnTab" "bool" "true"
 
-	# == Finder > Preferences > Extended > Show all filename extensions [true|false] ==/
+	# == Finder > Preferences > Advanced > Show all filename extensions [true|false] ==/
 	defaults_write "Finder" "NSGlobalDomain" "AppleShowAllExtensions" "bool" "true"
 
-	# == Finder > Preferences > Extended > Show warning before changing an extension [true|false] ==/
+	# == Finder > Preferences > Advanced > Show warning before changing an extension [true|false] ==/
 	defaults_write "Finder" "com.apple.finder" "FXEnableExtensionChangeWarning" "bool" "false"
 
-	# == Finder > Preferences > Extended > Show warning before removing from iCloud drive [true|false] ==/
+	# == Finder > Preferences > Advanced > Show warning before removing from iCloud drive [true|false] ==/
 	defaults_write "Finder" "com.apple.finder" "FXEnableRemoveFromICloudDriveWarning" "bool" "false"
 
-	# == Finder > Preferences > Extended > Search scope [SCcf=current folder|SCev=This Mac|SCsp=last search] ==/
+	# == Finder > Preferences > Advanced > Search scope [SCcf=current folder|SCev=This Mac|SCsp=last search] ==/
 	defaults_write "Finder" "com.apple.finder" "FXDefaultSearchScope" "string" "SCcf"
 
-	# == Finder > Preferences > Extended > Folder sort order [true|false] ==/
+	# == Finder > Preferences > Advanced > Folder sort order [true|false] ==/
 	defaults_write "Finder" "com.apple.finder" "_FXSortFoldersFirst" "bool" "true"
 	defaults_write "Finder" "com.apple.finder" "_FXSortFoldersFirstOnDesktop" "bool" "true"
 
 	# == Finder > View > As columns [icnv=As Symbols|Nlsv=As List|clmv=As Column|glyv=As Galery] ==/
 	defaults_write "Finder" "com.apple.finder" "FXPreferredViewStyle" "string" "clmv"
 	defaults_write "Finder" "com.apple.finder" "FXPreferredSearchViewStyle" "string" "clmv"
+
+	# == Finder > View > Group by
+	# == [Name|Kind|Application|Date Last Opened|Date Added|Date Modified|Date Created|Size|Finder Tags] ==/
+	defaults_write "Finder" "com.apple.finder" "FXPreferredGroupBy" "string" "Kind"
 
 	# == Finder > View > Show sidebar [true|false] ==/
 	defaults_write "Finder" "com.apple.finder" "ShowSidebar" "bool" "true"
@@ -292,7 +311,56 @@ finder_setup() {
 	# == Finder > View > Show status bar [true|false] ==/
 	defaults_write "Finder" "com.apple.finder" "ShowStatusBar" "bool" "true"
 
-	kill_app Finder
+	# == Finder > Avoid creating .DS_Store files on network or USB volumes [true|false] ==/
+	defaults_write "Finder" "com.apple.desktopservices" "DSDontWriteNetworkStores" "bool" "true"
+	defaults_write "Finder" "com.apple.desktopservices" "DSDontWriteUSBStores" "bool" "true"
+
+	# == Finder > Allow quitting via CMD + Q [true|false] ==/
+	defaults_write "Finder" "com.apple.finder" "QuitMenuItem" "bool" "true"
+
+	# == Finder > Use full POSIX path as window title [true|false] ==/
+	defaults_write "Finder" "com.apple.finder" "_FXShowPosixPathInTitle" "bool" "true"
+
+	# == Finder > Do not show recent tags [true|false] ==/
+	defaults_write "Finder" "com.apple.finder" "ShowRecentTags" "bool" "false"
+
+	# == Finder > Allowing text selection in Quick Look [true|false] ==/
+	defaults_write "Finder" "com.apple.finder" "QLEnableTextSelection" "bool" "true"
+
+	# == Finder > DefaultViewOptions > Grouped by [kipl=Kind] ==/
+	plist_set "Finder" "StandardViewOptions:ColumnViewOptions:SharedArrangeBy" "kipl" "$HOME/Library/Preferences/com.apple.finder.plist"
+
+	# == Finder > DefaultViewOptions > Sort by [dnam=Name] ==/
+	plist_set "Finder" "StandardViewOptions:ColumnViewOptions:ArrangeBy" "dnam" "$HOME/Library/Preferences/com.apple.finder.plist"
+
+	# == Finder > DefaultViewOptions > Font size ==/
+	plist_set "Finder" "StandardViewOptions:ColumnViewOptions:FontSize" "13" "$HOME/Library/Preferences/com.apple.finder.plist"
+
+	kill_app Finder cfprefsd
+}
+
+screencapture_setup() {
+	ask_for_confirmation "Should I setup the screencapture settings now?"
+	if ! answer_is_yes; then
+		return 1
+	fi
+
+	# == Screencapture > Save screenshots to ... ==/
+	defaults_write "Screencapture" "com.apple.screencapture" "location" "string" "${HOME}/Desktop"
+
+	# == Screencapture > Save screenshots in format [png|bmp|gif|jpg|pdf|tiff] ==/
+	defaults_write "Screencapture" "com.apple.screencapture" "type" "string" "png"
+
+	# == Screencapture > Disable shadow in screenshot [true|false] ==/
+	defaults_write "Screencapture" "com.apple.screencapture" "disable-shadow" "bool" "true"
+}
+
+terminal_setup() {
+	ask_for_confirmation "Should I setup the terminal settings now?"
+	if ! answer_is_yes; then
+		return 1
+	fi
+
 }
 
 __init__() {
@@ -316,14 +384,23 @@ __init__() {
 	print_cat "Setting up mission control!"
 	mission_control_setup
 
-	print_cat "Setting up the keyboard!"
+	print_cat "Setting up Siri!"
+	siri_setup
+
+	print_cat "Setting up keyboard!"
 	keyboard_setup
 
-	print_cat "Setting up the trackpad!"
+	print_cat "Setting up trackpad!"
 	trackpad_setup
 
 	print_cat "Setting up the Finder for you!"
 	finder_setup
+
+	print_cat "Setting up screencapture for you!"
+	screencapture_setup
+
+	print_cat "Setting up terminal for you!"
+	terminal_setup
 }
 
 __init__
