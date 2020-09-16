@@ -233,7 +233,7 @@ defaults_write() {
 	local VALUE_NAME=$(print_highlight "$VALUE")
 
 	# == Check if enough arguments specified == /
-	if [[ "$#" -lt 5 ]]; then
+	if [[ "$#" -lt 4 ]]; then
 		print_fail "There are not enough arguments specified for 'defaults_write'! "
 		return 1
 	fi
@@ -272,6 +272,8 @@ defaults_write() {
 			;;
 		esac
 		;;
+	array | array-add) ;;
+
 	# == If another type was sent
 	*)
 		print_error "Defaults | Type '$TYPE' is in function 'defaults_write' not allowed!"
@@ -280,7 +282,11 @@ defaults_write() {
 	esac
 
 	print_run "$DOMAIN_NAME | Will set $KEY_NAME to $VALUE_NAME!"
-	defaults write "$DOMAIN" "$KEY" "-$TYPE" "$VALUE" &>/dev/null
+	if [[ -z "$VALUE" ]]; then
+		defaults write "$DOMAIN" "$KEY" "-$TYPE" &>/dev/null
+	else
+		defaults write "$DOMAIN" "$KEY" "-$TYPE" "$VALUE" #&>/dev/null
+	fi
 	print_result "$?" "$DOMAIN_NAME | Set up $KEY_NAME to $VALUE_NAME!"
 }
 

@@ -233,6 +233,29 @@ siri_setup() {
 	defaults_write "General" "com.apple.Siri" "StatusMenuVisible" "bool" "false"
 }
 
+lang_reg_setup() {
+
+	ask_for_confirmation "Should I setup the language and region settings now?"
+	if ! answer_is_yes; then
+		return 1
+	fi
+	# == System Preferences > Language & Region > Languages == /
+	# defaults_write "Lang and Region" "NSGlobalDomain" "AppleLanguages" "array" ""
+	# defaults_write "Lang and Region" "NSGlobalDomain" "AppleLanguages" "array-add" "de-DE"
+
+	# == System Preferences > Language & Region > Language == /
+	defaults_write "Lang and Region" "NSGlobalDomain" "AppleLocale" "string" "de_DE"
+
+	# == System Preferences > Language & Region > Metric Units == /
+	defaults_write "Lang and Region" "NSGlobalDomain" "AppleMetricUnits" "bool" "true"
+
+	# == System Preferences > Language & Region > MeasurementUnits [Centimeters|Inches] == /
+	defaults_write "Lang and Region" "NSGlobalDomain" "AppleMeasurementUnits" "string" "Centimeters"
+
+	# == System Preferences > Language & Region > Temperatur [Celsius|Fahrenheit] == /
+	defaults_write "Lang and Region" "NSGlobalDomain" "AppleTemperatureUnit" "string" "Celsius;"
+}
+
 keyboard_setup() {
 	ask_for_confirmation "Should I setup the keyboard settings now?"
 	if ! answer_is_yes; then
@@ -247,21 +270,6 @@ keyboard_setup() {
 
 	# == System Preferences > Keyboard > Enable full keyboard access for all controls ==/
 	defaults_write "Keyboard" "NSGlobalDomain" "AppleKeyboardUIMode" "int" "3"
-
-	# == System Preferences > Language & Region > Languages == /
-	# defaults_write "Keyboard" "NSGlobalDomain" "AppleLanguages" "array" "{}"
-
-	# == System Preferences > Language & Region > Language == /
-	defaults_write "Keyboard" "NSGlobalDomain" "AppleLocale" "string" "de_DE"
-
-	# == System Preferences > Language & Region > Metric Units == /
-	defaults_write "Keyboard" "NSGlobalDomain" "AppleMetricUnits" "bool" "true"
-
-	# == System Preferences > Language & Region > MeasurementUnits [Centimeters|Inches] == /
-	defaults_write "Keyboard" "NSGlobalDomain" "AppleMeasurementUnits" "string" "Centimeters"
-
-	# == System Preferences > Language & Region > Temperatur [Celsius|Fahrenheit] == /
-	defaults_write "Keyboard" "NSGlobalDomain" "AppleTemperatureUnit" "string" "Celsius;"
 
 	# == System Preferences > Disable smart quotes when typing [true|false] ==/
 	defaults_write "General" "NSGlobalDomain" "NSAutomaticQuoteSubstitutionEnabled" "bool" "false"
@@ -406,6 +414,9 @@ __init__() {
 
 	print_cat "Setting up Siri!"
 	siri_setup
+
+	print_cat "Setting up Language and Region!"
+	lang_reg_setup
 
 	print_cat "Setting up keyboard!"
 	keyboard_setup
