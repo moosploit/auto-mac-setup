@@ -33,3 +33,6 @@ source ./src/install/mas/mas_install.sh
 
 # === Configure macOS === /
 source ./src/config/macos/setup_macos.sh
+
+# === Configure ForkLift 3 === /
+source ./src/config/forklift/setup_forklift.sh
