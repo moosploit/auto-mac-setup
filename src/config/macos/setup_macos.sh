@@ -255,7 +255,7 @@ keyboard_setup() {
 	defaults_write "Keyboard" "NSGlobalDomain" "AppleLocale" "string" "de_DE"
 
 	# == System Preferences > Language & Region > Metric Units == /
-	defaults_write "Keyboard" "NSGlobalDomain" "AppleMetricUnits" "bool" "true;"
+	defaults_write "Keyboard" "NSGlobalDomain" "AppleMetricUnits" "bool" "true"
 
 	# == System Preferences > Language & Region > MeasurementUnits [Centimeters|Inches] == /
 	defaults_write "Keyboard" "NSGlobalDomain" "AppleMeasurementUnits" "string" "Centimeters"

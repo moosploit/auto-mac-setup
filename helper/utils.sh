@@ -280,7 +280,7 @@ defaults_write() {
 	esac
 
 	print_run "$DOMAIN_NAME | Will set $KEY_NAME to $VALUE_NAME!"
-	defaults write "$DOMAIN" "$KEY" "-$TYPE" "$VALUE"
+	defaults write "$DOMAIN" "$KEY" "-$TYPE" "$VALUE" &>/dev/null
 	print_result "$?" "$DOMAIN_NAME | Set up $KEY_NAME to $VALUE_NAME!"
 }
 
@@ -326,7 +326,7 @@ add_app_to_dock() {
 	fi
 
 	print_run "$MODULE | Adding application $APP_NAME to the $DOCK_SIDE_NAME!"
-	defaults write com.apple.dock "$KEY" -array-add "$APP_ARRAY"
+	defaults write com.apple.dock "$KEY" -array-add "$APP_ARRAY" &>/dev/null
 	print_result "$?" "$MODULE | Added application $APP_NAME to the $DOCK_SIDE_NAME!"
 	sleep 1
 }
@@ -349,7 +349,7 @@ wipe_apps_from_dock() {
 	esac
 
 	print_run "$MODULE | Wiping all applications from the $DOCK_SIDE_NAME!"
-	defaults write com.apple.dock "$KEY" -array
+	defaults write com.apple.dock "$KEY" -array &>/dev/null
 	print_result "$?" "$MODULE | Wiped all applications from the $DOCK_SIDE_NAME!"
 	sleep 1
 }
@@ -401,7 +401,7 @@ plist_get() {
 		return 1
 	fi
 
-	/usr/libexec/PlistBuddy -c "Print :$PROPERTY" "$PLIST" #2>/dev/null
+	/usr/libexec/PlistBuddy -c "Print :$PROPERTY" "$PLIST" 2>/dev/null
 }
 
 plist_set() {
@@ -424,7 +424,7 @@ plist_set() {
 	fi
 
 	print_run "$MODULE | Setting $PROPERTY_NAME to $VALUE_NAME!"
-	/usr/libexec/PlistBuddy -c "Set :$PROPERTY $VALUE" "$PLIST"
+	/usr/libexec/PlistBuddy -c "Set :$PROPERTY $VALUE" "$PLIST" &>/dev/null
 	print_result "$?" "$MODULE | Set $PROPERTY_NAME to $VALUE_NAME!"
 
 }
