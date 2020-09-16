@@ -79,14 +79,19 @@ general_setup() {
 	# == System Preferences > Save to disk by default, instead of iCloud [true|false] ==/
 	defaults_write "General" "NSGlobalDomain" "NSDocumentSaveNewDocumentsToCloud" "bool" "false"
 
-	# == System Preferences > Disable smart quotes when typing [true|false] ==/
-	defaults_write "General" "NSGlobalDomain" "NSAutomaticQuoteSubstitutionEnabled" "bool" "false"
-
-	# == System Preferences > Disable smart dashes when typing [true|false] ==/
-	defaults_write "General" "NSGlobalDomain" "NSAutomaticDashSubstitutionEnabled" "bool" "false"
-
 	# == System Preferences > Disable Photos.app from starting everytime a device is plugged in [true|false] ==/
 	defaults_write "General-Photos" "com.apple.ImageCapture" "disableHotPlug" "bool" "true"
+
+	# == System Preferences > Energy saving > Show Battery status in menu bar [true|false]
+	defaults_write "General-Energy" "com.apple.systemuiserver" "NSStatusItem Visible com.apple.menuextra.battery" "bool" "false"
+
+	defaults write com.apple.systemuiserver menuExtras -array \
+		"/System/Library/CoreServices/Menu Extras/TimeMachine.menu" \
+		"/System/Library/CoreServices/Menu Extras/AirPort.menu" \
+		"/System/Library/CoreServices/Menu Extras/Volume.menu"
+
+	kill_app SystemUIServer
+
 }
 
 dock_setup() {
@@ -257,6 +262,14 @@ keyboard_setup() {
 
 	# == System Preferences > Language & Region > Temperatur [Celsius|Fahrenheit] == /
 	defaults_write "Keyboard" "NSGlobalDomain" "AppleTemperatureUnit" "string" "Celsius;"
+
+	# == System Preferences > Disable smart quotes when typing [true|false] ==/
+	defaults_write "General" "NSGlobalDomain" "NSAutomaticQuoteSubstitutionEnabled" "bool" "false"
+
+	# == System Preferences > Disable smart dashes when typing [true|false] ==/
+	defaults_write "General" "NSGlobalDomain" "NSAutomaticDashSubstitutionEnabled" "bool" "false"
+
+	kill_app cfprefsd
 }
 
 trackpad_setup() {
@@ -370,14 +383,6 @@ screencapture_setup() {
 	defaults_write "Screencapture" "com.apple.screencapture" "disable-shadow" "bool" "true"
 }
 
-terminal_setup() {
-	ask_for_confirmation "Should I setup the terminal settings now?"
-	if ! answer_is_yes; then
-		return 1
-	fi
-
-}
-
 __init__() {
 	ask_for_sudo
 
@@ -413,9 +418,6 @@ __init__() {
 
 	print_cat "Setting up screencapture for you!"
 	screencapture_setup
-
-	print_cat "Setting up terminal for you!"
-	terminal_setup
 }
 
 __init__
