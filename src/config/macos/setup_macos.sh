@@ -364,13 +364,13 @@ finder_setup() {
 	defaults_write "Finder" "com.apple.finder" "QLEnableTextSelection" "bool" "true"
 
 	# == Finder > DefaultViewOptions > Grouped by [kipl=Kind] ==/
-	plist_set "Finder" "StandardViewOptions:ColumnViewOptions:SharedArrangeBy" "kipl" "$HOME/Library/Preferences/com.apple.finder.plist"
+	plist_set_property "Finder" "StandardViewOptions:ColumnViewOptions:SharedArrangeBy" "kipl" "$HOME/Library/Preferences/com.apple.finder.plist"
 
 	# == Finder > DefaultViewOptions > Sort by [dnam=Name] ==/
-	plist_set "Finder" "StandardViewOptions:ColumnViewOptions:ArrangeBy" "dnam" "$HOME/Library/Preferences/com.apple.finder.plist"
+	plist_set_property "Finder" "StandardViewOptions:ColumnViewOptions:ArrangeBy" "dnam" "$HOME/Library/Preferences/com.apple.finder.plist"
 
 	# == Finder > DefaultViewOptions > Font size ==/
-	plist_set "Finder" "StandardViewOptions:ColumnViewOptions:FontSize" "13" "$HOME/Library/Preferences/com.apple.finder.plist"
+	plist_set_property "Finder" "StandardViewOptions:ColumnViewOptions:FontSize" "13" "$HOME/Library/Preferences/com.apple.finder.plist"
 
 	kill_app Finder cfprefsd
 }
