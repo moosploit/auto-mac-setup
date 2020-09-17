@@ -10,9 +10,13 @@
 # ================================================================================
 
 # Check whether the script is called directly or via source
-$(return &>/dev/null)
-
-if [ "$?" -ne "0" ]; then
+if [[ $(basename ${0}) == $(basename ${BASH_SOURCE}) ]]; then
 	source ../../../helper/output.sh
 	source ../../../helper/utils.sh
 fi
+
+__init__() {
+	:
+}
+
+__init__
