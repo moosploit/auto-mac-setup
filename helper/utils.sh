@@ -396,8 +396,54 @@ scutil_set() {
 	print_result "$?" "$MODULE | Set $PREF_NAME to $VALUE_NAME!"
 }
 
-# === macOS PlistBuddy Wrapper Functions === /
-plist_get() {
+# === macOS Plist Wrapper Functions === /
+plist_export() {
+	# plist_export MODULE DOMAIN PLIST_FILE
+	declare -r MODULE=$(print_highlight "$1") # == Module Name
+	declare -r DOMAIN="$2"                    # == Domain name which should be exported
+	declare -r DOMAIN_NAME=$(print_highlight "$DOMAIN")
+	declare -r PLIST_FILE="$3" # == Absolute path to plist file
+	declare -r PLIST_FILE_NAME=$(print_highlight "$PLIST_FILE")
+
+	if [[ "$#" -lt 3 ]]; then
+		print_fail "There are not enough arguments specified for 'plist_export'! "
+		return 1
+	fi
+
+	if [[ -e "$PLIST_FILE" ]]; then
+		ask_for_confirmation "File already exists, should I override it?"
+		if [[ ! answer_is_yes ]]; then
+			return 2
+		fi
+	fi
+	print_run "$MODULE | Exporting domain $DOMAIN_NAME into $PLIST_FILE_NAME!"
+	defaults export "$DOMAIN" "$PLIST_FILE"
+	print_result "$?" "$MODULE | Exported domain $DOMAIN_NAME into $PLIST_FILE_NAME!"
+}
+plist_import() {
+	# plist_import MODULE PLIST_FILE DOMAIN
+	declare -r MODULE=$(print_highlight "$1") # == Module Name
+	declare -r PLIST_FILE="$2"                # == Absolute path to plist file
+	declare -r PLIST_FILE_NAME=$(print_highlight "$PLIST_FILE")
+	declare -r DOMAIN="$3" # == Domain name which should be exported
+	declare -r DOMAIN_NAME=$(print_highlight "$DOMAIN")
+
+	if [[ "$#" -lt 3 ]]; then
+		print_fail "There are not enough arguments specified for 'plist_import'! "
+		return 1
+	fi
+
+	if [[ ! -e "$PLIST_FILE" ]]; then
+		print_fail "$MODULE | Plist file $PLIST_FILE_NAME doesn't exist!"
+		return 2
+	fi
+	print_run "$MODULE | Importing Plist file $PLIST_FILE_NAME into domain $DOMAIN_NAME!"
+	defaults import "$DOMAIN" "$PLIST_FILE"
+	print_result "$?" "$MODULE | Imported Plist file $PLIST_FILE_NAME into domain $DOMAIN_NAME!"
+}
+
+plist_get_property() {
+	# plist_get_property PROPERTY PLIST
 	declare -r PROPERTY="$1" # == : seperated path to property
 	declare -r PLIST="$2"    # == Absolut path to PLIST file
 
@@ -410,7 +456,8 @@ plist_get() {
 	/usr/libexec/PlistBuddy -c "Print :$PROPERTY" "$PLIST" 2>/dev/null
 }
 
-plist_set() {
+plist_set_property() {
+	# plist_set_property MODULE PROPERTY VAULE PLIST
 	declare -r MODULE=$(print_highlight "$1")               # == Module name which the plist file belongs to
 	declare -r PROPERTY=$2                                  # == Path to property seperated by :
 	declare -r PROPERTY_NAME=$(print_highlight "$PROPERTY") # == Color formated property
@@ -424,7 +471,7 @@ plist_set() {
 		return 1
 	fi
 
-	if [[ $(plist_get "$PROPERTY" "$PLIST") == "$VALUE" ]]; then
+	if [[ $(plist_get_property"$PROPERTY" "$PLIST") == "$VALUE" ]]; then
 		print_success "$MODULE | Setting $PROPERTY_NAME is already set to $VALUE_NAME!"
 		return 2
 	fi
@@ -432,5 +479,4 @@ plist_set() {
 	print_run "$MODULE | Setting $PROPERTY_NAME to $VALUE_NAME!"
 	/usr/libexec/PlistBuddy -c "Set :$PROPERTY $VALUE" "$PLIST" &>/dev/null
 	print_result "$?" "$MODULE | Set $PROPERTY_NAME to $VALUE_NAME!"
-
 }
