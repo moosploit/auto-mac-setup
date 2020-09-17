@@ -13,12 +13,38 @@
 if [[ $(basename ${0}) == $(basename ${BASH_SOURCE}) ]]; then
 	source ../../../helper/output.sh
 	source ../../../helper/utils.sh
+	PLIST_PATH="."
+else
+	PLIST_PATH="./src/config/moom"
 fi
 
+general_setup() {
+	local PLIST_FILE=""
 
+	ask_for_confirmation "Should I use the default Plist file?"
+	if ! answer_is_yes; then
+		while [[ -z $PLIST_FILE ]]; do
+			ask_for_input "Ok, please provide the absolute path to your Plist file"
+			if [[ -n "$REPLY" && -e "$REPLY" ]]; then
+				PLIST_FILE="$REPLY"
+			else
+				print_fail "Your provided plist file doesn't exist!"
+			fi
+		done
+	else
+		# == Path to the default plist file
+		PLIST_FILE="$PLIST_PATH/Moom.plist"
+	fi
 
+	kill_app Moom
+	plist_import "Moom" "$PLIST_FILE" "com.manytricks.Moom"
+	open -a Moom
+}
 
 __init__() {
+
+	print_cat "Setting up application Moom!"
+	general_setup
 
 }
 
