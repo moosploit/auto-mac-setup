@@ -76,5 +76,5 @@ zsdoc/data
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,visualstudiocode,zsh,homebrew
 
-# === Project specific gitignore files
+# === Project specific gitignore files === /
 **/*iterm2.plist
