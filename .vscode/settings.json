@@ -1,0 +1,9 @@
+{
+  "psi-header.variables": [
+    ["project", "auto-mac-setup"],
+    ["project-url", "https://github.com/moosploit/auto-mac-setup"]
+  ],
+  "psi-header.config": {
+    "license": "MIT"
+  }
+}
