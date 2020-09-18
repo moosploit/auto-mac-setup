@@ -12,6 +12,9 @@
 source ./helper/utils.sh
 source ./helper/output.sh
 
+# === Auto Mac Setup Directory === /
+ROOT_DIR=$(pwd -P)
+
 __init__() {
 	print_cat "Meow $(get_full_username)!" "I will help you to auto configure your new Apple Mac."
 	ask_for_confirmation "Shall we procced?"
@@ -40,6 +43,9 @@ __init__() {
 
 	# === Configure Application Moom === /
 	source ./src/config/moom/setup_moom.sh
+
+	# === Configure Application Iterm2 === /
+	source ./src/config/iterm/setup_iterm.sh
 }
 
 __init__
