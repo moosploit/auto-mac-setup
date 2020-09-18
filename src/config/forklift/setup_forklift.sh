@@ -16,7 +16,7 @@ if [[ $(basename ${0}) == $(basename ${BASH_SOURCE}) ]]; then
 fi
 
 general_setup() {
-	ask_for_confirmation "Should I setup the general settings now?"
+	ask_for_confirmation "Should I setup ForkLift now?"
 	if ! answer_is_yes; then
 		return 1
 	fi
