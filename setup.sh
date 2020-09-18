@@ -46,6 +46,9 @@ __init__() {
 
 	# === Configure Application Iterm2 === /
 	source ./src/config/iterm/setup_iterm.sh
+
+	# === Configure Application Visual Studio Code === /
+	source ./src/config/vscode/setup_vscode.sh
 }
 
 __init__

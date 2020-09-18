@@ -1,0 +1,287 @@
+{
+	// === Editor === /
+	"editor.fontSize": 16,
+	"editor.lineHeight": 22,
+	//   "editor.letterSpacing": 0.2,
+	"editor.fontWeight": "400",
+	"editor.fontFamily": "'RobotoMono Nerd Font','Hack Nerd Font','Fira Code'",
+	"editor.fontLigatures": false,
+	"editor.wordWrap": "on",
+	"editor.renderWhitespace": "boundary",
+	"editor.formatOnSave": true,
+	"editor.formatOnPaste": true,
+	"editor.formatOnSaveMode": "modifications",
+	"editor.cursorStyle": "line",
+	"editor.cursorWidth": 2,
+	"editor.tokenColorCustomizations": {
+		"textMateRules": [
+			{
+				"scope": "log.error",
+				"settings": {
+					"foreground": "#af1f1f",
+					"fontStyle": ""
+				}
+			},
+			{
+				"scope": "log.warning",
+				"settings": {
+					"foreground": "#f4ad42",
+					"fontStyle": ""
+				}
+			}
+		]
+	},
+	"editor.minimap.enabled": false,
+	"editor.suggestSelection": "first",
+	"editor.renderControlCharacters": false,
+	"editor.renameOnType": true,
+	// == Editor | Identation configuration == /
+	"editor.tabSize": 4,
+	"editor.insertSpaces": false,
+	"editor.detectIndentation": false,
+	// === Workbench === /
+	"workbench.iconTheme": "material-icon-theme",
+	"workbench.colorTheme": "Dracula Soft",
+	"workbench.colorCustomizations": {
+		"[Cobalt2]": {
+			"tab.activeBorder": "#fff",
+			"tab.activeBackground": "#077bf73e",
+			"gitDecoration.ignoredResourceForeground": "#706e6e"
+		}
+	},
+	"workbench.startupEditor": "none",
+	"workbench.settings.editor": "json",
+	"workbench.settings.openDefaultSettings": true,
+	"workbench.settings.useSplitJSON": false,
+	// === Window === /
+	"window.zoomLevel": 0,
+	// === Files === /
+	"files.exclude": {
+		"**/.vscode": false,
+		"**/venv": true,
+		"**/pyenv": true,
+		"**/.git": true,
+		"**/.svn": true,
+		"**/.hg": true,
+		"**/CVS": true,
+		"**/.DS_Store": true,
+		"**/_site": true,
+		"**/tmp": true,
+		"**/*.pyc": true,
+		"**/*.asset-cache": true,
+		"**/*.cache": true,
+		"**/*.jekyll-cache": true,
+		"**/*.tweet-cache": true,
+		"**/__pycache__": true,
+		"**/.pytest_cache": true,
+		"**/*.egg-info": true,
+		"**/*.coverage": true,
+		"**/celerybeat-schedule": true,
+		"**/node_modules": true,
+		"**/bower_components": true,
+		"**/*_temp.tex": true,
+		"**/*.synctex.gz": true,
+		"**/*.aux": true,
+		"**/*.fls": true,
+		"**/*.fdb_latexmk": true,
+		"**/*.out": true
+	},
+	"files.autoSaveDelay": 1000,
+	"files.autoSave": "afterDelay",
+	"files.associations": {
+		"*.json": "jsonc"
+	},
+	// === File Explorer === /
+	"explorer.confirmDelete": false,
+	"explorer.confirmDragAndDrop": false,
+	// === Terminal | Internal === /
+	"terminal.integrated.shell.osx": "/bin/zsh",
+	"terminal.integrated.shell.windows": "C:\\Windows\\System32\\bash.exe",
+	"terminal.integrated.fontFamily": "MesloLGS Nerd Font",
+	"terminal.integrated.fontWeightBold": "normal",
+	"terminal.integrated.fontSize": 14,
+	"terminal.integrated.fontWeight": "100",
+	// === Terminal | External === /
+	"terminal.external.osxExec": "iTerm.app",
+	"terminal.external.windowsExec": "C:\\Windows\\System32\\bash.exe",
+	// === Debug === /
+	"debug.console.fontFamily": "MesloLGS Nerd Font",
+	"debug.console.fontSize": 14,
+	"debug.console.lineHeight": 20,
+	// === Breadcrumb Navigation === /
+	"breadcrumbs.enabled": true,
+	// === Python === /
+	"python.jediEnabled": false,
+	"python.languageServer": "Microsoft",
+	// === Theme | Material Icon Theme === /
+	"material-icon-theme.folders.color": "#e59400",
+	"material-icon-theme.hidesExplorerArrows": false,
+	// === Extension | VSIntelliCode === /
+	"vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+	// === Extension | Code Settings Sync === /
+	"sync.gist": "",
+	"sync.forceUpload": true,
+	// === Extension | Code Runner === /
+	"code-runner.executorMap": {
+		"javascript": "node",
+		"java": "cd $dir && javac $fileName && java $fileNameWithoutExt",
+		"c": "cd $dir && gcc $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+		"cpp": "cd $dir && g++ $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+		"objective-c": "cd $dir && gcc -framework Cocoa $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+		"php": "php",
+		"python": "$pythonPath -u $fullFileName",
+		"perl": "perl",
+		"perl6": "perl6",
+		"ruby": "ruby",
+		"go": "go run",
+		"lua": "lua",
+		"groovy": "groovy",
+		"powershell": "powershell -ExecutionPolicy ByPass -File",
+		"bat": "cmd /c",
+		"shellscript": "bash",
+		"fsharp": "fsi",
+		"csharp": "scriptcs",
+		"vbscript": "cscript //Nologo",
+		"typescript": "ts-node",
+		"coffeescript": "coffee",
+		"scala": "scala",
+		"swift": "swift",
+		"julia": "julia",
+		"crystal": "crystal",
+		"ocaml": "ocaml",
+		"r": "Rscript",
+		"applescript": "osascript",
+		"clojure": "lein exec",
+		"haxe": "haxe --cwd $dirWithoutTrailingSlash --run $fileNameWithoutExt",
+		"rust": "cd $dir && rustc $fileName && $dir$fileNameWithoutExt",
+		"racket": "racket",
+		"scheme": "csi -script",
+		"ahk": "autohotkey",
+		"autoit": "autoit3",
+		"dart": "dart",
+		"pascal": "cd $dir && fpc $fileName && $dir$fileNameWithoutExt",
+		"d": "cd $dir && dmd $fileName && $dir$fileNameWithoutExt",
+		"haskell": "runhaskell",
+		"nim": "nim compile --verbosity:0 --hints:off --run",
+		"lisp": "sbcl --script",
+		"kit": "kitc --run"
+	},
+	"code-runner.showExecutionMessage": false,
+	"code-runner.clearPreviousOutput": true,
+	// === Extension | Project Manager === /
+	"projectManager.git.baseFolders": [
+		""
+	],
+	// === Extension | Latex Workshop === /
+	"latex-workshop.view.pdf.viewer": "tab",
+	"latex-workshop.latex.autoBuild.run": "never",
+	// === Extension | Gitlens === /
+	"gitlens.advanced.messages": {
+		"suppressLineUncommittedWarning": true
+	},
+	// === Extension | Indent-Colors === /
+	"indentRainbow.colors": [
+		"rgba(255,255,64,0.02)",
+		"rgba(127,255,127,0.02)",
+		"rgba(255,127,255,0.02)",
+		"rgba(79,236,236,0.02)"
+	],
+	"indentRainbow.errorColor": "rgba(128,32,32,0.6)",
+	"indentRainbow.tabmixColor": "rgba(128,32,96,0.6)",
+	// === Extension | Psioniq File Header === /
+	"psi-header.config": {
+		"forceToTop": true,
+		"blankLinesAfter": 1,
+		"license": "",
+		"author": "",
+		"initials": "",
+		"authorEmail": "",
+		"company": "",
+		"copyrightHolder": ""
+	},
+	"psi-header.changes-tracking": {
+		"isActive": true,
+		"autoHeader": "autoSave",
+		"enforceHeader": true,
+		"exclude": [
+			"jsonc",
+			"json",
+			"markdown",
+			"plaintext",
+			"xml"
+		],
+		"excludeGlob": [
+			"**/settings.json",
+			"**/.gitignore",
+			"**/*.txt",
+			"**/.git/config",
+			"**/.plist",
+			"**/.plist.example",
+		]
+	},
+	"psi-header.lang-config": [
+		{
+			"language": "shellscript",
+			"begin": "",
+			"prefix": "# ",
+			"end": "",
+			"beforeHeader": [
+				"#!/bin/bash"
+			]
+		},
+		{
+			"language": "python",
+			"begin": "###",
+			"prefix": "# ",
+			"end": "###",
+			"beforeHeader": [
+				"#!/usr/bin/env python3",
+				""
+			]
+		},
+		{
+			"language": "javascript",
+			"begin": "/**",
+			"prefix": " * ",
+			"end": " */"
+			// === "blankLinesAfter": 2,
+			// === "forceToTop": false
+		},
+		{
+			"language": "typescript",
+			"mapTo": "javascript"
+		},
+		{
+			"language": "powershell",
+			"begin": "<#",
+			"prefix": "",
+			"end": "#>"
+		}
+	],
+	"psi-header.templates": [
+		{
+			"language": "*",
+			"template": [
+				"================================================================================",
+				"-- File:          <<projectname>>/<<filename>>",
+				"-- Project:       <<project>>",
+				"-- Project URL:   <<project-url>>",
+				"-- Create Date:   <<filecreated('YYYY-MM-DD HH:mm')>>",
+				"-- Author:        <<author>>",
+				// === "-- Author Mail:   <<authoremail>>",
+				"-- Company:       <<company>>",
+				"-- License:       <<licensename>> | <<licenseurl>>",
+				// === "-- Description:   ...",
+				"================================================================================"
+				//"-- History:       Date                 By \tComment",
+				// === "                -------------------  ---\t---------------------------------",
+				// === "================================================================================"
+			]
+			// === "changeLogCaption": "History:"
+			// === "changeLogHeaderLineCount": 1,
+			// === "changeLogEntryTemplate": [
+			// ===   "                  <<dateformat('YYYY-MM-DD HH:mm:ss')>>  <<initials>> \t"
+			// === ]
+		}
+	]
+}
