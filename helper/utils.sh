@@ -221,6 +221,36 @@ mas_update() {
 	declare -r MODULE=$(print_highlight "MAS-Update")
 }
 
+vscode_install_ext() {
+	# vscode_install_ext EXTENSION
+	declare -r EXT=$1                             # Extension
+	declare -r EXT_NAME=$(print_highlight "$EXT") # Extension Name
+	declare -r MODULE=$(print_highlight "VSCode") # Module Name
+
+	# == Check if enough arguments specified == /
+	if [[ "$#" -lt 1 ]]; then
+		print_fail "There are not enough arguments specified for 'vscode_install_ext'! "
+		return 1
+	fi
+
+	if test "$(which code)"; then
+		code --list-extensions | grep "$EXT" -i &>/dev/null
+		if [[ "$?" -eq 0 ]]; then
+			print_success "$MODULE | Extension $EXT_NAME is already installed!"
+			return 2
+		fi
+	else
+		print_error "Application $MODULE is not installed!"
+		return 99
+	fi
+
+	# == Install MAS App == /
+	print_run "$MODULE | Installing extension $EXT_NAME!"
+	code --install-extension "$EXT" &>/dev/null
+	print_result "$?" "$MODULE | Installation of extension $EXT_NAME"
+
+}
+
 # === macOS Defaults Wrapper Functions === /
 defaults_write() {
 	declare -r DOMAIN_NAME=$(print_highlight "$1")
