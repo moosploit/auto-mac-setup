@@ -24,13 +24,13 @@ This script do not have any dependencies, because it is designed for use on a br
 If you want to use the script, you have to clone the repository first to your local machine via the following command:
 
 ```bash
-git clone https://github.com/moosploit/auto-mac-setup.git ~/.dotfiles
+git clone https://github.com/moosploit/auto-mac-setup.git ~/Desktop/auto-mac-setup
 ```
 
-Next go the origin of the downloaded repository and run the setup.sh script.
+Next go the origin of the downloaded repository and run the **./setup.sh** script.
 
 ```bash
-cd ~/.dotfiles
+cd ~/Desktop/auto-mac-setup
 ./setup.sh
 ```
 
