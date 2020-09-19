@@ -68,7 +68,7 @@ setup_config() {
 	fi
 
 	# == Create new folder to store VSCode settings == /
-	mkdir -p $HOME/.dotfiles/vscode &>/dev/null
+	mkdir -p "$DEST_DIR" &>/dev/null
 
 	print_run "$MODULE | Copying $(print_highlight settings.json) to $DEST_DIR_NAME!"
 	cp "$SETTINGS_FILE" "$DEST_DIR/settings.json" &>/dev/null
