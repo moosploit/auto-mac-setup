@@ -13,6 +13,7 @@
 if [[ $(basename ${0}) == $(basename ${BASH_SOURCE}) ]]; then
 	source ../../../helper/output.sh
 	source ../../../helper/utils.sh
+	source ../../../helper/global_variables.sh
 fi
 
 computer_name_setup() {
@@ -198,7 +199,7 @@ apps_in_dock_setup() {
 	add_app_to_dock "left" "VMware Fusion"
 	add_app_to_dock "left" "VirtualBox"
 
-	add_app_to_dock "right" "System Preferences" "System"
+	# add_app_to_dock "right" "System Preferences" "System"
 	add_app_to_dock "right" "AppCleaner"
 
 	kill_app Dock

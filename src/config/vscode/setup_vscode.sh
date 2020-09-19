@@ -13,10 +13,14 @@
 if [[ $(basename ${0}) == $(basename ${BASH_SOURCE}) ]]; then
 	source ../../../helper/output.sh
 	source ../../../helper/utils.sh
-	ROOT_DIR=$(pwd -P)
+	source ../../../helper/global_variables.sh
+	VSCODE_DIR="$ROOT_DIR"
 else
-	ROOT_DIR="$ROOT_DIR/src/config/vscode"
+	VSCODE_DIR="$ROOT_DIR/src/config/vscode"
 fi
+
+# === Directory where the VSCode settings files should be stored === /
+DOTFILES_VSCODE_DIR="$DOTFILES_DIR/vscode"
 
 install_extensions() {
 	ask_for_confirmation "Should I install the extensions now?"
@@ -24,7 +28,7 @@ install_extensions() {
 		return 1
 	fi
 
-	cat $ROOT_DIR/extensions.txt | while read line; do
+	cat $VSCODE_DIR/extensions.txt | while read line; do
 		vscode_install_ext "$line"
 	done
 
@@ -38,7 +42,7 @@ copy_and_link() {
 setup_config() {
 
 	declare -r MODULE=$(print_highlight "VSCode")
-	declare -r DEST_DIR="$HOME/.dotfiles/vscode"
+	declare -r DEST_DIR="$DOTFILES_VSCODE_DIR"
 	declare -r DEST_DIR_NAME=$(print_highlight "$DEST_DIR/")
 
 	local SETTINGS_FILE=""
@@ -53,9 +57,9 @@ setup_config() {
 	ask_for_confirmation "Should I use the default settings?"
 	# == Copy the default files from this folder and symlink them to the origin
 	if answer_is_yes; then
-		SETTINGS_FILE="$ROOT_DIR/example/settings.json"
-		KEYBINDINGS_FILE="$ROOT_DIR/example/keybindings.json"
-		SNIPPETS_DIR="$ROOT_DIR/example/snippets"
+		SETTINGS_FILE="$VSCODE_DIR/example/settings.json"
+		KEYBINDINGS_FILE="$VSCODE_DIR/example/keybindings.json"
+		SNIPPETS_DIR="$VSCODE_DIR/example/snippets"
 	# == Copy the original files and symlink them to the origin
 	else
 		SETTINGS_FILE="$HOME/Library/Application Support/Code/User/settings.json"

@@ -11,9 +11,7 @@
 
 source ./helper/utils.sh
 source ./helper/output.sh
-
-# === Auto Mac Setup Directory === /
-ROOT_DIR=$(pwd -P)
+source ./helper/global_variables.sh
 
 __init__() {
 	print_cat "Meow $(get_full_username)!" "I will help you to auto configure your new Apple Mac."
