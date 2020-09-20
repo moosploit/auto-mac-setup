@@ -91,6 +91,7 @@ __init__() {
 	brew_install "Roboto Mono for Powerline" "font-roboto-mono-for-powerline" "cask"
 	brew_install "Source Code Pro" "font-source-code-pro" "cask"
 	brew_install "Source Code Pro for Powerline" "font-source-code-pro-for-powerline" "cask"
+	brew_install "JetBrains Mono" "font-jetbrains-mono" "cask"
 
 	print_cat "Homebrew | Install some usefull 'Tools'!"
 	brew_install "Keka" "keka" "cask"
