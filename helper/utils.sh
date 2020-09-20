@@ -12,6 +12,7 @@
 # Check whether the script is called directly or via source
 if [[ $(basename ${0}) == $(basename ${BASH_SOURCE}) ]]; then
 	source ./output.sh
+	source ./global_variables.sh
 fi
 
 # === Check Functions === /
@@ -101,6 +102,55 @@ kill_app() {
 		print_result "$?" "Application $app_name killed!"
 	done
 	sleep 2
+}
+
+copy_it_to() {
+	# copy_it_to "MODULE" "COPY_NAME" "SOURCE" "TARGET"
+	declare -r MODULE=$(print_highlight "$1")           # Module name
+	declare -r COPY_NAME=$(print_highlight "$2")        # Copy name
+	declare -r SOURCE="$3"                              # Path to source
+	declare -r TARGET="$4"                              # Path to target
+	declare -r TARGET_NAME=$(print_highlight "$TARGET") # Target Name
+
+	if [[ "$#" -lt 4 ]]; then
+		print_fail "There are not enough arguments specified for 'copy_it_to'! "
+		return 1
+	fi
+
+	print_run "$MODULE | Copying $COPY_NAME to $TARGET_NAME!"
+	if [[ -d "$SOURCE" ]]; then
+		cp -fR "$SOURCE" "$TARGET" &>/dev/null
+	else
+		cp -f "$SOURCE" "$TARGET" &>/dev/null
+	fi
+	print_result "$?" "$MODULE | Copyied $COPY_NAME to $TARGET_NAME!"
+}
+
+create_symlink() {
+	# create_symlink "MODULE" "SYMLINK_NAME" "SOURCE" "TARGET"
+	declare -r MODULE=$(print_highlight "$1")                     # Module name
+	declare -r SYMLINK_NAME=$(print_highlight "$2")               # Symlink name
+	declare -r SOURCE_LINK="$3"                                   # Path to source
+	declare -r SOURCE_LINK_NAME=$(print_highlight "$SOURCE_LINK") # Formated path to source
+	declare -r TARGET_LINK="$4"                                   # Path to target
+
+	if [[ "$#" -lt 4 ]]; then
+		print_fail "There are not enough arguments specified for 'create_symlink'! "
+		return 1
+	fi
+
+	if [[ ! -e "$SOURCE_LINK" ]]; then
+		print_fail "$MODULE | Symlink can't be created, because source $SOURCE_LINK_NAME doesn't exist!"
+		return 2
+	fi
+
+	if [[ -d "$TARGET_LINK" ]]; then
+		rm -r "$TARGET_LINK"
+	fi
+
+	print_run "$MODULE | Creating symlink for $SYMLINK_NAME!"
+	ln -sfn "$SOURCE_LINK" "$TARGET_LINK" &>/dev/null
+	print_result "$?" "$MODULE | Symlink $SYMLINK_NAME created!"
 }
 
 # === User Details Functions === /

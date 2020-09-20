@@ -21,6 +21,7 @@ fi
 
 # === Directory where the VSCode settings files should be stored === /
 DOTFILES_VSCODE_DIR="$DOTFILES_DIR/vscode"
+DOTFILES_VSCODE_DIR_NAME=$(print_heightlight "$DDOTFILES_VSCODE_DIR")
 
 install_extensions() {
 	ask_for_confirmation "Should I install the extensions now?"
@@ -35,15 +36,8 @@ install_extensions() {
 	kill_app Electron
 }
 
-copy_and_link() {
-	:
-}
-
 setup_config() {
-
 	declare -r MODULE=$(print_highlight "VSCode")
-	declare -r DEST_DIR="$DOTFILES_VSCODE_DIR"
-	declare -r DEST_DIR_NAME=$(print_highlight "$DEST_DIR/")
 
 	local SETTINGS_FILE=""
 	local KEYBINDINGS_FILE=""
@@ -68,34 +62,16 @@ setup_config() {
 	fi
 
 	# == Create new folder to store VSCode settings == /
-	mkdir -p "$DEST_DIR" &>/dev/null
+	mkdir -p "$DOTFILES_VSCODE_DIR" &>/dev/null
 
-	print_run "$MODULE | Copying $(print_highlight settings.json) to $DEST_DIR_NAME!"
-	cp "$SETTINGS_FILE" "$DEST_DIR/settings.json" &>/dev/null
-	print_result "$?" "$MODULE | Copyied $(print_highlight settings.json) to $DEST_DIR_NAME!"
+	copy_it_to "$MODULE" "settings.json" "$SETTINGS_FILE" "$DOTFILES_VSCODE_DIR/settings.json"
+	create_symlink "$MODULE" "settings.json" "$DOTFILES_VSCODE_DIR/settings.json" "$HOME/Library/Application Support/Code/User/settings.json"
 
-	print_run "$MODULE | Create symlink for $(print_highlight settings.json)!"
-	ln -sf "$DEST_DIR/settings.json" "$HOME/Library/Application Support/Code/User/settings.json"
-	print_result "$?" "$MODULE | Symlink $(print_highlight settings.json) created!"
+	copy_it_to "$MODULE" "keybindings.json" "$KEYBINDINGS_FILE" "$DOTFILES_VSCODE_DIR/keybindings.json"
+	create_symlink "$MODULE" "keybindings.json" "$DOTFILES_VSCODE_DIR/keybindings.json" "$HOME/Library/Application Support/Code/User/keybindings.json"
 
-	print_run "$MODULE | Copying $(print_highlight keybindings.json) to $DEST_DIR_NAME!"
-	cp "$KEYBINDINGS_FILE" "$DEST_DIR/keybindings.json" &>/dev/null
-	print_result "$?" "$MODULE | Copyied $(print_highlight keybindings.json) to $DEST_DIR_NAME!"
-
-	print_run "$MODULE | Create symlink for $(print_highlight keybindings.json)!"
-	ln -sf "$DEST_DIR/keybindings.json" "$HOME/Library/Application Support/Code/User/keybindings.json"
-	print_result "$?" "$MODULE | Symlink $(print_highlight keybindings.json) created!"
-
-	print_run "$MODULE | Copying folder $(print_highlight snippets/) to $DEST_DIR_NAME!"
-	cp -R "$SNIPPETS_DIR" "$DEST_DIR" &>/dev/null
-	print_result "$?" "$MODULE | Copyied folder $(print_highlight snippets/) to $DEST_DIR_NAME!"
-
-	print_run "$MODULE | Create symlink for folder $(print_highlight snippets/)!"
-	if [[ ! -h "$HOME/Library/Application Support/Code/User/snippets" ]]; then
-		rm -r "$HOME/Library/Application Support/Code/User/snippets"
-	fi
-	ln -sf "$DEST_DIR/snippets" "$HOME/Library/Application Support/Code/User"
-	print_result "$?" "$MODULE | Symlink for folder $(print_highlight snippets/) created!"
+	copy_it_to "$MODULE" "snippets/" "$SNIPPETS_DIR" "$DOTFILES_VSCODE_DIR"
+	create_symlink "$MODULE" "snippets/" "$DOTFILES_VSCODE_DIR/snippets" "$HOME/Library/Application Support/Code/User/snippets"
 
 	kill_app Electron
 }
