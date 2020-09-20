@@ -392,6 +392,32 @@ screencapture_setup() {
 	defaults_write "Screencapture" "com.apple.screencapture" "disable-shadow" "bool" "true"
 }
 
+time_machine_setup() {
+	ask_for_confirmation "Should I setup the timemachine settings now?"
+	if ! answer_is_yes; then
+		return 1
+	fi
+
+	# == Disable Time Machine prompting to use new hard drives as backup volume [true|false] ==/
+	defaults_write "TimeMachine" "com.apple.TimeMachine" "DoNotOfferNewDisksForBackup" "bool" "true"
+}
+
+activity_monitor_setup() {
+	ask_for_confirmation "Should I setup the timemachine settings now?"
+	if ! answer_is_yes; then
+		return 1
+	fi
+
+	# ==  Show the main window when launching Activity Monitor [true|false] ==/
+	defaults_write "ActivityMonitor" "com.apple.ActivityMonitor" "OpenMainWindow" "bool" "true"
+
+	# == Change Activity Monitor Dock icon to visualize ... [0=ApplicationSymbol|2=Network|3=Harddrive|5=CPU|6=CPU-History] ==/
+	defaults_write "ActivityMonitor" "com.apple.ActivityMonitor" "IconType" "int" "5"
+
+	# == Show all processes in Activity Monitor == /
+	defaults_write "ActivityMonitor" "com.apple.ActivityMonitor" "ShowCategory" "int" "100"
+}
+
 __init__() {
 	ask_for_sudo
 
@@ -404,13 +430,13 @@ __init__() {
 	print_cat "Setting up general settings!"
 	general_setup
 
-	print_cat "Setting up your dock!"
+	print_cat "Setting up your Dock!"
 	dock_setup
 
 	print_cat "Setting up the applications inside your dock!"
 	apps_in_dock_setup
 
-	print_cat "Setting up mission control!"
+	print_cat "Setting up Mission Control!"
 	mission_control_setup
 
 	print_cat "Setting up Siri!"
@@ -419,17 +445,23 @@ __init__() {
 	print_cat "Setting up Language and Region!"
 	lang_reg_setup
 
-	print_cat "Setting up keyboard!"
+	print_cat "Setting up Keyboard!"
 	keyboard_setup
 
-	print_cat "Setting up trackpad!"
+	print_cat "Setting up Trackpad!"
 	trackpad_setup
 
 	print_cat "Setting up the Finder for you!"
 	finder_setup
 
-	print_cat "Setting up screencapture for you!"
+	print_cat "Setting up Screen Capture for you!"
 	screencapture_setup
+
+	print_cat "Setting up TimeMachine for you"
+	time_machine_setup
+
+	print_cat "Setting up Activity Monitor for you"
+	activity_monitor_setup
 }
 
 __init__
