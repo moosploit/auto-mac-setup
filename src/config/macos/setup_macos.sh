@@ -96,7 +96,6 @@ general_setup() {
 }
 
 dock_setup() {
-
 	ask_for_confirmation "Should I setup your dock?"
 	if ! answer_is_yes; then
 		return 1
@@ -257,6 +256,16 @@ lang_reg_setup() {
 	defaults_write "Lang and Region" "NSGlobalDomain" "AppleTemperatureUnit" "string" "Celsius;"
 }
 
+user_group_setup() {
+	ask_for_confirmation "Should I setup some User and Group settings now?"
+	if ! answer_is_yes; then
+		return 1
+	fi
+
+	# == System Preferences > Users & Groups > Guest User Access [true|false]
+	defaults_write "Users-Groups" "/Library/Preferences/com.apple.loginwindow" "GuestEnabled" "bool" "false"
+}
+
 keyboard_setup() {
 	ask_for_confirmation "Should I setup the keyboard settings now?"
 	if ! answer_is_yes; then
@@ -376,8 +385,37 @@ finder_setup() {
 	kill_app Finder cfprefsd
 }
 
+music_setup() {
+	ask_for_confirmation "Should I setup the Music settings now?"
+	if ! answer_is_yes; then
+		return 1
+	fi
+
+	# == Music > Preferences > General > Show Store in Sidebar [1=don't show|2=show] ==/
+	defaults_write "Music" "com.apple.Music" "showStoreInSidebar" "int" "2"
+
+	# == Music > Preferences > General > Playback Notifications [true|false] ==/
+	defaults_write "Music" "com.apple.Music" "userWantsPlaybackNotifications" "bool" "true"
+
+	# == Music > Preferences > Playback > Crossfasde [true|false] ==/
+	defaults_write "Music" "com.apple.Music" "crossfadeEnabled" "bool" "true"
+
+	# == Music > Preferences > Playback > Sound Ehancer [true|false] ==/
+	defaults_write "Music" "com.apple.Music" "soundEnhancerEnabled" "bool" "true"
+
+	# == Music > Preferences > Advanced > Auto Download Cover Artwork [true|false] ==/
+	defaults_write "Music" "com.apple.Music" "automaticallyDownloadArtwork" "bool" "true"
+
+	# == Music > Preferences > Advanced > Mini Player always on top [true|false] ==/
+	defaults_write "Music" "com.apple.Music" "miniPlayerAlwaysOnTop" "bool" "true"
+
+	# == Music > Preferences > Advanced > Movie Window always on top [true|false] ==/
+	defaults_write "Music" "com.apple.Music" "movieWindowAlwaysOnTop" "bool" "false"
+
+}
+
 screencapture_setup() {
-	ask_for_confirmation "Should I setup the screencapture settings now?"
+	ask_for_confirmation "Should I setup the ScreenCapture settings now?"
 	if ! answer_is_yes; then
 		return 1
 	fi
@@ -445,6 +483,9 @@ __init__() {
 	print_cat "Setting up Language and Region!"
 	lang_reg_setup
 
+	print_cat "Setting up Users and Groups!"
+	user_group_setup
+
 	print_cat "Setting up Keyboard!"
 	keyboard_setup
 
@@ -453,6 +494,9 @@ __init__() {
 
 	print_cat "Setting up the Finder for you!"
 	finder_setup
+
+	print_cat "Setting up the application Music for you!"
+	music_setup
 
 	print_cat "Setting up Screen Capture for you!"
 	screencapture_setup
