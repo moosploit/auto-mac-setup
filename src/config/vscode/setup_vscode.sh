@@ -21,6 +21,7 @@ fi
 
 # === Directory where the VSCode settings files should be stored === /
 DOTFILES_VSCODE_DIR="$DOTFILES_DIR/vscode"
+mkdir -p "$DOTFILES_VSCODE_DIR" &>/dev/null # == Create new folder to store VSCode settings == /
 DOTFILES_VSCODE_DIR_NAME=$(print_highlight "$DDOTFILES_VSCODE_DIR")
 
 install_extensions() {
@@ -60,9 +61,6 @@ setup_config() {
 		KEYBINDINGS_FILE="$HOME/Library/Application Support/Code/User/keybindings.json"
 		SNIPPETS_DIR="$HOME/Library/Application Support/Code/User/snippets"
 	fi
-
-	# == Create new folder to store VSCode settings == /
-	mkdir -p "$DOTFILES_VSCODE_DIR" &>/dev/null
 
 	copy_it_to "$MODULE" "settings.json" "$SETTINGS_FILE" "$DOTFILES_VSCODE_DIR/settings.json"
 	create_symlink "$MODULE" "settings.json" "$DOTFILES_VSCODE_DIR/settings.json" "$HOME/Library/Application Support/Code/User/settings.json"
