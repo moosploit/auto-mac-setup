@@ -69,6 +69,7 @@ __init__() {
 	brew_install "Python3" "python"
 	brew_install "Pipenv" "pipenv"
 	brew_install "Tldr" "tldr"
+	brew_install "GitHub CLI" "gh"
 	# brew_install "Zsh-autosuggestions" "zsh-autosuggestions"
 	# brew_install "Zzsh-syntax-highlighting" "zsh-syntax-highlighting"
 	# brew_install "ssllabs-scan | Command-line client for the SSL Labs APIs" "ssllabs-scan"
