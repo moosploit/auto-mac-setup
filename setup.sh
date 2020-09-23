@@ -47,6 +47,9 @@ __init__() {
 
 	# === Configure Application Visual Studio Code === /
 	source ./src/config/vscode/setup_vscode.sh
+
+	# === Configure SSH === /
+	source ./src/config/ssh/setup_ssh.sh
 }
 
 __init__
