@@ -14,3 +14,8 @@ ROOT_DIR=$(pwd -P)
 
 # === Dotfiles directory where the settings will be stored === /
 DOTFILES_DIR="$HOME/.dotfiles"
+mkdir -p "$DOTFILES_DIR" && chmod 700 "$DOTFILES_DIR"
+
+# === Backup directory where the current settings will be backed up === /
+BKP_DATE=$(date +"%d-%m-%Y_%H-%M-%S")
+BACKUP_DIR="$DOTFILES_DIR/_backup/backup-$BKP_DATE"
