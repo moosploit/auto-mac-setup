@@ -21,7 +21,7 @@ fi
 
 # === Directory where the VSCode settings files should be stored === /
 DOTFILES_VSCODE_DIR="$DOTFILES_DIR/vscode"
-DOTFILES_VSCODE_DIR_NAME=$(print_heightlight "$DDOTFILES_VSCODE_DIR")
+DOTFILES_VSCODE_DIR_NAME=$(print_highlight "$DDOTFILES_VSCODE_DIR")
 
 install_extensions() {
 	ask_for_confirmation "Should I install the extensions now?"
