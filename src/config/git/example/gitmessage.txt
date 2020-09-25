@@ -1,19 +1,17 @@
 # === Title of commit message (no more than 50 chars)=== /
-# <type>:(<ref number>) <short summary> 
-#   |           |              |
-#   |           |              └─> Summary in present tense
-#   |           └─> Refers to story/card/issue #
-#   └─> Type: Add|Drop|Fix|Bump|Make|Start|Stop|Doc|Optimze|Refactor|Reformat|Rephrase
+<type>: (<ref number>) <short summary>
+#  |           |              |
+#  |           |              └─> Summary in present tense
+#  |           └─> Refers to story/card/issue #
+#  └─> Type: Add|Drop|Fix|Bump|Make|Start|Stop|Doc|Optimze|Refactor|Reformat|Rephrase
 #
-<type>:(<ref number>) <short summary>
-#
+# === Why do we need this commit? === /
+[DESCRIPTION]
+Short description text here
+
 # === List of issues === /
 # [ISSUES]
 # **<type>** - *<issue name>*
-#
-# === Why do we need this commit? === /
-# [DESCRIPTION]
-# Short description text here
 #
 # === Step-by-step instructions for practical testing === /
 # [STEPS TO TEST]
@@ -27,6 +25,7 @@
 # [REFERENCES]
 # 1. [Example](https://example.com) - Example
 #
+# ===
 #
 # === HELP === /
 # Commit subject line should not exceed 50 characters.
@@ -47,3 +46,5 @@
 # Refactor = A change that MUST be just refactoring.
 # Reformat = A change that MUST be just format, e.g. indent line, trim space, etc.
 # Rephrase = A change that MUST be just textual, e.g. edit a comment, doc, etc.
+#
+# ===
