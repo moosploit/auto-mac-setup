@@ -50,6 +50,9 @@ __init__() {
 
 	# === Configure SSH === /
 	source ./src/config/ssh/setup_ssh.sh
+
+	# === Configure GIT === /
+	source ./src/config/git/setup_git.sh
 }
 
 __init__

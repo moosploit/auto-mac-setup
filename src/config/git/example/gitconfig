@@ -1,0 +1,64 @@
+# === Core configurations === /
+[core]
+	editor = code --wait
+	excludesfile = ~/.dotfiles/git/gitignore
+
+# === Define some git aliases === /
+[alias]
+	discard = reset --hard HEAD
+	ch = checkout
+	sign = commit -S -m
+	signtag = 'tag -s -m ""'
+	d = diff
+
+	graph = log --graph
+	last = log -n 10
+
+[filter "lfs"]
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+
+# === Setup diff === /
+[diff]
+	tool = vscode
+[difftool "vscode"]
+	cmd = code --wait --diff $LOCAL $REMOTE
+
+# === Setup all color related informations === /
+[color]
+	ui = auto
+[color "diff"]
+	meta = yellow bold
+	commit = green bold
+	frag = magenta bold
+	old = red bold
+	new = green bold
+	whitespace = red reverse
+    newMoved = cyan
+    oldMoved = blue
+[color "diff-highlight"]
+	oldNormal = red bold
+	oldHighlight = "red bold 52"
+	newNormal = "green bold"
+	newHighlight = "green bold 22"
+[color "branch"]
+	current = yellow reverse
+	local = yellow
+	remote = green
+[color "status"]
+	added = yellow
+	changed = green
+	untracked = cyan
+
+[init]
+	defaultBranch = main
+
+# === Use git message template for commits === /
+[commit]
+	template = ~/.dotfiles/git/gitmessage.txt
+
+# === Include user specific details === /
+[include]
+	path = ~/.dotfiles/git/gitconfig.local
