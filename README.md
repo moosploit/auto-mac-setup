@@ -6,20 +6,18 @@
 
 This script will automatically setup your clean-installed or brand-new Apple Mac with ease.
 
-## Installation
-
-### Disclaimer
+## Disclaimer
 
 Before you procceed keep in mind, that this script will override your current setup and you may loose some of your own configurations. Please do not use this script blindly unless you know what each functions entails.
 
 Best way would be to fork the repository and customize the script for your personal needs.  
 **Use this script at your own risk!**
 
-### Dependecies
+## Dependencies
 
 This script do not have any dependencies, because it is designed for use on a brand-new or clean-installed Apple Mac.
 
-### Setup
+## Installation
 
 If you want to use the script, you have to clone the repository first to your local machine via the following command:
 
@@ -27,7 +25,8 @@ If you want to use the script, you have to clone the repository first to your lo
 git clone https://github.com/moosploit/auto-mac-setup.git ~/Desktop/auto-mac-setup
 ```
 
-Next go the origin of the downloaded repository and run the **./setup.sh** script.
+Next go the origin of the downloaded repository and run the `./setup.sh` script.  
+For example:
 
 ```bash
 cd ~/Desktop/auto-mac-setup
