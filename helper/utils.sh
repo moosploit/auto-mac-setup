@@ -241,6 +241,31 @@ brew_tap() {
 
 }
 
+# === Ruby Wrapper Functions === /
+ruby_install() {
+	# ruby_install colorls
+	declare -r FORMULA_NAME=$(print_highlight "$1") # ColorLS
+	declare -r FORMULA="$2"                         # colorls
+	declare -r MODULE=$(print_highlight "Ruby-Install")
+
+	if [[ "$#" -lt 2 ]]; then
+		print_fail "There are not enough arguments specified for 'ruby_install'! "
+		return 1
+	fi
+
+	# == Check if ruby formula already installed == /
+	gem list "$FORMULA" &>/dev/null
+	if [[ "$?" -eq 0 ]]; then
+		print_success "$MODULE | Formula $FORMULA_NAME is already installed!"
+		return 2
+	fi
+
+	# == Install ruby formula == /
+	print_run "$MODULE | Installing formula $FORMULA_NAME!"
+	sudo gem install "$FORMULA" &>/dev/null
+	print_result "$?" "$MODULE | Installation of formula $FORMULA_NAME"
+}
+
 # === MacAppStore (MAS) Wrapper Functions === /
 mas_install() {
 	# mas_install "Numbers" "409203825"
