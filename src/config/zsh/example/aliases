@@ -1,0 +1,59 @@
+# ================================================================================
+# -- Author:        Michael Linder
+# -- Company:       moosploit.com
+# -- Project URL:   https://github.com/moosploit/auto-mac-setup
+# -- License:       MIT License | http://www.opensource.org/licenses/MIT
+# -- Description:   Some usefull predefinied aliases
+# ================================================================================
+
+# === General aliases === /
+alias myip="curl http://ipecho.net/plain; echo"
+
+# === ZSH aliases === /
+alias reload="source ~/.zshrc"
+
+# === List aliases | ColorLS === /
+alias ll='colorls -al --sd --gs'
+#					|	|	 └─	Shows git status informations within the list
+#					|	└─	Shows the directories in the folder first
+#					└─	Shows all files within a long list
+alias lct='colorls --sd --tree'
+#					|		└─	Shows a tree view of the current folder
+#					└─	Shows the directories in the folder first
+
+# === File aliases === /
+alias cp='cp -iv' # Copy files/folders interatively in verbose mode
+alias mv='mv -iv' # Move files/folders interatively in verbose mode
+# alias rm='rm -i'  # Remove files interatively
+
+# === Disk usage aliases === /
+alias dud="du -d 1 -h" # Human readable disk usage of folders within the current folder
+alias duf="du -sh *"   # Summarized human readable disk usage of all files within the current folder
+
+# === Ping aliases === /
+alias ping="ping 8.8.8.8"
+
+# === Folder aliases === /
+alias doc="$HOME/Documents"
+alias dow="$HOME/Downloads"
+alias dot="$HOME/.dotfiles"
+
+# === Git aliases === /
+alias ga="git add"
+alias gaa="git add --all"
+alias gav="git add --verbose"
+alias gau="git add --update"
+
+alias gst="git status"
+alias gss="git status -s"
+
+alias gc="git commit -v"
+
+alias gf="git fetch -v"
+
+alias gf="git fetch -v"
+
+alias gl="git pull -v origin '$(git_current_branch)'"
+
+alias gp="git push -v origin '$(git_current_branch)'"
+alias gpd="git push --dry-run"

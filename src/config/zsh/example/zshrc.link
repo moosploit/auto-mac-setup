@@ -1,0 +1,35 @@
+#!/bin/zsh
+# ================================================================================
+# -- Author:        Michael Linder
+# -- Company:       moosploit.com
+# -- Project URL:   https://github.com/moosploit/auto-mac-setup
+# -- License:       MIT License | http://www.opensource.org/licenses/MIT
+# -- Description:   ZSHRC will allways be sourced and contains interactive shell
+#                   configurations
+# ================================================================================
+
+# === oh-my-zsh configuration === /
+ZSH_THEME="powerlevel10k/powerlevel10k" # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
+ZSH_CUSTOM="$ZSH/custom"                # Set path to ~/.oh-my-zsh/custom
+
+plugins=(
+	sudo
+	python
+	extract
+	history
+	pip
+	colored-man-pages
+	zsh-autosuggestions
+	zsh-syntax-highlighting
+	z
+)
+
+# === Source external configurations === /
+[[ ! -f $ZSH/oh-my-zsh.sh ]] || source $ZSH/oh-my-zsh.sh               # Source the oh-my-zsh framework
+[[ ! -f $ZSH_DOTFILES/aliases ]] || source $ZSH_DOTFILES/aliases       # Additional terminal aliases
+[[ ! -f $ZSH_DOTFILES/functions ]] || source $ZSH_DOTFILES/functions   # Additional terminal functions
+[[ ! -f ~/.dotfiles/zsh/p10k.zsh ]] || source ~/.dotfiles/zsh/p10k.zsh # Load config for zsh theme Powerlevel10K
+source $(dirname $(gem which colorls))/tab_complete.sh                 # Enable tab completion for flags in colorls
+
+# === ZSH configuration === /
+HIST_STAMPS="yyyy-mm-dd" # Optional formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"

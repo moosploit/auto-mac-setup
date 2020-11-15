@@ -1,0 +1,31 @@
+#!/bin/zsh
+# ================================================================================
+# -- Author:        Michael Linder
+# -- Company:       moosploit.com
+# -- Project URL:   https://github.com/moosploit/auto-mac-setup
+# -- License:       MIT License | http://www.opensource.org/licenses/MIT
+# -- Description:   ZSHENV will allways be sourced and contains environmental
+#                   relevant configurations and contains exported variables that
+#                   should be available to other programs
+# ================================================================================
+
+# === General === /
+export DOTFILES="$HOME/.dotfiles" # Path to the dotfiles directory
+export GPG_TTY=$(tty)             # For git commit signing
+
+# === Language === /
+if [[ -z "$LANG" ]]; then
+	export LANG='de_DE.UTF-8' # Sets the language variable to german with utf-8
+fi
+
+# === Editor === /
+export EDITOR="/usr/local/bin/code" # General text editor
+export VISUAL="$EDITOR"             # Visual text editor
+export HOMEBREW_EDITOR="$EDITOR"    # Visual text editor for homebrew
+
+# === ZSH === /
+export ZSH="$HOME/.oh-my-zsh"                # Path to your oh-my-zsh installation.
+export ZSH_DOTFILES="$DOTFILES/zsh"          # Defines the directory where other zsh config files are located
+export HISTFILE="$ZSH_DOTFILES/.zsh_history" # History filepath for zsh
+export HISTSIZE=10000                        # Maximum events for internal history
+export SAVEHIST=10000                        # Maximum events in history file
