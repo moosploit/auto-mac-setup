@@ -30,6 +30,9 @@ __init__() {
 	# === Install Applications via Homebrew === /
 	source ./src/install/homebrew/brew_install.sh
 
+	# === Install Applications via Ruby === /
+	source ./src/install/ruby/ruby_install.sh
+
 	# === Install Applications via Mac App Store === /
 	source ./src/install/mas/mas_install.sh
 
