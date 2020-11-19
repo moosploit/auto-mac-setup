@@ -1,11 +1,11 @@
 {
 	// === Editor === /
-	"editor.fontSize": 16,
+	"editor.fontSize": 14,
 	"editor.lineHeight": 22,
-	//   "editor.letterSpacing": 0.2,
-	"editor.fontWeight": "400",
-	"editor.fontFamily": "'RobotoMono Nerd Font','Hack Nerd Font','Fira Code'",
-	"editor.fontLigatures": false,
+	"editor.letterSpacing": 0.2,
+	"editor.fontWeight": "300",
+	"editor.fontFamily": "'Cascadia Code', 'JetBrains Mono','Fira Code'",
+	"editor.fontLigatures": true, // Cascadia Code | Fire Code => true
 	"editor.wordWrap": "on",
 	"editor.renderWhitespace": "boundary",
 	"editor.formatOnSave": true,
@@ -13,6 +13,7 @@
 	"editor.formatOnSaveMode": "modifications",
 	"editor.cursorStyle": "line",
 	"editor.cursorWidth": 2,
+	"editor.cursorBlinking": "expand",
 	"editor.tokenColorCustomizations": {
 		"textMateRules": [
 			{
@@ -35,13 +36,13 @@
 	"editor.suggestSelection": "first",
 	"editor.renderControlCharacters": false,
 	"editor.renameOnType": true,
-	// == Editor | Identation configuration == /
+	// === Editor | Identation configuration === /
 	"editor.tabSize": 4,
 	"editor.insertSpaces": false,
 	"editor.detectIndentation": false,
 	// === Workbench === /
 	"workbench.iconTheme": "material-icon-theme",
-	"workbench.colorTheme": "Dracula Soft",
+	"workbench.colorTheme": "Dracula",
 	"workbench.colorCustomizations": {
 		"[Cobalt2]": {
 			"tab.activeBorder": "#fff",
@@ -52,9 +53,11 @@
 	"workbench.startupEditor": "none",
 	"workbench.settings.editor": "json",
 	"workbench.settings.openDefaultSettings": true,
-	"workbench.settings.useSplitJSON": false,
+	"workbench.settings.useSplitJSON": true,
 	// === Window === /
-	"window.zoomLevel": 0,
+	"window.zoomLevel": 1,
+	"window.titleSeparator": " | ",
+	"window.title": "${activeFolderMedium}${separator}${rootName}",
 	// === Files === /
 	"files.exclude": {
 		"**/.vscode": false,
@@ -97,9 +100,9 @@
 	// === Terminal | Internal === /
 	"terminal.integrated.shell.osx": "/bin/zsh",
 	"terminal.integrated.shell.windows": "C:\\Windows\\System32\\bash.exe",
-	"terminal.integrated.fontFamily": "MesloLGS Nerd Font",
-	"terminal.integrated.fontWeightBold": "normal",
-	"terminal.integrated.fontSize": 14,
+	"terminal.integrated.fontFamily": "'Fira Code', MesloLGS Nerd Font",
+	"terminal.integrated.fontWeightBold": "300",
+	"terminal.integrated.fontSize": 12,
 	"terminal.integrated.fontWeight": "100",
 	// === Terminal | External === /
 	"terminal.external.osxExec": "iTerm.app",
@@ -119,7 +122,7 @@
 	// === Extension | VSIntelliCode === /
 	"vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
 	// === Extension | Code Settings Sync === /
-	"sync.gist": "",
+	"sync.gist": "a741b206a61e6c17c597924af1ee5411",
 	"sync.forceUpload": true,
 	// === Extension | Code Runner === /
 	"code-runner.executorMap": {
@@ -208,15 +211,25 @@
 			"json",
 			"markdown",
 			"plaintext",
-			"xml"
+			"properties",
+			"xml",
+			"gitconfig",
+			"git-commit",
+			"makefile",
+			"latex",
+			"bibtex",
+			"tex"
 		],
 		"excludeGlob": [
 			"**/settings.json",
+			"**/*.symlink",
 			"**/.gitignore",
+			"**/.gitconfig",
 			"**/*.txt",
 			"**/.git/config",
-			"**/.plist",
-			"**/.plist.example",
+			"**/*.plist",
+			"**/*.plist.example",
+			"**/*.zsh"
 		]
 	},
 	"psi-header.lang-config": [
@@ -283,5 +296,9 @@
 			// ===   "                  <<dateformat('YYYY-MM-DD HH:mm:ss')>>  <<initials>> \t"
 			// === ]
 		}
-	]
+	],
+	"python.showStartPage": false,
+	"[markdown]": {
+		"editor.defaultFormatter": "yzhang.markdown-all-in-one"
+	}
 }
