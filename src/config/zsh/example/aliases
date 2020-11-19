@@ -13,13 +13,11 @@ alias myip="curl http://ipecho.net/plain; echo"
 alias reload="source ~/.zshrc"
 
 # === List aliases | ColorLS === /
-alias ll='colorls -al --sd --gs'
-#					|	|	 └─	Shows git status informations within the list
-#					|	└─	Shows the directories in the folder first
-#					└─	Shows all files within a long list
-alias lct='colorls --sd --tree'
-#					|		└─	Shows a tree view of the current folder
-#					└─	Shows the directories in the folder first
+alias ls="colorls -A --sort-dirs"
+alias ll='colorls -al --sort-dirs --git-status'
+alias lsd='colorls -ald --sort-dirs --git-status'
+alias lsf='colorls -alf --sort-dirs --git-status'
+alias lt='colorls --tree --sort-dirs'
 
 # === File aliases === /
 alias cp='cp -iv' # Copy files/folders interatively in verbose mode
@@ -31,7 +29,7 @@ alias dud="du -d 1 -h" # Human readable disk usage of folders within the current
 alias duf="du -sh *"   # Summarized human readable disk usage of all files within the current folder
 
 # === Ping aliases === /
-alias ping="ping 8.8.8.8"
+alias pg="ping 8.8.8.8"
 
 # === Folder aliases === /
 alias doc="$HOME/Documents"
