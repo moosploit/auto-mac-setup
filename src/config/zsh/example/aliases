@@ -14,10 +14,10 @@ alias reload="source ~/.zshrc"
 
 # === List aliases | ColorLS === /
 alias ls="colorls -A --sort-dirs"
-alias ll='colorls -al --sort-dirs --git-status'
+alias lsl='colorls -al --sort-dirs --git-status'
 alias lsd='colorls -ald --sort-dirs --git-status'
 alias lsf='colorls -alf --sort-dirs --git-status'
-alias lt='colorls --tree --sort-dirs'
+alias lst='colorls --tree --sort-dirs'
 
 # === File aliases === /
 alias cp='cp -iv' # Copy files/folders interatively in verbose mode
@@ -42,16 +42,25 @@ alias gaa="git add --all"
 alias gav="git add --verbose"
 alias gau="git add --update"
 
+alias gc="git commit"
+
+alias gd="git diff"
+alias gds="git diff --staged"
+alias gdy="git yesterday"
+
+alias gf="git fetch -v"
+alias gfa="git fetch --all --prune"
+
+alias gl="git quicklog"
+alias gll="git quicklog-long"
+alias gls="git quicklog-stat"
+
+alias ggl="git pull -v origin '$(git_current_branch)'"
+
+alias ggp="git push -v origin '$(git_current_branch)'"
+alias ggpd="git push --dry-run"
+
+alias gr="git restore --staged"
+
 alias gst="git status"
 alias gss="git status -s"
-
-alias gc="git commit -v"
-
-alias gf="git fetch -v"
-
-alias gf="git fetch -v"
-
-alias gl="git pull -v origin '$(git_current_branch)'"
-
-alias gp="git push -v origin '$(git_current_branch)'"
-alias gpd="git push --dry-run"
