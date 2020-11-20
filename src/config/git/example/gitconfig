@@ -3,6 +3,14 @@
 	editor = code --wait
 	excludesfile = ~/.dotfiles/git/gitignore
 
+# === Pull configurations === /
+[pull]
+	rebase = true
+
+# === Fetch configurations === /
+[fetch]
+	prune = true
+
 # === Define some git aliases === /
 [alias]
 	discard = reset --hard HEAD
@@ -11,8 +19,18 @@
 	signtag = 'tag -s -m ""'
 	d = diff
 
+	r = remote
+	rb = rebase
+	rl = reflog
+
 	graph = log --graph
 	last = log -n 10
+
+	quicklog = log --graph --oneline --decorate -10 --pretty=format:'%C(yellow)%h%C(reset) -%C(auto)%d%Creset %s %Cgreen(%ad - %cr) %C(bold blue)<%an>%Creset' --date=short
+	quicklog-long = log --graph --oneline --decorate --pretty=format:'%C(yellow)%h%C(reset) -%C(auto)%d%Creset %s %Cgreen(%ad - %cr) %C(bold blue)<%an>%Creset' --date=short
+	quicklog-stat = log --graph --oneline --decorate --pretty=format:'%C(yellow)%h%C(reset) -%C(auto)%d%Creset %s %Cgreen(%ad - %cr) %C(bold blue)<%an>%Creset' --date=short --stat
+
+	yesterday = diff --stat 'HEAD@{yesterday}' 'HEAD@{midnight}'
 
 [filter "lfs"]
 	smudge = git-lfs smudge -- %f
@@ -23,6 +41,7 @@
 # === Setup diff === /
 [diff]
 	tool = vscode
+	colorMoved = zebra
 [difftool "vscode"]
 	cmd = code --wait --diff $LOCAL $REMOTE
 
@@ -36,8 +55,8 @@
 	old = red bold
 	new = green bold
 	whitespace = red reverse
-    newMoved = cyan
-    oldMoved = blue
+	newMoved = cyan
+	oldMoved = blue
 [color "diff-highlight"]
 	oldNormal = red bold
 	oldHighlight = "red bold 52"
@@ -52,6 +71,7 @@
 	changed = green
 	untracked = cyan
 
+# === Setup the initial configuration === /
 [init]
 	defaultBranch = main
 
