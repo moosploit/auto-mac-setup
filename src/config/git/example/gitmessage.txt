@@ -1,10 +1,19 @@
 # === Title of commit message (no more than 50 chars)=== /
-<type>: (<ref number>) <short summary>
-#  |           |              |
-#  |           |              └─> Summary in present tense
-#  |           └─> Refers to story/card/issue #
-#  └─> Type: Add|Drop|Fix|Bump|Make|Start|Stop|Doc|Optimze|Refactor|Reformat|Rephrase
-#
+[type] (<ref number>) <short summary>
+#  |         |               |
+#  |         |               └─⫸ Short Summary in present tense. Not capitalized. No period at the end.
+#  |         └─⫸ Refers to story/card/issue/scope numnber
+#  └─⫸ Type: ADD|DEL|FIX|BUILD|DOCS|OPT|REF|FORMAT|PHRASE
+#              |   |   |    |    |    |   |    |      └─⫸ A change that MUST be just textualetc.
+#              |   |   |    |    |    |   |    └─⫸ A change that MUST be just format, e.g. indent line, trim space, etc.
+#              |   |   |    |    |    |   └─⫸ A change that MUST be just refactoring.
+#              |   |   |    |    |    └─⫸ A change that MUST be just about performance, e.g. speed up code.
+#              |   |   |    |    └─⫸ A change that MUST be only in the documentation, e.g. help files.
+#              |   |   |    └─⫸ Change the build process, or tools, or infrastructure.
+#              |   |   └─⫸ Fix an issue e.g. bug, typo, accident, misstatement.
+#              |   └─⫸ Delete a capability e.g. feature, test, dependency.
+#              └─⫸ Create a capability e.g. feature, test, dependency.
+
 # === Why do we need this commit? === /
 [DESCRIPTION]
 Short description text here
@@ -18,33 +27,12 @@ Short description text here
 # 1. First
 #
 # === List of changed files === /
-# [CHANGELIST]
-# *
+[CHANGELIST]
+#
 #
 # === (optional) Links to reference materials that may provide context === /
 # [REFERENCES]
 # 1. [Example](https://example.com) - Example
 #
-# ===
-#
-# === HELP === /
-# Commit subject line should not exceed 50 characters.
-# Remainder of gitmessage should wrap at 72 characters.
-# Use github-flavored markdown for formatting and links
-# (links should not be line-wrapped)
-#
-# == Title types explained == /
-# Add      = Create a capability e.g. feature, test, dependency.
-# Drop     = Delete a capability e.g. feature, test, dependency.
-# Fix      = Fix an issue e.g. bug, typo, accident, misstatement.
-# Bump     = Increase the version of something e.g. a dependency.
-# Make     = Change the build process, or tools, or infrastructure.
-# Start    = Begin doing something; e.g. enable a toggle, feature flag, etc.
-# Stop     = End doing something; e.g. disable a toggle, feature flag, etc.
-# Doc      = A change that MUST be only in the documentation, e.g. help files.
-# Optimze  = A change that MUST be just about performance, e.g. speed up code.
-# Refactor = A change that MUST be just refactoring.
-# Reformat = A change that MUST be just format, e.g. indent line, trim space, etc.
-# Rephrase = A change that MUST be just textual, e.g. edit a comment, doc, etc.
 #
 # ===
