@@ -29,3 +29,6 @@ export ZSH_DOTFILES="$DOTFILES/zsh"          # Defines the directory where other
 export HISTFILE="$ZSH_DOTFILES/.zsh_history" # History filepath for zsh
 export HISTSIZE=10000                        # Maximum events for internal history
 export SAVEHIST=10000                        # Maximum events in history file
+
+# === LaTeX === /
+export TEXINPUTS="$DOTFILES/latex/styles/rwustyle::" # Path to latex styles
