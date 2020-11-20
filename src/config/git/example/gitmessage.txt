@@ -1,17 +1,17 @@
 # === Title of commit message (no more than 50 chars)=== /
 [type] (<ref number>) <short summary>
-#  |         |               |
-#  |         |               └─⫸ Short Summary in present tense. Not capitalized. No period at the end.
-#  |         └─⫸ Refers to story/card/issue/scope numnber
+#  │         │               │
+#  │         │               └─⫸ Short Summary in present tense. Not capitalized. No period at the end.
+#  │         └─⫸ Refers to story/card/issue/scope numnber
 #  └─⫸ Type: ADD|DEL|FIX|BUILD|DOCS|OPT|REF|FORMAT|PHRASE
-#              |   |   |    |    |    |   |    |      └─⫸ A change that MUST be just textualetc.
-#              |   |   |    |    |    |   |    └─⫸ A change that MUST be just format, e.g. indent line, trim space, etc.
-#              |   |   |    |    |    |   └─⫸ A change that MUST be just refactoring.
-#              |   |   |    |    |    └─⫸ A change that MUST be just about performance, e.g. speed up code.
-#              |   |   |    |    └─⫸ A change that MUST be only in the documentation, e.g. help files.
-#              |   |   |    └─⫸ Change the build process, or tools, or infrastructure.
-#              |   |   └─⫸ Fix an issue e.g. bug, typo, accident, misstatement.
-#              |   └─⫸ Delete a capability e.g. feature, test, dependency.
+#              │   │   │    │    │    │   │    │      └─⫸ A change that MUST be just textualetc.
+#              │   │   │    │    │    │   │    └─⫸ A change that MUST be just format, e.g. indent line, trim space, etc.
+#              │   │   │    │    │    │   └─⫸ A change that MUST be just refactoring.
+#              │   │   │    │    │    └─⫸ A change that MUST be just about performance, e.g. speed up code.
+#              │   │   │    │    └─⫸ A change that MUST be only in the documentation, e.g. help files.
+#              │   │   │    └─⫸ Change the build process, or tools, or infrastructure.
+#              │   │   └─⫸ Fix an issue e.g. bug, typo, accident, misstatement.
+#              │   └─⫸ Delete a capability e.g. feature, test, dependency.
 #              └─⫸ Create a capability e.g. feature, test, dependency.
 
 # === Why do we need this commit? === /
