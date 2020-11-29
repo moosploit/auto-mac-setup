@@ -130,6 +130,7 @@ __init__() {
 	print_cat "Homebrew | Install some cool 'Development' applications!"
 	brew_install "iTerm2 Terminal Emulator" "iterm2" "cask"
 	brew_install "Visual Studio Code" "visual-studio-code" "cask"
+	brew_install "Atom" "atom" "cask"
 	brew_install "GitHub Client" "github" "cask"
 	brew_install "CodeKit" "codekit" "cask"
 	brew_install "Insomnia" "insomnia" "cask"
@@ -143,13 +144,14 @@ __init__() {
 	brew_install "Flume" "flume" "cask"
 	brew_install "Signal" "signal" "cask"
 	brew_install "WhatsApp" "whatsapp" "cask"
-	brew_install "Telegram" "telegram" "cask"
+	# brew_install "Telegram" "telegram" "cask"
 	brew_install "Discord" "discord" "cask"
 	brew_install "Wordpress Client" "wordpresscom" "cask"
 
 	print_cat "Homebrew | Install some necessary 'Browser' applications!"
 	brew_install "Firefox" "firefox" "cask"
 	brew_install "Google Chrome" "google-chrome" "cask"
+	brew_install "Tor Browser" "tor-browser" "cask"
 
 	print_cat "Homebrew | Install some 'Cloud Storage' applications!"
 	brew_install "NextCloud" "nextcloud" "cask"
