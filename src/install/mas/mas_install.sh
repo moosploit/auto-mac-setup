@@ -34,9 +34,13 @@ __init__() {
 
 	print_cat "MAS | Install some nifty 'Media Editing' applications!"
 	mas_install "Affinity Designer" "824171161"
+	mas_install "Affinity Photo" "824183456"
+	mas_install "Affinity Publisher" "881418622"
 
 	print_cat "MAS | Install some dusty 'Office' applications!"
 	mas_install "Microsoft OneNote" "784801555"
+	mas_install "GoodNotes" "1444383602"
+	mas_install "Nimbus Note" "1431085284"
 	mas_install "Pages" "409201541"
 	mas_install "Numbers" "409203825"
 	mas_install "Keynote" "409183694"
