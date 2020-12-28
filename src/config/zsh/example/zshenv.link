@@ -15,7 +15,7 @@ export GPG_TTY=$(tty)             # For git commit signing
 
 # === Language === /
 if [[ -z "$LANG" ]]; then
-	export LANG='de_DE.UTF-8' # Sets the language variable to german with utf-8
+    export LANG="de_DE.UTF-8" # Sets the language variable to german with utf-8
 fi
 
 # === Editor === /
@@ -29,6 +29,12 @@ export ZSH_DOTFILES="$DOTFILES/zsh"          # Defines the directory where other
 export HISTFILE="$ZSH_DOTFILES/.zsh_history" # History filepath for zsh
 export HISTSIZE=10000                        # Maximum events for internal history
 export SAVEHIST=10000                        # Maximum events in history file
+
+# === Guile === /
+export GUILE_LOAD_PATH="/usr/local/share/guile/site/3.0"
+export GUILE_LOAD_COMPILED_PATH="/usr/local/lib/guile/3.0/site-ccache"
+export GUILE_SYSTEM_EXTENSIONS_PATH="/usr/local/lib/guile/3.0/extensions"
+export GUILE_TLS_CERTIFICATE_DIRECTORY="/usr/local/etc/gnutls/"
 
 # === LaTeX === /
 export TEXINPUTS="$DOTFILES/latex/styles/rwustyle::" # Path to latex styles
