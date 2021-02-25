@@ -32,7 +32,7 @@ install_homebrew() {
     if ! check_cmd_exists "brew"; then
         print_run "Starting to install Homebrew package manager for macOS!"
 
-        printf "\n" | /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)" &>/dev/null
+        printf "\n" | /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" &>/dev/null
         #        └─ simulate the ENTER keypress
 
         print_result $? "'Homebrew' installation."
