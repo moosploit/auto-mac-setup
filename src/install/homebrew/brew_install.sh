@@ -53,7 +53,7 @@ brew_install() {
             fi
             # == Install brew cask formula == /
             print_run "$MODULE | Installing cask formula $FORMULA_NAME!"
-            brew cask install "$FORMULA" &>/dev/null
+            brew install --cask "$FORMULA" &>/dev/null
             print_result "$?" "$MODULE | Installation of cask formula $FORMULA_NAME"
             ;;
         *)
