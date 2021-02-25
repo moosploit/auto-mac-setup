@@ -15,6 +15,85 @@ if [[ $(basename ${0}) == $(basename ${BASH_SOURCE}) ]]; then
     source ../../../helper/utils.sh
 fi
 
+# === Homebrew Wrapper Functions === /
+brew_install() {
+    # brew_install "Google Chrome" "google-chrome" "cask"
+    declare -r FORMULA_NAME=$(print_highlight "$1") # Google Chrome
+    declare -r FORMULA="$2"                         # google-chrome
+    declare -r CMD="$3"                             # cask
+    declare -r MODULE=$(print_highlight "Brew-Install")
+
+    if [[ "$#" -lt 2 ]]; then
+        print_fail "There are not enough arguments specified for 'brew_install'! "
+        return 1
+    fi
+
+    # == [[ $CMD not set ]] == /
+    if [[ -z "$CMD" ]]; then
+        # == Check if brew formula already installed == /
+        brew list "$FORMULA" &>/dev/null
+        if [[ "$?" -eq 0 ]]; then
+            print_success "$MODULE | Formula $FORMULA_NAME is already installed!"
+            return 2
+        fi
+
+        # == Install brew formula == /
+        print_run "$MODULE | Installing formula $FORMULA_NAME!"
+        brew install "$FORMULA" &>/dev/null
+        print_result "$?" "$MODULE | Installation of formula $FORMULA_NAME"
+    # == [[ $CMD is set ]] == /
+    else
+        case "$CMD" in
+        cask)
+            # == Check if brew cask formula already installed == /
+            brew list --cask "$FORMULA" &>/dev/null
+            if [[ "$?" -eq 0 ]]; then
+                print_success "$MODULE | Cask Formula $FORMULA_NAME is already installed!"
+                return 2
+            fi
+            # == Install brew cask formula == /
+            print_run "$MODULE | Installing cask formula $FORMULA_NAME!"
+            brew cask install "$FORMULA" &>/dev/null
+            print_result "$?" "$MODULE | Installation of cask formula $FORMULA_NAME"
+            ;;
+        *)
+            print_fail "$MODULE | Installation of formula $FORMULA_NAME failed, because command '$CMD' is not defined!"
+            return 99
+            ;;
+        esac
+    fi
+}
+
+brew_update() {
+    declare -r MODULE=$(print_highlight "Brew-Update")
+    print_run "$MODULE | Updating formulas!"
+
+    brew update &>/dev/null
+    print_result "$?" "$MODULE | Formulas update."
+}
+
+brew_upgrade() {
+    declare -r MODULE=$(print_highlight "Brew-Upgrade")
+    print_run "$MODULE | Upgrading all installed and outdated formulas!"
+
+    brew upgrade &>/dev/null
+    print_result "$?" "$MODULE | Upgrade of installed and outdated formulas!"
+}
+
+brew_tap() {
+    declare -r REPO=$(print_highlight "$1")
+    declare -r MODULE=$(print_highlight "Brew-Tap")
+
+    if ! brew tap | grep "$1" -i &>/dev/null; then
+        print_run "$MODULE | is tapping repository $REPO!"
+        brew tap "$1" &>/dev/null
+        print_result "$?" "$MODULE | Tapping of repository $REPO"
+    else
+        print_success "$MODULE | the repository $REPO is already tapped."
+    fi
+
+}
+
 opt_out_of_analaytics() {
 
     if [[ "$(git config --file="$(brew --repository)/.git/config" --get homebrew.analyticsdisabled)" != "true" ]]; then
