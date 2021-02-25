@@ -35,12 +35,15 @@
 	"editor.minimap.enabled": false,
 	"editor.suggestSelection": "first",
 	"editor.renderControlCharacters": false,
-	"editor.renameOnType": true,
+	"editor.linkedEditing": true,
 	// === Editor | Identation configuration === /
 	"editor.tabSize": 4,
 	"editor.insertSpaces": false,
 	"editor.detectIndentation": false,
 	// === Workbench === /
+    "workbench.editor.wrapTabs": true,
+    "workbench.editor.decorations.colors": true,
+    "workbench.editor.decorations.badges": true,
 	"workbench.iconTheme": "material-icon-theme",
 	"workbench.colorTheme": "Dracula",
 	"workbench.colorCustomizations": {
