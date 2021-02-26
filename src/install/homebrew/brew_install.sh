@@ -1,13 +1,12 @@
 #!/bin/bash
-# ================================================================================
+# ============================================================================
 # -- File:          homebrew/brew_install.sh
 # -- Project:       auto-mac-setup
 # -- Project URL:   https://github.com/moosploit/auto-mac-setup
 # -- Create Date:   2020-08-28 13:07
-# -- Author:        Michael Linder
-# -- Company:       moosploit.com
+# -- Author:        moosploit
 # -- License:       MIT License | http://www.opensource.org/licenses/MIT
-# ================================================================================
+# ============================================================================
 
 # Check whether the script is called directly or via source
 if [[ $(basename ${0}) == $(basename ${BASH_SOURCE}) ]]; then
@@ -95,7 +94,6 @@ brew_tap() {
 }
 
 opt_out_of_analaytics() {
-
     if [[ "$(git config --file="$(brew --repository)/.git/config" --get homebrew.analyticsdisabled)" != "true" ]]; then
         print_run "Opting out of 'Homebrew' analytics!"
 
