@@ -23,6 +23,36 @@ DOTFILES_VSCODE_DIR="$DOTFILES_DIR/vscode"
 mkdir -p "$DOTFILES_VSCODE_DIR" &>/dev/null # == Create new folder to store VSCode settings == /
 DOTFILES_VSCODE_DIR_NAME=$(print_highlight "$DDOTFILES_VSCODE_DIR")
 
+vscode_install_ext() {
+    # vscode_install_ext EXTENSION
+    declare -r EXT=$1                             # Extension
+    declare -r EXT_NAME=$(print_highlight "$EXT") # Extension Name
+    declare -r MODULE=$(print_highlight "VSCode") # Module Name
+
+    # == Check if enough arguments specified == /
+    if [[ "$#" -lt 1 ]]; then
+        print_fail "There are not enough arguments specified for 'vscode_install_ext'! "
+        return 1
+    fi
+
+    if test "$(which code)"; then
+        code --list-extensions | grep "$EXT" -i &>/dev/null
+        if [[ "$?" -eq 0 ]]; then
+            print_success "$MODULE | Extension $EXT_NAME is already installed!"
+            return 2
+        fi
+    else
+        print_error "Application $MODULE is not installed!"
+        return 99
+    fi
+
+    # == Install MAS App == /
+    print_run "$MODULE | Installing extension $EXT_NAME!"
+    code --install-extension "$EXT" &>/dev/null
+    print_result "$?" "$MODULE | Installation of extension $EXT_NAME"
+
+}
+
 install_extensions() {
     ask_for_confirmation "Should I install the extensions now?"
     if ! answer_is_yes; then
