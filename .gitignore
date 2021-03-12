@@ -78,3 +78,13 @@ zsdoc/data
 
 # === Project specific gitignore files === /
 **/*iterm2.plist
+
+# === Exclude private dotfiles from repo === /
+dotfiles/ssh
+dotfiles/latex
+dotfiles/git/*.local
+dotfiles/btt/*.bttlicense
+
+# == Exclude configuration files
+**/old
+**/new
