@@ -467,7 +467,7 @@ plist_set_property() {
         return 1
     fi
 
-    if [[ $(plist_get_property"$PROPERTY" "$PLIST") == "$VALUE" ]]; then
+    if [[ $(plist_get_property "$PROPERTY" "$PLIST") == "$VALUE" ]]; then
         print_success "$MODULE | Setting $PROPERTY_NAME is already set to $VALUE_NAME!"
         return 2
     fi
