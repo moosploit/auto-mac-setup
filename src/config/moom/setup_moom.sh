@@ -13,31 +13,31 @@ if [[ $(basename ${0}) == $(basename ${BASH_SOURCE}) ]]; then
     source ../../../helper/output.sh
     source ../../../helper/utils.sh
     source ../../../helper/global_variables.sh
-    MOOM_DIR="$ROOT_DIR"
+    project_dir_moom="$ROOT_DIR"
 else
-    MOOM_DIR="$ROOT_DIR/src/config/moom"
+    project_dir_moom="$ROOT_DIR/src/config/moom"
 fi
 
 general_setup() {
-    local PLIST_FILE=""
+    local plist_file_moom=""
 
     ask_for_confirmation "Should I use the default plist file?"
     if ! answer_is_yes; then
-        while [[ -z $PLIST_FILE ]]; do
+        while [[ -z $plist_file_moom ]]; do
             ask_for_input "Ok, please provide the absolute path to your plist file"
             if [[ -n "$REPLY" && -e "$REPLY" ]]; then
-                PLIST_FILE="$REPLY"
+                plist_file_moom="$REPLY"
             else
                 print_fail "Your provided plist file doesn't exist!"
             fi
         done
     else
         # == Path to the default plist file
-        PLIST_FILE="$MOOM_DIR/com.manytricks.Moom.plist.example"
+        plist_file_moom="$project_dir_moom/com.manytricks.Moom.plist.example"
     fi
 
     kill_app Moom
-    plist_import "Moom" "$PLIST_FILE" "com.manytricks.Moom"
+    plist_import "Moom" "$plist_file_moom" "com.manytricks.Moom"
     open -a Moom
 }
 
