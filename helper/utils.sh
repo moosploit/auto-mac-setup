@@ -395,10 +395,10 @@ scutil_set() {
 plist_export() {
     # plist_export MODULE DOMAIN PLIST_FILE
     declare -r MODULE=$(print_highlight "$1") # == Module Name
-    declare -r DOMAIN="$2"                    # == Domain name which should be exported
-    declare -r DOMAIN_NAME=$(print_highlight "$DOMAIN")
-    declare -r PLIST_FILE="$3" # == Absolute path to plist file
+    declare -r PLIST_FILE="$2"                # == Absolute path to plist file
     declare -r PLIST_FILE_NAME=$(print_highlight "$PLIST_FILE")
+    declare -r DOMAIN="$3" # == Domain name which should be exported
+    declare -r DOMAIN_NAME=$(print_highlight "$DOMAIN")
 
     if [[ "$#" -lt 3 ]]; then
         print_fail "There are not enough arguments specified for 'plist_export'! "
