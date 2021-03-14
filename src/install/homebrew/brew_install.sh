@@ -148,9 +148,6 @@ __init__() {
     brew_install "Tldr" "tldr"
     brew_install "GitHub CLI" "gh"
     brew_install "GNU Privacy Guard" "gpg"
-    # brew_install "Zsh-autosuggestions" "zsh-autosuggestions"
-    # brew_install "Zsh-syntax-highlighting" "zsh-syntax-highlighting"
-    # brew_install "ssllabs-scan | Command-line client for the SSL Labs APIs" "ssllabs-scan"
 
     print_cat "Homebrew | Install some cool 'Fonts'!"
     brew_install "Awesome Terminal Fonts" "font-awesome-terminal-fonts" "cask"
@@ -222,7 +219,6 @@ __init__() {
     brew_install "Flume" "flume" "cask"
     brew_install "Signal" "signal" "cask"
     brew_install "WhatsApp" "whatsapp" "cask"
-    # brew_install "Telegram" "telegram" "cask"
     brew_install "Discord" "discord" "cask"
     brew_install "Wordpress Client" "wordpresscom" "cask"
 
