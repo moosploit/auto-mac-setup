@@ -23,37 +23,37 @@ check_are_xcode_clts_installed() {
 }
 
 accept_xcode_license() {
-    declare -r MODULE=$(print_highlight "XCode")
+    declare -r module_name_highlight=$(print_highlight "XCode")
 
     # Automatically agree to the terms of the `Xcode` license.
     # https://github.com/alrra/dotfiles/issues/10
 
     sudo xcodebuild -license accept &>/dev/null
-    print_result "$?" "$MODULE | Agree to the terms of Xcode license"
+    print_result "$?" "$module_name_highlight | Agree to the terms of Xcode license"
 }
 
 install_xcode() {
-    declare -r MODULE=$(print_highlight "XCode")
+    declare -r module_name_highlight=$(print_highlight "XCode")
 
     if ! check_is_xcode_installed; then
-        print_run "$MODULE | Open Mac App Store and click install Xcode please!"
+        print_run "$module_name_highlight | Open Mac App Store and click install Xcode please!"
         open "macappstores://apps.apple.com/us/app/xcode/id497799835"
 
         until check_is_xcode_installed; do
             sleep 5
         done
 
-        print_result "$?" "$MODULE | Installation of Apple Xcode!"
+        print_result "$?" "$module_name_highlight | Installation of Apple Xcode!"
     else
-        print_success "$MODULE | Application Apple Xcode is already installed!"
+        print_success "$module_name_highlight | Application Apple Xcode is already installed!"
     fi
 }
 
 install_xcode_ctls() {
-    declare -r MODULE=$(print_highlight "XCode")
+    declare -r module_name_highlight=$(print_highlight "XCode")
 
     if ! check_are_xcode_clts_installed; then
-        print_run "$MODULE | Command line developer tools will be installed!"
+        print_run "$module_name_highlight | Command line developer tools will be installed!"
 
         # Install xcode command line developer tools
         xcode-select --install &>/dev/null
@@ -63,26 +63,26 @@ install_xcode_ctls() {
             sleep 5
         done
 
-        print_result "$?" "$MODULE | Command line developer tools installation."
+        print_result "$?" "$module_name_highlight | Command line developer tools installation."
     else
-        print_success "$MODULE | Command line developer tools are already installed!"
+        print_success "$module_name_highlight | Command line developer tools are already installed!"
     fi
 }
 
 set_xcode_dev_dir() {
-    declare -r CURR_DEV_DIR=$(xcode-select -p)
-    declare -r NEW_DEV_DIR="/Applications/Xcode.app/Contents/Developer"
-    declare -r MODULE=$(print_highlight "XCode")
+    declare -r xcode_current_dev_directory=$(xcode-select -p)
+    declare -r xcode_new_dev_directory="/Applications/Xcode.app/Contents/Developer"
+    declare -r module_name_highlight=$(print_highlight "XCode")
 
-    if [[ $CURR_DEV_DIR == $NEW_DEV_DIR ]]; then
-        print_success "$MODULE | Active developer directory already set!"
+    if [[ $xcode_current_dev_directory == $xcode_new_dev_directory ]]; then
+        print_success "$module_name_highlight | Active developer directory already set!"
         return 1
     fi
 
-    print_run "$MODULE | Setting active developer directory!"
+    print_run "$module_name_highlight | Setting active developer directory!"
     # sudo xcode-select --switch /Library/Developer/CommandLineTools &>/dev/null
     sudo xcode-select -switch "/Applications/Xcode.app/Contents/Developer" &>/dev/null
-    print_result $? "$MODULE | Set active developer directory!"
+    print_result $? "$module_name_highlight | Set active developer directory!"
 }
 
 __init__() {
