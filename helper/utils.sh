@@ -91,65 +91,63 @@ get_os_version() {
 }
 
 kill_app() {
-    declare -r APPS="$@"
+    declare -r applications="$@"
 
-    for app in $APPS; do
-        app_name=$(print_highlight $app)
+    for application in $applications; do
+        application_highlight=$(print_highlight $application)
 
-        print_run "Killing the application $app_name!"
-        killall "$app" &>/dev/null
-        print_result "$?" "Application $app_name killed!"
+        print_run "Killing the application $application_highlight!"
+        killall "$application" &>/dev/null
+        print_result "$?" "Application $application_highlight killed!"
     done
     sleep 2
 }
 
 copy_it_to() {
-    # copy_it_to "MODULE" "COPY_NAME" "SOURCE" "TARGET"
-    declare -r MODULE=$(print_highlight "$1")           # Module name
-    declare -r COPY_NAME=$(print_highlight "$2")        # Copy name
-    declare -r SOURCE="$3"                              # Path to source
-    declare -r TARGET="$4"                              # Path to target
-    declare -r TARGET_NAME=$(print_highlight "$TARGET") # Target Name
+    declare -r module_name_highlight=$(print_highlight "$1")
+    declare -r copy_name_highlight=$(print_highlight "$2")
+    declare -r copy_source="$3"
+    declare -r copy_target="$4"
+    declare -r copy_target_highlight=$(print_highlight "$copy_target")
 
     if [[ "$#" -lt 4 ]]; then
         print_fail "There are not enough arguments specified for 'copy_it_to'! "
         return 1
     fi
 
-    print_run "$MODULE | Copying $COPY_NAME to $TARGET_NAME!"
-    if [[ -d "$SOURCE" ]]; then
-        cp -fR "$SOURCE" "$TARGET" &>/dev/null
+    print_run "$module_name_highlight | Copying $copy_name_highlight to $copy_target_highlight!"
+    if [[ -d "$copy_source" ]]; then
+        cp -fR "$copy_source" "$copy_target" &>/dev/null
     else
-        cp -f "$SOURCE" "$TARGET" &>/dev/null
+        cp -f "$copy_source" "$copy_target" &>/dev/null
     fi
-    print_result "$?" "$MODULE | Copyied $COPY_NAME to $TARGET_NAME!"
+    print_result "$?" "$module_name_highlight | Copyied $copy_name_highlight to $copy_target_highlight!"
 }
 
 create_symlink() {
-    # create_symlink "MODULE" "SYMLINK_NAME" "SOURCE" "TARGET"
-    declare -r MODULE=$(print_highlight "$1")                     # Module name
-    declare -r SYMLINK_NAME=$(print_highlight "$2")               # Symlink name
-    declare -r SOURCE_LINK="$3"                                   # Path to source
-    declare -r SOURCE_LINK_NAME=$(print_highlight "$SOURCE_LINK") # Formated path to source
-    declare -r TARGET_LINK="$4"                                   # Path to target
+    declare -r module_name_highlight=$(print_highlight "$1")
+    declare -r symlink_name_highlight=$(print_highlight "$2")
+    declare -r symlink_source="$3"
+    declare -r symlink_source_highlight=$(print_highlight "$symlink_source")
+    declare -r symlink_target="$4"
 
     if [[ "$#" -lt 4 ]]; then
         print_fail "There are not enough arguments specified for 'create_symlink'! "
         return 1
     fi
 
-    if [[ ! -e "$SOURCE_LINK" ]]; then
-        print_fail "$MODULE | Symlink can't be created, because source $SOURCE_LINK_NAME doesn't exist!"
+    if [[ ! -e "$symlink_source" ]]; then
+        print_fail "$module_name_highlight | Symlink can't be created, because source $symlink_source_highlight doesn't exist!"
         return 2
     fi
 
-    if [[ -d "$TARGET_LINK" ]]; then
-        rm -r "$TARGET_LINK"
+    if [[ -d "$symlink_target" ]]; then
+        rm -r "$symlink_target"
     fi
 
-    print_run "$MODULE | Creating symlink for $SYMLINK_NAME!"
-    ln -sfn "$SOURCE_LINK" "$TARGET_LINK" &>/dev/null
-    print_result "$?" "$MODULE | Symlink $SYMLINK_NAME created!"
+    print_run "$module_name_highlight | Creating symlink for $symlink_name_highlight!"
+    ln -sfn "$symlink_source" "$symlink_target" &>/dev/null
+    print_result "$?" "$module_name_highlight | Symlink $symlink_name_highlight created!"
 }
 
 # === User Details Functions === /
@@ -163,10 +161,9 @@ get_full_username() {
 
 # === Ruby Wrapper Functions === /
 ruby_install() {
-    # ruby_install colorls
-    declare -r FORMULA_NAME=$(print_highlight "$1") # ColorLS
-    declare -r FORMULA="$2"                         # colorls
-    declare -r MODULE=$(print_highlight "Ruby-Install")
+    declare -r ruby_formula_name_highlight=$(print_highlight "$1")
+    declare -r ruby_formula="$2"
+    declare -r module_name_highlight=$(print_highlight "Ruby-Install")
 
     if [[ "$#" -lt 2 ]]; then
         print_fail "There are not enough arguments specified for 'ruby_install'! "
@@ -174,24 +171,23 @@ ruby_install() {
     fi
 
     # == Check if ruby formula already installed == /
-    gem list "$FORMULA" &>/dev/null
+    gem list "$ruby_formula" &>/dev/null
     if [[ "$?" -eq 0 ]]; then
-        print_success "$MODULE | Formula $FORMULA_NAME is already installed!"
+        print_success "$module_name_highlight | Formula $ruby_formula_name_highlight is already installed!"
         return 2
     fi
 
     # == Install ruby formula == /
-    print_run "$MODULE | Installing formula $FORMULA_NAME!"
-    sudo gem install "$FORMULA" &>/dev/null
-    print_result "$?" "$MODULE | Installation of formula $FORMULA_NAME"
+    print_run "$module_name_highlight | Installing formula $ruby_formula_name_highlight!"
+    sudo gem install "$ruby_formula" &>/dev/null
+    print_result "$?" "$module_name_highlight | Installation of formula $ruby_formula_name_highlight"
 }
 
 # === MacAppStore (MAS) Wrapper Functions === /
 mas_install() {
-    # mas_install "Numbers" "409203825"
-    declare -r APP_NAME=$(print_highlight "$1") # Numbers
-    declare -r APP_ID="$2"                      # 409203825
-    declare -r MODULE=$(print_highlight "MAS-Install")
+    declare -r mas_application_name_highlight=$(print_highlight "$1")
+    declare -r mas_application_id="$2"
+    declare -r module_name_highlight=$(print_highlight "MAS-Install")
 
     # == Check if enough arguments specified == /
     if [[ "$#" -lt 2 ]]; then
@@ -200,32 +196,32 @@ mas_install() {
     fi
 
     # == Check if MAS App already installed == /
-    mas list | grep "$APP_ID" | head -n 1 &>/dev/null
+    mas list | grep "$mas_application_id" | head -n 1 &>/dev/null
     if [[ "$?" -eq 0 ]]; then
-        print_success "$MODULE | Application $APP_NAME is already installed!"
+        print_success "$module_name_highlight | Application $mas_application_name_highlight is already installed!"
         return 2
     fi
 
     # == Install MAS App == /
-    print_run "$MODULE | Installing application $APP_NAME!"
-    mas install "$APP_ID" &>/dev/null
-    print_result "$?" "$MODULE | Installation of application $APP_NAME"
+    print_run "$module_name_highlight | Installing application $mas_application_name_highlight!"
+    mas install "$mas_application_id" &>/dev/null
+    print_result "$?" "$module_name_highlight | Installation of application $mas_application_name_highlight"
 }
 
 mas_update() {
-    declare -r MODULE=$(print_highlight "MAS-Update")
+    declare -r module_name_highlight=$(print_highlight "MAS-Update")
 }
 
 # === macOS Defaults Wrapper Functions === /
 defaults_write() {
-    declare -r DOMAIN_NAME=$(print_highlight "$1")
-    declare -r DOMAIN="$2"
-    declare -r KEY="$3"
-    declare -r KEY_NAME=$(print_highlight "$KEY")
-    declare -r TYPE="$4"
+    declare -r domain_name_highlight=$(print_highlight "$1")
+    declare -r domain_name="$2"
+    declare -r key_name="$3"
+    declare -r key_name_highlight=$(print_highlight "$key_name")
+    declare -r type="$4"
 
-    local VALUE="$5"
-    local VALUE_NAME=$(print_highlight "$VALUE")
+    local value="$5"
+    local value_highlight=$(print_highlight "$value")
 
     # == Check if enough arguments specified == /
     if [[ "$#" -lt 4 ]]; then
@@ -233,35 +229,35 @@ defaults_write() {
         return 1
     fi
 
-    case "$TYPE" in
+    case "$type" in
     # == If type is string, int, integer or float == /
     string | int | integer | float)
         # == Checks whether the key exists or the sent value is already set
-        if [[ $(defaults read "$DOMAIN" "$KEY" 2>/dev/null) == "$VALUE" ]]; then
-            print_success "$DOMAIN_NAME | The setting $KEY_NAME is already set to $VALUE_NAME!"
+        if [[ $(defaults read "$domain_name" "$key_name" 2>/dev/null) == "$value" ]]; then
+            print_success "$domain_name_highlight | The setting $key_name_highlight is already set to $value_highlight!"
             return 2
         fi
         ;;
     # == If type is bool or boolean == /
     bool | boolean)
-        case "$VALUE" in
+        case "$value" in
         # == If value is true or 1 == /
         true | 1)
-            VALUE="true"
-            VALUE_NAME=$(print_highlight "$VALUE")
+            value="true"
+            value_highlight=$(print_highlight "$value")
             # == Checks whether the key exists or the sent value is already set
-            if [[ $(defaults read "$DOMAIN" "$KEY" 2>/dev/null) == "1" ]]; then
-                print_success "$DOMAIN_NAME | The setting $KEY_NAME is already set to $VALUE_NAME!"
+            if [[ $(defaults read "$domain_name" "$key_name" 2>/dev/null) == "1" ]]; then
+                print_success "$domain_name_highlight | The setting $key_name_highlight is already set to $value_highlight!"
                 return 2
             fi
             ;;
         # == If value is false or 0 == /
         false | 0)
-            VALUE="false"
-            VALUE_NAME=$(print_highlight "$VALUE")
+            value="false"
+            value_highlight=$(print_highlight "$value")
             # == Checks whether the key exists or the sent value is already set
-            if [[ $(defaults read "$DOMAIN" "$KEY" 2>/dev/null) == "0" ]]; then
-                print_success "$DOMAIN_NAME | The setting $KEY_NAME is already set to $VALUE_NAME!"
+            if [[ $(defaults read "$domain_name" "$key_name" 2>/dev/null) == "0" ]]; then
+                print_success "$domain_name_highlight | The setting $key_name_highlight is already set to $value_highlight!"
                 return 2
             fi
             ;;
@@ -271,30 +267,30 @@ defaults_write() {
 
     # == If another type was sent
     *)
-        print_error "Defaults | Type '$TYPE' is in function 'defaults_write' not allowed!"
+        print_error "Defaults | Type '$type' is in function 'defaults_write' not allowed!"
         return 99
         ;;
     esac
 
-    print_run "$DOMAIN_NAME | Will set $KEY_NAME to $VALUE_NAME!"
-    if [[ -z "$VALUE" ]]; then
-        defaults write "$DOMAIN" "$KEY" "-$TYPE" &>/dev/null
+    print_run "$domain_name_highlight | Will set $key_name_highlight to $value_highlight!"
+    if [[ -z "$value" ]]; then
+        defaults write "$domain_name" "$key_name" "-$type" &>/dev/null
     else
-        defaults write "$DOMAIN" "$KEY" "-$TYPE" "$VALUE" #&>/dev/null
+        defaults write "$domain_name" "$key_name" "-$type" "$value" #&>/dev/null
     fi
-    print_result "$?" "$DOMAIN_NAME | Set up $KEY_NAME to $VALUE_NAME!"
+    print_result "$?" "$domain_name_highlight | Set up $key_name_highlight to $value_highlight!"
 }
 
 add_app_to_dock() {
-    declare -r DOCK_SIDE="$1"
-    declare -r DOCK_SIDE_NAME=$(print_highlight "$DOCK_SIDE")
-    declare -r APP="$2"
-    declare -r APP_NAME=$(print_highlight "$APP")
-    declare -r SYSTEM="$3"
-    declare -r MODULE=$(print_highlight "Apple Dock")
+    declare -r dock_side="$1"
+    declare -r dock_side_highlight=$(print_highlight "$dock_side")
+    declare -r application="$2"
+    declare -r application_highlight=$(print_highlight "$application")
+    declare -r system="$3"
+    declare -r module_name_highlight=$(print_highlight "Apple Dock")
 
-    local KEY=""
-    local APP_ARRAY=""
+    local key_name=""
+    local application_array=""
 
     # == Check if enough arguments specified == /
     if [[ "$#" -lt 2 ]]; then
@@ -303,176 +299,172 @@ add_app_to_dock() {
     fi
 
     # == On which side of the Dock should the application be placed
-    case $DOCK_SIDE in
+    case $dock_side in
     left)
-        KEY="persistent-apps"
+        key_name="persistent-apps"
         ;;
     right)
-        KEY="persistent-others"
+        key_name="persistent-others"
         ;;
     esac
 
     # == If the application is a spacer
-    if [[ "$APP" =~ ^[sS](pacer|eperator) ]]; then
-        APP_ARRAY="<dict><key>tile-data</key><dict></dict><key>tile-type</key><string>spacer-tile</string></dict>"
+    if [[ "$application" =~ ^[sS](pacer|eperator) ]]; then
+        application_array="<dict><key>tile-data</key><dict></dict><key>tile-type</key><string>spacer-tile</string></dict>"
     # == If the application is not a spacer
     else
         # == If the application is a apple default application
-        if [[ -n "$SYSTEM" ]]; then
-            APP_ARRAY="<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>System/Applications/$APP.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>"
+        if [[ -n "$system" ]]; then
+            application_array="<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>System/Applications/$application.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>"
         # == If the application is a normal application
         else
-            APP_ARRAY="<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/$APP.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>"
+            application_array="<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/$application.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>"
         fi
     fi
 
-    print_run "$MODULE | Adding application $APP_NAME to the $DOCK_SIDE_NAME!"
-    defaults write com.apple.dock "$KEY" -array-add "$APP_ARRAY" &>/dev/null
-    print_result "$?" "$MODULE | Added application $APP_NAME to the $DOCK_SIDE_NAME!"
+    print_run "$module_name_highlight | Adding application $application_highlight to the $dock_side_highlight!"
+    defaults write com.apple.dock "$key_name" -array-add "$application_array" &>/dev/null
+    print_result "$?" "$module_name_highlight | Added application $application_highlight to the $dock_side_highlight!"
     sleep 1
 }
 
 wipe_apps_from_dock() {
-    declare -r DOCK_SIDE="$1"
-    declare -r DOCK_SIDE_NAME=$(print_highlight "$DOCK_SIDE")
-    declare -r MODULE=$(print_highlight "Apple Dock")
+    declare -r dock_side="$1"
+    declare -r dock_side_highlight=$(print_highlight "$dock_side")
+    declare -r module_name_highlight=$(print_highlight "Apple Dock")
 
-    local KEY=""
+    local key_name=""
 
     # == On which side of the Dock should the application be wiped
-    case $DOCK_SIDE in
+    case $dock_side in
     left)
-        KEY="persistent-apps"
+        key_name="persistent-apps"
         ;;
     right)
-        KEY="persistent-others"
+        key_name="persistent-others"
         ;;
     esac
 
-    print_run "$MODULE | Wiping all applications from the $DOCK_SIDE_NAME!"
-    defaults write com.apple.dock "$KEY" -array &>/dev/null
-    print_result "$?" "$MODULE | Wiped all applications from the $DOCK_SIDE_NAME!"
+    print_run "$module_name_highlight | Wiping all applications from the $dock_side_highlight!"
+    defaults write com.apple.dock "$key_name" -array &>/dev/null
+    print_result "$?" "$module_name_highlight | Wiped all applications from the $dock_side_highlight!"
     sleep 1
 }
 
 # === macOS Scutil Wrapper Functions === /
 scutil_get() {
-    declare -r PREF=$1
+    declare -r preference=$1
 
     # == Check if enough arguments specified == /
     if [[ "$#" -lt 1 ]]; then
-        print_fail "There are not enough arguments specified for 'scutil_get'! "
+        print_fail "There are not enough arguments specified for 'scutil_get'!"
         return 1
     fi
 
-    sudo scutil --get $PREF 2>/dev/null
+    sudo scutil --get $preference 2>/dev/null
 }
 
 scutil_set() {
-    declare -r PREF=$1
-    declare -r PREF_NAME=$(print_highlight "$PREF")
-    declare -r VALUE=$2
-    declare -r VALUE_NAME=$(print_highlight "$VALUE")
-    declare -r MODULE=$(print_highlight "Scutil-Set")
+    declare -r preference=$1
+    declare -r preference_highlight=$(print_highlight "$preference")
+    declare -r value=$2
+    declare -r value_highlight=$(print_highlight "$value")
+    declare -r module_name_highlight=$(print_highlight "Scutil-Set")
 
     # == Check if enough arguments specified == /
     if [[ "$#" -lt 2 ]]; then
-        print_fail "There are not enough arguments specified for 'scutil_set'! "
+        print_fail "There are not enough arguments specified for 'scutil_set'!"
         return 1
     fi
 
-    if [[ $(scutil_get "$PREF") == "$VALUE" ]]; then
-        print_success "$MODULE | Setting $PREF_NAME is already set to $VALUE_NAME!"
+    if [[ $(scutil_get "$preference") == "$value" ]]; then
+        print_success "$module_name_highlight | Setting $preference_highlight is already set to $value_highlight!"
         return 2
     fi
 
-    print_run "$MODULE | Setting $PREF_NAME to $VALUE_NAME!"
-    sudo scutil --set $PREF $VALUE &>/dev/null
-    print_result "$?" "$MODULE | Set $PREF_NAME to $VALUE_NAME!"
+    print_run "$module_name_highlight | Setting $preference_highlight to $value_highlight!"
+    sudo scutil --set $preference $value &>/dev/null
+    print_result "$?" "$module_name_highlight | Set $preference_highlight to $value_highlight!"
 }
 
 # === macOS Plist Wrapper Functions === /
 plist_export() {
-    # plist_export MODULE DOMAIN PLIST_FILE
-    declare -r MODULE=$(print_highlight "$1") # == Module Name
-    declare -r PLIST_FILE="$2"                # == Absolute path to plist file
-    declare -r PLIST_FILE_NAME=$(print_highlight "$PLIST_FILE")
-    declare -r DOMAIN="$3" # == Domain name which should be exported
-    declare -r DOMAIN_NAME=$(print_highlight "$DOMAIN")
+    declare -r module_name_highlight=$(print_highlight "$1")
+    declare -r plist_file="$2"
+    declare -r plist_file_highlight=$(print_highlight "$plist_file")
+    declare -r domain_name="$3"
+    declare -r domain_name_highlight=$(print_highlight "$domain_name")
 
     if [[ "$#" -lt 3 ]]; then
         print_fail "There are not enough arguments specified for 'plist_export'! "
         return 1
     fi
 
-    if [[ -e "$PLIST_FILE" ]]; then
+    if [[ -e "$plist_file" ]]; then
         ask_for_confirmation "File already exists, should I override it?"
         if [[ ! answer_is_yes ]]; then
             return 2
         fi
     fi
-    print_run "$MODULE | Exporting domain $DOMAIN_NAME into $PLIST_FILE_NAME!"
-    defaults export "$DOMAIN" "$PLIST_FILE"
-    print_result "$?" "$MODULE | Exported domain $DOMAIN_NAME into $PLIST_FILE_NAME!"
+    print_run "$module_name_highlight | Exporting domain $domain_name_highlight into $plist_file_highlight!"
+    defaults export "$domain_name" "$plist_file"
+    print_result "$?" "$module_name_highlight | Exported domain $domain_name_highlight into $plist_file_highlight!"
 }
 
 plist_import() {
-    # plist_import MODULE PLIST_FILE DOMAIN
-    declare -r MODULE=$(print_highlight "$1") # == Module Name
-    declare -r PLIST_FILE="$2"                # == Absolute path to plist file
-    declare -r PLIST_FILE_NAME=$(print_highlight "$PLIST_FILE")
-    declare -r DOMAIN="$3" # == Domain name which should be exported
-    declare -r DOMAIN_NAME=$(print_highlight "$DOMAIN")
+    declare -r module_name_highlight=$(print_highlight "$1") # == Module Name
+    declare -r plist_file="$2"                               # == Absolute path to plist file
+    declare -r plist_file_highlight=$(print_highlight "$plist_file")
+    declare -r domain_name="$3" # == Domain name which should be exported
+    declare -r domain_name_highlight=$(print_highlight "$domain_name")
 
     if [[ "$#" -lt 3 ]]; then
         print_fail "There are not enough arguments specified for 'plist_import'! "
         return 1
     fi
 
-    if [[ ! -e "$PLIST_FILE" ]]; then
-        print_fail "$MODULE | Plist file $PLIST_FILE_NAME doesn't exist!"
+    if [[ ! -e "$plist_file" ]]; then
+        print_fail "$module_name_highlight | Plist file $plist_file_highlight doesn't exist!"
         return 2
     fi
-    print_run "$MODULE | Importing Plist file $PLIST_FILE_NAME into domain $DOMAIN_NAME!"
-    defaults import "$DOMAIN" "$PLIST_FILE"
-    print_result "$?" "$MODULE | Imported Plist file $PLIST_FILE_NAME into domain $DOMAIN_NAME!"
+    print_run "$module_name_highlight | Importing Plist file $plist_file_highlight into domain $domain_name_highlight!"
+    defaults import "$domain_name" "$plist_file"
+    print_result "$?" "$module_name_highlight | Imported Plist file $plist_file_highlight into domain $domain_name_highlight!"
 }
 
 plist_get_property() {
-    # plist_get_property PROPERTY PLIST
-    declare -r PROPERTY="$1" # == : seperated path to property
-    declare -r PLIST="$2"    # == Absolut path to PLIST file
+    declare -r plist_property="$1" # == : seperated path to property
+    declare -r plist_file="$2"
 
     # == Check if enough arguments specified == /
     if [[ "$#" -lt 2 ]]; then
-        print_fail "There are not enough arguments specified for 'plist_get'! "
+        print_fail "There are not enough arguments specified for 'plist_get_property'! "
         return 1
     fi
 
-    /usr/libexec/PlistBuddy -c "Print :$PROPERTY" "$PLIST" 2>/dev/null
+    /usr/libexec/PlistBuddy -c "Print :$plist_property" "$plist_file" 2>/dev/null
 }
 
 plist_set_property() {
-    # plist_set_property MODULE PROPERTY VAULE PLIST
-    declare -r MODULE=$(print_highlight "$1")               # == Module name which the plist file belongs to
-    declare -r PROPERTY=$2                                  # == Path to property seperated by :
-    declare -r PROPERTY_NAME=$(print_highlight "$PROPERTY") # == Color formated property
-    declare -r VALUE=$3                                     # == New value for the property
-    declare -r VALUE_NAME=$(print_highlight "$VALUE")       # == Color formated value
-    declare -r PLIST=$4                                     # == Absolut path to PLIST file
+    declare -r module_name_highlight=$(print_highlight "$1")
+    declare -r plist_property=$2 # == Path to property seperated by :
+    declare -r plist_property_highlight=$(print_highlight "$plist_property")
+    declare -r value=$3
+    declare -r value_highlight=$(print_highlight "$value")
+    declare -r plist_file=$4
 
     # == Check if enough arguments specified == /
     if [[ "$#" -lt 4 ]]; then
-        print_fail "There are not enough arguments specified for 'plist_set'! "
+        print_fail "There are not enough arguments specified for 'plist_set_property'! "
         return 1
     fi
 
-    if [[ $(plist_get_property "$PROPERTY" "$PLIST") == "$VALUE" ]]; then
-        print_success "$MODULE | Setting $PROPERTY_NAME is already set to $VALUE_NAME!"
+    if [[ $(plist_get_property "$plist_property" "$plist_file") == "$value" ]]; then
+        print_success "$module_name_highlight | Setting $plist_property_highlight is already set to $value_highlight!"
         return 2
     fi
 
-    print_run "$MODULE | Setting $PROPERTY_NAME to $VALUE_NAME!"
-    /usr/libexec/PlistBuddy -c "Set :$PROPERTY $VALUE" "$PLIST" &>/dev/null
-    print_result "$?" "$MODULE | Set $PROPERTY_NAME to $VALUE_NAME!"
+    print_run "$module_name_highlight | Setting $plist_property_highlight to $value_highlight!"
+    /usr/libexec/PlistBuddy -c "Set :$plist_property $value" "$plist_file" &>/dev/null
+    print_result "$?" "$module_name_highlight | Set $plist_property_highlight to $value_highlight!"
 }
