@@ -183,35 +183,6 @@ ruby_install() {
     print_result "$?" "$module_name_highlight | Installation of formula $ruby_formula_name_highlight"
 }
 
-# === MacAppStore (MAS) Wrapper Functions === /
-mas_install() {
-    declare -r mas_application_name_highlight=$(print_highlight "$1")
-    declare -r mas_application_id="$2"
-    declare -r module_name_highlight=$(print_highlight "MAS-Install")
-
-    # == Check if enough arguments specified == /
-    if [[ "$#" -lt 2 ]]; then
-        print_fail "There are not enough arguments specified for 'mas_install'! "
-        return 1
-    fi
-
-    # == Check if MAS App already installed == /
-    mas list | grep "$mas_application_id" | head -n 1 &>/dev/null
-    if [[ "$?" -eq 0 ]]; then
-        print_success "$module_name_highlight | Application $mas_application_name_highlight is already installed!"
-        return 2
-    fi
-
-    # == Install MAS App == /
-    print_run "$module_name_highlight | Installing application $mas_application_name_highlight!"
-    mas install "$mas_application_id" &>/dev/null
-    print_result "$?" "$module_name_highlight | Installation of application $mas_application_name_highlight"
-}
-
-mas_update() {
-    declare -r module_name_highlight=$(print_highlight "MAS-Update")
-}
-
 # === macOS Defaults Wrapper Functions === /
 defaults_write() {
     declare -r domain_name_highlight=$(print_highlight "$1")
