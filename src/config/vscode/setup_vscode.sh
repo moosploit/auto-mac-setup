@@ -13,21 +13,21 @@ if [[ $(basename ${0}) == $(basename ${BASH_SOURCE}) ]]; then
     source ../../../helper/output.sh
     source ../../../helper/utils.sh
     source ../../../helper/global_variables.sh
-    VSCODE_DIR="$ROOT_DIR"
+    project_dir_vscode="$ROOT_DIR"
 else
-    VSCODE_DIR="$ROOT_DIR/src/config/vscode"
+    project_dir_vscode="$ROOT_DIR/src/config/vscode"
 fi
 
 # === Directory where the VSCode settings files should be stored === /
-DOTFILES_VSCODE_DIR="$DOTFILES_DIR/vscode"
-mkdir -p "$DOTFILES_VSCODE_DIR" &>/dev/null # == Create new folder to store VSCode settings == /
-DOTFILES_VSCODE_DIR_NAME=$(print_highlight "$DDOTFILES_VSCODE_DIR")
+dotfiles_dir_vscode="$DOTFILES_DIR/vscode"
+dotfiles_dir_vscode_highlight=$(print_highlight "$dotfiles_dir_vscode")
+# == Create new folder to store VSCode settings == /
+mkdir -p "$dotfiles_dir_vscode" &>/dev/null
 
 vscode_install_ext() {
-    # vscode_install_ext EXTENSION
-    declare -r EXT=$1                             # Extension
-    declare -r EXT_NAME=$(print_highlight "$EXT") # Extension Name
-    declare -r MODULE=$(print_highlight "VSCode") # Module Name
+    declare -r module_name=$(print_highlight "VSCode")                       # Module Name
+    declare -r extension_name=$1                                             # Extension Name
+    declare -r extension_name_highlight=$(print_highlight "$extension_name") # Extension Name Highlighted
 
     # == Check if enough arguments specified == /
     if [[ "$#" -lt 1 ]]; then
@@ -36,20 +36,20 @@ vscode_install_ext() {
     fi
 
     if test "$(which code)"; then
-        code --list-extensions | grep "$EXT" -i &>/dev/null
+        code --list-extensions | grep "$extension_name" -i &>/dev/null
         if [[ "$?" -eq 0 ]]; then
-            print_success "$MODULE | Extension $EXT_NAME is already installed!"
+            print_success "$module_name | Extension $extension_name_highlight is already installed!"
             return 2
         fi
     else
-        print_error "Application $MODULE is not installed!"
+        print_error "Application $module_name is not installed!"
         return 99
     fi
 
     # == Install MAS App == /
-    print_run "$MODULE | Installing extension $EXT_NAME!"
-    code --install-extension "$EXT" &>/dev/null
-    print_result "$?" "$MODULE | Installation of extension $EXT_NAME"
+    print_run "$module_name | Installing extension $extension_name_highlight!"
+    code --install-extension "$extension_name" &>/dev/null
+    print_result "$?" "$module_name | Installation of extension $extension_name_highlight"
 
 }
 
@@ -59,7 +59,7 @@ install_extensions() {
         return 1
     fi
 
-    cat $VSCODE_DIR/extensions.txt | while read line; do
+    cat $project_dir_vscode/extensions.txt | while read line; do
         vscode_install_ext "$line"
     done
 
@@ -67,11 +67,11 @@ install_extensions() {
 }
 
 setup_config() {
-    declare -r MODULE=$(print_highlight "VSCode")
+    declare -r module_name=$(print_highlight "VSCode")
 
-    local SETTINGS_FILE=""
-    local KEYBINDINGS_FILE=""
-    local SNIPPETS_DIR=""
+    local vscode_file_settings=""
+    local vscode_file_keybindings=""
+    local vscode_dir_snippets=""
 
     ask_for_confirmation "Should I setup the configuration now?"
     if ! answer_is_yes; then
@@ -81,24 +81,24 @@ setup_config() {
     ask_for_confirmation "Should I use the default settings?"
     # == Copy the default files from this folder and symlink them to the origin
     if answer_is_yes; then
-        SETTINGS_FILE="$VSCODE_DIR/example/settings.json"
-        KEYBINDINGS_FILE="$VSCODE_DIR/example/keybindings.json"
-        SNIPPETS_DIR="$VSCODE_DIR/example/snippets"
+        vscode_file_settings="$project_dir_vscode/example/settings.json"
+        vscode_file_keybindings="$project_dir_vscode/example/keybindings.json"
+        vscode_dir_snippets="$project_dir_vscode/example/snippets"
     # == Copy the original files and symlink them to the origin
     else
-        SETTINGS_FILE="$HOME/Library/Application Support/Code/User/settings.json"
-        KEYBINDINGS_FILE="$HOME/Library/Application Support/Code/User/keybindings.json"
-        SNIPPETS_DIR="$HOME/Library/Application Support/Code/User/snippets"
+        vscode_file_settings="$HOME/Library/Application Support/Code/User/settings.json"
+        vscode_file_keybindings="$HOME/Library/Application Support/Code/User/keybindings.json"
+        vscode_dir_snippets="$HOME/Library/Application Support/Code/User/snippets"
     fi
 
-    copy_it_to "$MODULE" "settings.json" "$SETTINGS_FILE" "$DOTFILES_VSCODE_DIR/settings.json"
-    create_symlink "$MODULE" "settings.json" "$DOTFILES_VSCODE_DIR/settings.json" "$HOME/Library/Application Support/Code/User/settings.json"
+    copy_it_to "$module_name" "settings.json" "$vscode_file_settings" "$dotfiles_dir_vscode/settings.json"
+    create_symlink "$module_name" "settings.json" "$dotfiles_dir_vscode/settings.json" "$HOME/Library/Application Support/Code/User/settings.json"
 
-    copy_it_to "$MODULE" "keybindings.json" "$KEYBINDINGS_FILE" "$DOTFILES_VSCODE_DIR/keybindings.json"
-    create_symlink "$MODULE" "keybindings.json" "$DOTFILES_VSCODE_DIR/keybindings.json" "$HOME/Library/Application Support/Code/User/keybindings.json"
+    copy_it_to "$module_name" "keybindings.json" "$vscode_file_keybindings" "$dotfiles_dir_vscode/keybindings.json"
+    create_symlink "$module_name" "keybindings.json" "$dotfiles_dir_vscode/keybindings.json" "$HOME/Library/Application Support/Code/User/keybindings.json"
 
-    copy_it_to "$MODULE" "snippets/" "$SNIPPETS_DIR" "$DOTFILES_VSCODE_DIR"
-    create_symlink "$MODULE" "snippets/" "$DOTFILES_VSCODE_DIR/snippets" "$HOME/Library/Application Support/Code/User/snippets"
+    copy_it_to "$module_name" "snippets/" "$vscode_dir_snippets" "$dotfiles_dir_vscode"
+    create_symlink "$module_name" "snippets/" "$dotfiles_dir_vscode/snippets" "$HOME/Library/Application Support/Code/User/snippets"
 
     kill_app Electron
 }
