@@ -159,30 +159,6 @@ get_full_username() {
     osascript -e "long user name of (system info)"
 }
 
-# === Ruby Wrapper Functions === /
-ruby_install() {
-    declare -r ruby_formula_name_highlight=$(print_highlight "$1")
-    declare -r ruby_formula="$2"
-    declare -r module_name_highlight=$(print_highlight "Ruby-Install")
-
-    if [[ "$#" -lt 2 ]]; then
-        print_fail "There are not enough arguments specified for 'ruby_install'! "
-        return 1
-    fi
-
-    # == Check if ruby formula already installed == /
-    gem list "$ruby_formula" &>/dev/null
-    if [[ "$?" -eq 0 ]]; then
-        print_success "$module_name_highlight | Formula $ruby_formula_name_highlight is already installed!"
-        return 2
-    fi
-
-    # == Install ruby formula == /
-    print_run "$module_name_highlight | Installing formula $ruby_formula_name_highlight!"
-    sudo gem install "$ruby_formula" &>/dev/null
-    print_result "$?" "$module_name_highlight | Installation of formula $ruby_formula_name_highlight"
-}
-
 # === macOS Defaults Wrapper Functions === /
 defaults_write() {
     declare -r domain_name_highlight=$(print_highlight "$1")
