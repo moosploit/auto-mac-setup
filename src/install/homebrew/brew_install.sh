@@ -16,47 +16,46 @@ fi
 
 # === Homebrew Wrapper Functions === /
 brew_install() {
-    # brew_install "Google Chrome" "google-chrome" "cask"
-    declare -r FORMULA_NAME=$(print_highlight "$1") # Google Chrome
-    declare -r FORMULA="$2"                         # google-chrome
-    declare -r CMD="$3"                             # cask
-    declare -r MODULE=$(print_highlight "Brew-Install")
+    declare -r brew_formula_highlight=$(print_highlight "$1")
+    declare -r brew_formula="$2"
+    declare -r brew_command="$3"
+    declare -r module_name_highlight=$(print_highlight "Brew-Install")
 
     if [[ "$#" -lt 2 ]]; then
         print_fail "There are not enough arguments specified for 'brew_install'! "
         return 1
     fi
 
-    # == [[ $CMD not set ]] == /
-    if [[ -z "$CMD" ]]; then
+    # == [[ $brew_command not set ]] == /
+    if [[ -z "$brew_command" ]]; then
         # == Check if brew formula already installed == /
-        brew list "$FORMULA" &>/dev/null
+        brew list "$brew_formula" &>/dev/null
         if [[ "$?" -eq 0 ]]; then
-            print_success "$MODULE | Formula $FORMULA_NAME is already installed!"
+            print_success "$module_name_highlight | Formula $brew_formula_highlight is already installed!"
             return 2
         fi
 
         # == Install brew formula == /
-        print_run "$MODULE | Installing formula $FORMULA_NAME!"
-        brew install "$FORMULA" &>/dev/null
-        print_result "$?" "$MODULE | Installation of formula $FORMULA_NAME"
-    # == [[ $CMD is set ]] == /
+        print_run "$module_name_highlight | Installing formula $brew_formula_highlight!"
+        brew install "$brew_formula" &>/dev/null
+        print_result "$?" "$module_name_highlight | Installation of formula $brew_formula_highlight"
+    # == [[ $brew_command is set ]] == /
     else
-        case "$CMD" in
+        case "$brew_command" in
         cask)
             # == Check if brew cask formula already installed == /
-            brew list --cask "$FORMULA" &>/dev/null
+            brew list --cask "$brew_formula" &>/dev/null
             if [[ "$?" -eq 0 ]]; then
-                print_success "$MODULE | Cask Formula $FORMULA_NAME is already installed!"
+                print_success "$module_name_highlight | Cask Formula $brew_formula_highlight is already installed!"
                 return 2
             fi
             # == Install brew cask formula == /
-            print_run "$MODULE | Installing cask formula $FORMULA_NAME!"
-            brew install --cask "$FORMULA" &>/dev/null
-            print_result "$?" "$MODULE | Installation of cask formula $FORMULA_NAME"
+            print_run "$module_name_highlight | Installing cask formula $brew_formula_highlight!"
+            brew install --cask "$brew_formula" &>/dev/null
+            print_result "$?" "$module_name_highlight | Installation of cask formula $brew_formula_highlight"
             ;;
         *)
-            print_fail "$MODULE | Installation of formula $FORMULA_NAME failed, because command '$CMD' is not defined!"
+            print_fail "$module_name_highlight | Installation of formula $brew_formula_highlight failed, because command '$brew_command' is not defined!"
             return 99
             ;;
         esac
@@ -64,33 +63,32 @@ brew_install() {
 }
 
 brew_update() {
-    declare -r MODULE=$(print_highlight "Brew-Update")
-    print_run "$MODULE | Updating formulas!"
+    declare -r module_name_highlight=$(print_highlight "Brew-Update")
+    print_run "$module_name_highlight | Updating formulas!"
 
     brew update &>/dev/null
-    print_result "$?" "$MODULE | Formulas update."
+    print_result "$?" "$module_name_highlight | Formulas update."
 }
 
 brew_upgrade() {
-    declare -r MODULE=$(print_highlight "Brew-Upgrade")
-    print_run "$MODULE | Upgrading all installed and outdated formulas!"
+    declare -r module_name_highlight=$(print_highlight "Brew-Upgrade")
+    print_run "$module_name_highlight | Upgrading all installed and outdated formulas!"
 
     brew upgrade &>/dev/null
-    print_result "$?" "$MODULE | Upgrade of installed and outdated formulas!"
+    print_result "$?" "$module_name_highlight | Upgrade of installed and outdated formulas!"
 }
 
 brew_tap() {
-    declare -r REPO=$(print_highlight "$1")
-    declare -r MODULE=$(print_highlight "Brew-Tap")
+    declare -r brew_repository_highlight=$(print_highlight "$1")
+    declare -r module_name_highlight=$(print_highlight "Brew-Tap")
 
     if ! brew tap | grep "$1" -i &>/dev/null; then
-        print_run "$MODULE | is tapping repository $REPO!"
+        print_run "$module_name_highlight | is tapping repository $brew_repository_highlight!"
         brew tap "$1" &>/dev/null
-        print_result "$?" "$MODULE | Tapping of repository $REPO"
+        print_result "$?" "$module_name_highlight | Tapping of repository $brew_repository_highlight"
     else
-        print_success "$MODULE | the repository $REPO is already tapped."
+        print_success "$module_name_highlight | the repository $brew_repository_highlight is already tapped."
     fi
-
 }
 
 opt_out_of_analaytics() {
