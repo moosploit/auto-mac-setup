@@ -15,7 +15,7 @@ if [[ $(basename ${0}) == $(basename ${BASH_SOURCE}) ]]; then
     source ../../../helper/global_variables.sh
     FORKLIFT_DIR="$ROOT_DIR"
 else
-    FORKLIFT_DIR="$ROOT_DIR/src/config/forklift"
+    FORKLIFT_DIR="$ROOT_DIR/src/setup/forklift"
 fi
 
 general_setup() {

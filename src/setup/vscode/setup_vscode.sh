@@ -15,7 +15,7 @@ if [[ $(basename ${0}) == $(basename ${BASH_SOURCE}) ]]; then
     source ../../../helper/global_variables.sh
     project_dir_vscode="$ROOT_DIR"
 else
-    project_dir_vscode="$ROOT_DIR/src/config/vscode"
+    project_dir_vscode="$ROOT_DIR/src/setup/vscode"
 fi
 
 # === Directory where the VSCode settings files should be stored === /

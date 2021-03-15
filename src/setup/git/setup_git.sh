@@ -15,7 +15,7 @@ if [[ $(basename ${0}) == $(basename ${BASH_SOURCE}) ]]; then
     source ../../../helper/global_variables.sh
     GIT_DIR="$ROOT_DIR"
 else
-    GIT_DIR="$ROOT_DIR/src/config/git"
+    GIT_DIR="$ROOT_DIR/src/setup/git"
 fi
 
 # === Directory where the GIT settings files should be stored === /
