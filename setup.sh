@@ -36,25 +36,25 @@ __init__() {
     source ./src/install/mas/mas_install.sh
 
     # === Configure macOS === /
-    source ./src/config/macos/setup_macos.sh
+    source ./src/setup/macos/setup_macos.sh
 
     # === Configure Application ForkLift 3 === /
-    source ./src/config/forklift/setup_forklift.sh
+    source ./src/setup/forklift/setup_forklift.sh
 
     # === Configure Application Moom === /
-    source ./src/config/moom/setup_moom.sh
+    source ./src/setup/moom/setup_moom.sh
 
     # === Configure Application Iterm2 === /
-    source ./src/config/iterm/setup_iterm.sh
+    source ./src/setup/iterm/setup_iterm.sh
 
     # === Configure Application Visual Studio Code === /
-    source ./src/config/vscode/setup_vscode.sh
+    source ./src/setup/vscode/setup_vscode.sh
 
     # === Configure SSH === /
-    source ./src/config/ssh/setup_ssh.sh
+    source ./src/setup/ssh/setup_ssh.sh
 
     # === Configure GIT === /
-    source ./src/config/git/setup_git.sh
+    source ./src/setup/git/setup_git.sh
 }
 
 __init__
