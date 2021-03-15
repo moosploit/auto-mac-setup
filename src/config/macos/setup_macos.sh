@@ -16,23 +16,22 @@ if [[ $(basename ${0}) == $(basename ${BASH_SOURCE}) ]]; then
 fi
 
 computer_name_setup() {
-
-    local MAC_NAME=""
+    local compter_name=""
 
     ask_for_confirmation "Should I setup your computer name?"
     if ! answer_is_yes; then
         return 1
     fi
 
-    while [[ -z $MAC_NAME ]]; do
+    while [[ -z $compter_name ]]; do
         ask_for_input "How should I name your new Apple Mac?"
-        MAC_NAME=$REPLY
+        compter_name=$REPLY
     done
 
-    scutil_set "ComputerName" "$MAC_NAME"
-    scutil_set "HostName" "$MAC_NAME"
-    scutil_set "LocalHostName" "$MAC_NAME"
-    defaults_write "Apple SMB Server" "/Library/Preferences/SystemConfiguration/com.apple.smb.server" "NetBIOSName" "string" "$MAC_NAME"
+    scutil_set "ComputerName" "$compter_name"
+    scutil_set "HostName" "$compter_name"
+    scutil_set "LocalHostName" "$compter_name"
+    defaults_write "Apple SMB Server" "/Library/Preferences/SystemConfiguration/com.apple.smb.server" "NetBIOSName" "string" "$compter_name"
 }
 
 general_setup() {
@@ -139,7 +138,6 @@ dock_setup() {
 }
 
 apps_in_dock_setup() {
-
     ask_for_confirmation "May I rearrange your apps inside your dock?"
     if ! answer_is_yes; then
         return 1
@@ -436,7 +434,7 @@ time_machine_setup() {
 }
 
 activity_monitor_setup() {
-    ask_for_confirmation "Should I setup the timemachine settings now?"
+    ask_for_confirmation "Should I setup the activity monitor settings now?"
     if ! answer_is_yes; then
         return 1
     fi
