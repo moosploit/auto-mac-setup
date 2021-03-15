@@ -118,6 +118,11 @@ configure_zsh() {
     create_symlink "$MODULE" "zshrc" "$DOTFILES_ZSH_DIR/zshrc.link" "$HOME/.zshrc"
 }
 
+fix_insecure_directories() {
+    :
+    # compaudit | xargs chmod g-w,o-w
+}
+
 change_default_shell() {
     :
 }
@@ -128,6 +133,9 @@ __init__() {
 
     print_cat "Installation of zsh framework oh-my-zsh"
     install_oh_my_zsh
+
+    print_cat "Installation of usefull oh-my-zsh plugins"
+    install_oh_my_zsh_plugins
 
     print_cat "Installation of oh-my-zsh theme Powerlevel10k"
     install_oh_my_zsh_theme_p10k
