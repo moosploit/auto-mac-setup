@@ -13,13 +13,15 @@ if [[ $(basename ${0}) == $(basename ${BASH_SOURCE}) ]]; then
     source ../../../helper/output.sh
     source ../../../helper/utils.sh
     source ../../../helper/global_variables.sh
-    ITERM_DIR="$ROOT_DIR"
+    project_dir_iterm="$ROOT_DIR"
 else
-    ITERM_DIR="$ROOT_DIR/src/config/iterm"
+    project_dir_iterm="$ROOT_DIR/src/config/iterm"
 fi
 
 # === Directory where the iTerm settings file should be stored === /
-DOTFILES_ITERM_DIR="$DOTFILES_DIR/iTerm"
+dotfiles_dir_iterm="$DOTFILES_DIR/iTerm"
+# == Create new folder to store iTerm settings == /
+mkdir -p "$dotfiles_dir_iterm" &>/dev/null
 
 general_setup() {
     ask_for_confirmation "Should I setup iTerm now?"
@@ -27,14 +29,13 @@ general_setup() {
         return 1
     fi
 
-    mkdir -p "$DOTFILES_ITERM_DIR"
-    cp "$ITERM_DIR"/com.googlecode.iterm2.plist.example "$DOTFILES_ITERM_DIR"/com.googlecode.iterm2.plist
+    copy_it_to "iTerm 2" "iTerm" "$project_dir_iterm"/com.googlecode.iterm2.plist.example "$dotfiles_dir_iterm"/com.googlecode.iterm2.plist
 
     # == iTerm > Settings > General > Preferences > Load preferences from a custom folder or URL [true|false] ==/
     defaults_write "iTerm 2" "com.googlecode.iterm2" "LoadPrefsFromCustomFolder" "bool" "true"
 
     # == iTerm > Settings > General > Preferences > Custom folder ==/
-    defaults_write "iTerm 2" "com.googlecode.iterm2" "PrefsCustomFolder" "string" "$DOTFILES_ITERM_DIR"
+    defaults_write "iTerm 2" "com.googlecode.iterm2" "PrefsCustomFolder" "string" "$dotfiles_dir_iterm"
 
     # == iTerm > Settings > General > Preferences > Save changes to folder when iTerm2 quits [true|false] ==/
     defaults_write "iTerm 2" "com.googlecode.iterm2" "NoSyncNeverRemindPrefsChangesLostForFile_selection" "bool" "false"
