@@ -442,7 +442,7 @@ activity_monitor_setup() {
     # ==  Show the main window when launching Activity Monitor [true|false] ==/
     defaults_write "ActivityMonitor" "com.apple.ActivityMonitor" "OpenMainWindow" "bool" "true"
 
-    # == Change Activity Monitor Dock icon to visualize ... [0=ApplicationSymbol|2=Network|3=Harddrive|5=CPU|6=CPU-History] ==/
+    # == Change Activity Monitor Dock icon to visualize [0=ApplicationSymbol|2=Network|3=Harddrive|5=CPU|6=CPU-History] == /
     defaults_write "ActivityMonitor" "com.apple.ActivityMonitor" "IconType" "int" "5"
 
     # == Show all processes in Activity Monitor == /

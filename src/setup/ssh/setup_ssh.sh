@@ -13,20 +13,20 @@ if [[ $(basename ${0}) == $(basename ${BASH_SOURCE}) ]]; then
     source ../../../helper/output.sh
     source ../../../helper/utils.sh
     source ../../../helper/global_variables.sh
-    SSH_DIR="$ROOT_DIR"
+    project_dir_ssh="$ROOT_DIR"
 else
-    SSH_DIR="$ROOT_DIR/src/config/ssh"
+    project_dir_ssh="$ROOT_DIR/src/setup/ssh"
 fi
 
 # === Directory where the SSH settings files should be stored === /
-DOTFILES_SSH_DIR="$DOTFILES_DIR/ssh"
-mkdir -p "$DOTFILES_SSH_DIR" &>/dev/null && chmod 700 "$DOTFILES_SSH_DIR"
-DOTFILES_SSH_DIR_NAME=$(print_highlight "$DOTFILES_SSH_DIR")
+dotfiles_dir_ssh="$DOTFILES_DIR/ssh"
+mkdir -p "$dotfiles_dir_ssh" &>/dev/null && chmod 700 "$dotfiles_dir_ssh"
+dotfiles_dir_ssh_highlight=$(print_highlight "$dotfiles_dir_ssh")
 
 backup_existing_ssh() {
-    declare -r MODULE=$(print_highlight "SSH-Bkp")
-    declare -r BACKUP_SSH_DIR="$BACKUP_DIR/ssh"
-    declare -r BACKUP_SSH_DIR_NAME=$(print_highlight "$BACKUP_SSH_DIR")
+    declare -r module_name_highlight=$(print_highlight "SSH-Bkp")
+    declare -r backup_dir_ssh="$BACKUP_DIR/ssh"
+    declare -r backup_dir_ssh_highlight=$(print_highlight "$backup_dir_ssh")
 
     local HOME_SSH_DIR="$HOME/.ssh"
 
@@ -36,86 +36,86 @@ backup_existing_ssh() {
     fi
 
     if [[ ! -e $HOME_SSH_DIR ]]; then
-        print_fail "$MODULE | No SSH backup needed, because SSH configuaration folder doesn't exist!"
+        print_fail "$module_name_highlight | No SSH backup needed, because SSH configuaration folder doesn't exist!"
         return 2
     fi
 
     # == If the SSH Folder exists == /
     if [[ -d $HOME_SSH_DIR ]]; then
-        print_run "$MODULE | Backing up your SSH configuration to $BACKUP_SSH_DIR_NAME!"
-        mkdir -p "$BACKUP_SSH_DIR" &>/dev/null && chmod 700 "$BACKUP_SSH_DIR"
-        mv "$HOME_SSH_DIR" "$BACKUP_SSH_DIR" &>/dev/null
-        print_result "$?" "$MODULE | Backed up your SSH configuration to $BACKUP_SSH_DIR_NAME!"
+        print_run "$module_name_highlight | Backing up your SSH configuration to $backup_dir_ssh_highlight!"
+        mkdir -p "$backup_dir_ssh" &>/dev/null && chmod 700 "$backup_dir_ssh"
+        mv "$HOME_SSH_DIR" "$backup_dir_ssh" &>/dev/null
+        print_result "$?" "$module_name_highlight | Backed up your SSH configuration to $backup_dir_ssh_highlight!"
     fi
 }
 
 create_config_file() {
-    declare -r MODULE=$(print_highlight "SSH-Config")
+    declare -r module_name_highlight=$(print_highlight "SSH-Config")
 
     ask_for_confirmation "Should I create a new basic SSH configuration file?"
     if ! answer_is_yes; then
         return 1
     fi
 
-    print_run "$MODULE | Creating basic SSH configuration file in $DOTFILES_SSH_DIR_NAME!"
+    print_run "$module_name_highlight | Creating basic SSH configuration file in $dotfiles_dir_ssh_highlight!"
     printf "%b\n" \
-        "Host *\n  AddKeysToAgent yes\n  UseKeychain yes\n\nInclude ~/.ssh/config.local" >"$DOTFILES_SSH_DIR/config"
-    print_result "$?" "$MODULE | Created basic SSH configuration file in $DOTFILES_SSH_DIR_NAME!"
+        "Host *\n  AddKeysToAgent yes\n  UseKeychain yes\n\nInclude ~/.ssh/config.local" >"$dotfiles_dir_ssh/config"
+    print_result "$?" "$module_name_highlight | Created basic SSH configuration file in $dotfiles_dir_ssh_highlight!"
 }
 
 create_local_config_file() {
-    declare -r MODULE=$(print_highlight "SSH-Config")
+    declare -r module_name_highlight=$(print_highlight "SSH-Config")
 
     ask_for_confirmation "Should I create a new local SSH configuration file?"
     if ! answer_is_yes; then
         return 1
     fi
 
-    print_run "$MODULE | Creating local SSH configuration file in $DOTFILES_SSH_DIR_NAME!"
+    print_run "$module_name_highlight | Creating local SSH configuration file in $dotfiles_dir_ssh_highlight!"
     printf "%b\n" \
-        "Host example.com\n  HostName example.com\n  Port 22\n  User example-user\n  IdentityFile $HOME/.ssh/id_ed25519_example\n  IdentitiesOnly yes\n" >>"$DOTFILES_SSH_DIR/config.local"
-    print_result "$?" "$MODULE | Created local SSH configuration file in $DOTFILES_SSH_DIR_NAME!"
+        "Host example.com\n  HostName example.com\n  Port 22\n  User example-user\n  IdentityFile $HOME/.ssh/id_ed25519_example\n  IdentitiesOnly yes\n" >>"$dotfiles_dir_ssh/config.local"
+    print_result "$?" "$module_name_highlight | Created local SSH configuration file in $dotfiles_dir_ssh_highlight!"
 }
 
 generate_ssh_key() {
-    declare -r MODULE=$(print_highlight "SSH-KEY")
+    declare -r module_name_highlight=$(print_highlight "SSH-KEY")
 
-    local EMAIL=""
-    local EMAIL_NAME=""
-    local PURPOSE=""
-    local SSH_KEY=""
-    local SSH_KEY_NAME=""
-    local SSH_KEY_PATH="$DOTFILES_SSH_DIR"
+    local email=""
+    local email_highlight=""
+    local purpose=""
+    local ssh_key=""
+    local ssh_key_highlight=""
+    local ssh_key_path="$dotfiles_dir_ssh"
 
     ask_for_confirmation "Should I setup a new SSH Key for you now?"
     if ! answer_is_yes; then
         return 1
     fi
 
-    while [[ -z $EMAIL ]]; do
-        ask_for_input "Please provide an EMail address:"
-        EMAIL="$REPLY"
-        EMAIL_NAME=$(print_highlight "$EMAIL")
+    while [[ -z $email ]]; do
+        ask_for_input "Please enter an validt EMail address:"
+        email="$REPLY"
+        email_highlight=$(print_highlight "$email")
     done
 
     ask_for_input "Please set a purpose for this SSH key or leave it blank:"
-    PURPOSE=$REPLY
+    purpose=$REPLY
 
-    if [[ -z $PURPOSE ]]; then
-        SSH_KEY="id_ed25519"
+    if [[ -z $purpose ]]; then
+        ssh_key="id_ed25519"
     else
-        PURPOSE=$(echo $PURPOSE | tr "[:upper:]" "[:lower:]" | tr " " "-")
-        SSH_KEY="id_ed25519_$PURPOSE"
+        purpose=$(echo $purpose | tr "[:upper:]" "[:lower:]" | tr " " "-")
+        ssh_key="id_ed25519_$purpose"
     fi
-    SSH_KEY_NAME=$(print_highlight "$SSH_KEY")
+    ssh_key_highlight=$(print_highlight "$ssh_key")
 
-    print_run "$MODULE | Generating SSH-Key $SSH_KEY_NAME for EMail $EMAIL_NAME!"
-    ssh-keygen -o -t ed25519 -a 256 -C "$EMAIL" -f "$SSH_KEY_PATH/$SSH_KEY"
-    print_result "$?" "$MODULE | SSH-Key $SSH_KEY_NAME generated and stored at $SSH_KEY_PATH!"
+    print_run "$module_name_highlight | Generating SSH-Key $ssh_key_highlight for EMail $email_highlight!"
+    ssh-keygen -o -t ed25519 -a 256 -C "$email" -f "$ssh_key_path/$ssh_key"
+    print_result "$?" "$module_name_highlight | SSH-Key $ssh_key_highlight generated and stored at $ssh_key_path!"
 
-    print_run "$MODULE | Adding SSH-Key $SSH_KEY_NAME to your keychain for easier use!"
-    ssh-add -K "$SSH_KEY_PATH/$SSH_KEY"
-    print_result "$?" "$MODULE | SSH-Key $SSH_KEY_NAME added to keychain!"
+    print_run "$module_name_highlight | Adding SSH-Key $ssh_key_highlight to your keychain for easier use!"
+    ssh-add -K "$ssh_key_path/$ssh_key"
+    print_result "$?" "$module_name_highlight | SSH-Key $ssh_key_highlight added to keychain!"
 }
 
 __init__() {
@@ -131,7 +131,7 @@ __init__() {
     print_cat "Creating type ED25519 SSH Key!"
     generate_ssh_key
 
-    create_symlink "SSH" "SSH Configuration" "$DOTFILES_SSH_DIR" "$HOME/.ssh"
+    create_symlink "SSH" "SSH Configuration" "$dotfiles_dir_ssh" "$HOME/.ssh"
 }
 
 __init__
