@@ -13,9 +13,9 @@ if [[ $(basename ${0}) == $(basename ${BASH_SOURCE}) ]]; then
     source ../../../helper/output.sh
     source ../../../helper/utils.sh
     source ../../../helper/global_variables.sh
-    project_dir_istatmenus="$ROOT_DIR"
+    project_dir_sequelpro="$ROOT_DIR"
 else
-    project_dir_istatmenus="$ROOT_DIR/src/setup/SequelPro"
+    project_dir_sequelpro="$ROOT_DIR/src/setup/SequelPro"
 fi
 
 general_setup() {
