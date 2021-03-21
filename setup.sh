@@ -24,16 +24,16 @@ __init__() {
     print_cat "Purrrrrrfect! - Let us begin."
 
     # === Install Xcode and Xcode Development Tools === /
-    source ./src/install/xcode/xcode_install.sh
+    source ./src/install/xcode/install_xcode.sh
 
     # === Install Applications via Homebrew === /
-    source ./src/install/homebrew/brew_install.sh
+    source ./src/install/homebrew/install_brew.sh
 
     # === Install Applications via Ruby === /
-    source ./src/install/ruby/ruby_install.sh
+    source ./src/install/ruby/install_ruby.sh
 
     # === Install Applications via Mac App Store === /
-    source ./src/install/mas/mas_install.sh
+    source ./src/install/mas/install_mas.sh
 
     # === Configure macOS === /
     source ./src/setup/macos/setup_macos.sh
