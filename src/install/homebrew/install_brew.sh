@@ -144,6 +144,7 @@ __init__() {
     brew_install "Python3" "python"
     brew_install "Pipenv" "pipenv"
     brew_install "Tldr" "tldr"
+    brew_install "Subversion" "svn"
     brew_install "GitHub CLI" "gh"
     brew_install "GNU Privacy Guard" "gpg"
 
