@@ -198,7 +198,7 @@ __init__() {
     brew_install "1Password" "1password" "cask"
     brew_install "TeamViewer" "teamviewer" "cask"
     brew_install "jDownloader" "jdownloader" "cask"
-    brew_install "MacTeX No Gui" "mactex-no-gui" "cask"
+    # brew_install "MacTeX No Gui" "mactex-no-gui" "cask"
 
     print_cat "Homebrew | Install some cool 'Development' applications!"
     brew_install "iTerm2 Terminal Emulator" "iterm2" "cask"
